@@ -169,6 +169,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .i-clubs    { --src: url("../assets/illustrations/dist/clubs-croises.svg");      --ar: 506/538; }
 .i-golfeur  { --src: url("../assets/illustrations/dist/golfeur-silhouette.svg"); --ar: 255/453; }
 .i-swing    { --src: url("../assets/illustrations/dist/golfeur-vintage.svg");    --ar: 299/518; }
+.i-table    { --src: url("../assets/illustrations/dist/table-terrasse.svg");          --ar: 492/508; }
+.i-sac      { --src: url("../assets/illustrations/dist/sac-golf.svg");                --ar: 310/786; }
 
 @media (max-width: 1180px) { .illu[data-hide~="lg"] { display: none; } }
 @media (max-width: 860px)  { .illu[data-hide~="md"] { display: none; } }

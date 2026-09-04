@@ -3,8 +3,20 @@
 - `source/` : les dessins d'origine, tels que fournis. Non utilisés par le site.
 - `dist/` : ce que le site sert. Une seule couleur, donnée par le CSS.
 
-Six dessins : deux golfeurs, des clubs croisés, une bouteille et un verre, une
-assiette dressée, un chef à la cloche.
+Huit dessins : deux golfeurs, des clubs croisés, un sac de golf, une bouteille
+et un verre, une assiette dressée, un chef à la cloche, et une table de terrasse
+dont les chaises en fer forgé sont celles des photos du restaurant.
+
+| Classe CSS | Fichier |
+|---|---|
+| `i-swing` | golfeur-vintage |
+| `i-golfeur` | golfeur-silhouette |
+| `i-clubs` | clubs-croises |
+| `i-sac` | sac-golf |
+| `i-bouteille` | bouteille-verre |
+| `i-assiette` | assiette-couverts |
+| `i-chef` | chef-cloche |
+| `i-table` | table-terrasse |
 
 ## Régénérer dist/
 
@@ -38,6 +50,7 @@ automatique ne suffit pas :
 | `threshold` | écart minimal à la couleur du fond, de 0 à 255 |
 | `min_area` | taille minimale d'une tache conservée, en pixels ; c'est ce qui efface les mentions des banques d'images |
 | `softness` | douceur du bord, pour garder l'anticrénelage |
+| `thicken` | épaissit le trait, en pixels ; sans quoi un dessin au trait fin s'efface une fois réduit et posé en fond |
 | `mode` | `color` (défaut) ou `luminance` |
 | `background` | forcer la couleur du fond, par exemple `[255, 255, 255]` |
 | `svg` | forcer ou empêcher la vectorisation |

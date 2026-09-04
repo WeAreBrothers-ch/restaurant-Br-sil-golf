@@ -29,5 +29,16 @@
   "golfeur-vintage.jpg": {
     "min_area": 300,
     "_note": "Fond vert texturé, pantalon blanc : le détourage par écart au fond garde la figure entière."
+  },
+  "table-terrasse.jpg": {
+    "threshold": 70,
+    "thicken": 2,
+    "min_area": 120,
+    "_note": "Encre sur papier texturé : le réglage automatique montait trop haut et coupait le trait. Seuil fixé à la main."
+  },
+  "sac-golf.jpg": {
+    "thicken": 2,
+    "min_area": 200,
+    "_note": "Trait fin sur fond crème uni."
   }
 }
