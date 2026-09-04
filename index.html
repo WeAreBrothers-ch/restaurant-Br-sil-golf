@@ -75,20 +75,14 @@
       <i class="piece piece--clubs     i-clubs"></i>
     </div>
 
-    <div class="home-hero__mid">
-      <!-- Le sceau de la maison, redessiné d'après le filigrane des photos. -->
-      <h1 class="mono">
-        <span class="seal" role="img" aria-label="Le 9, Restaurant du Golf du Brésil"></span>
-      </h1>
-      <p class="home-hero__say">Une table au calme, au bord du parcours.
-        <span class="home-hero__loc">Goumoens-le-Jux · Vaud</span>
-      </p>
-      <div class="home-hero__go">
-        <a class="btn" href="la-carte.html">Voir la carte</a>
-        <a class="btn btn--line" href="tel:+41218822419">Réserver · 021 882 24 19</a>
-      </div>
-    </div>
-    <a class="home-hero__down" href="#entrer" aria-label="Descendre vers le contenu">Entrer</a>
+    <!-- Le premier écran ne porte que le sceau. Pas de phrase, pas de bouton :
+         ce qu'on veut savoir tout de suite est dans le bandeau juste dessous,
+         et le nom de la maison est déjà dans le sceau. La phrase reste dans le
+         document pour les moteurs de recherche et les lecteurs d'écran. -->
+    <h1 class="mono">
+      <span class="seal" role="img" aria-label="Le 9, Restaurant du Golf du Brésil"></span>
+      <span class="sr">Le 9, le restaurant du Golf du Domaine du Brésil : une table au calme, au bord du parcours, à Goumoens-le-Jux dans le canton de Vaud.</span>
+    </h1>
   </section>
 
   <div class="strip">

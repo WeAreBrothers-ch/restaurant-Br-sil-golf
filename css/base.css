@@ -36,9 +36,20 @@
   --illu:         var(--c-green);
   --illu-opacity: .45;
 
-  /* --- Typographie --- */
+  /* --- Typographie ---
+     Le site est pensé pour le téléphone d'abord. Rien n'y descend sous 12 px,
+     et les libellés en capitales espacées, les plus durs à lire, sont les
+     premiers servis. Les tailles montent ensuite avec l'écran. */
   --serif: "Cormorant Garamond", "Iowan Old Style", Palatino, Georgia, serif;
   --sans:  "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  --fs-micro: .75rem;   /* 12 px — libellés en capitales espacées */
+  --fs-mini:  .8125rem; /* 13 px — mentions, notes */
+  --fs-sm:    .9375rem; /* 15 px — texte secondaire */
+  --fs-base:  1.0625rem;/* 17 px — texte courant */
+
+  /* Hauteur minimale d'une cible tactile. En dessous, on vise mal. */
+  --cible: 44px;
 
   /* --- Mouvement ---
      Une pose longue et molle : c'est ce qui sépare une page qui se pose d'une
@@ -56,6 +67,16 @@
   --pad:     clamp(1.25rem, 4vw, 3.5rem);
   --head-h:  74px;
   --r:       4px;
+}
+
+/* Au doigt, la typographie monte d'un cran : un libellé en capitales espacées
+   de 12 px se lit devant un écran d'ordinateur, pas dans le métro. */
+@media (max-width: 699px) {
+  :root {
+    --fs-micro: .8125rem; /* 13 px */
+    --fs-mini:  .875rem;  /* 14 px */
+    --fs-sm:    1rem;     /* 16 px */
+  }
 }
 
 /* Zones sombres : seuls les rôles changent */
@@ -119,14 +140,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .wrap    { width: min(100% - 2*var(--pad), var(--wrap)); margin-inline: auto; }
 .wrap-sm { width: min(100% - 2*var(--pad), var(--wrap-sm)); margin-inline: auto; }
 .bleed   { width: min(100% - 2*var(--pad), 1600px); margin-inline: auto; }
-.sect    { position: relative; padding-block: clamp(4.5rem, 9vw, 8rem); }
+.sect    { position: relative; padding-block: clamp(3.25rem, 9vw, 8rem); }
 .sect > * { position: relative; z-index: 1; }
 
 /* ---------- Typographie ---------- */
 .kicker {
   display: inline-flex; align-items: center; gap: .8rem;
   margin: 0 0 1.5rem;
-  font: 600 .7rem/1 var(--sans); letter-spacing: .24em; text-transform: uppercase;
+  font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .2em; text-transform: uppercase;
   color: var(--accent);
 }
 .kicker::before { content: ""; width: 2.2rem; height: 1px; background: currentColor; }
@@ -137,16 +158,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .t-3    { font-size: clamp(1.3rem, 2vw, 1.7rem); }
 .lead   { font-size: clamp(1.1rem, 1.4vw, 1.28rem); line-height: 1.55; color: var(--fg-soft); }
 .soft   { color: var(--fg-soft); }
-.sm     { font-size: .9rem; }
-.xs     { font-size: .78rem; }
+.sm     { font-size: var(--fs-sm); }
+.xs     { font-size: var(--fs-mini); }
 .serif  { font-family: var(--serif); }
 .center { text-align: center; }
 .rule   { height: 1px; background: var(--line); border: 0; margin: 0; }
+/* Une coupure de ligne voulue sur grand écran, qui laisserait un mot orphelin
+   sur un téléphone : on la laisse au texte de se placer. */
+@media (max-width: 699px) { .br-lg { display: none; } }
 
 /* Marqueur des contenus à compléter */
 .todo {
   display: inline-block; padding: .12em .5em; border-radius: 2px; vertical-align: middle;
-  font: 600 .68rem/1.5 var(--sans); letter-spacing: .1em; text-transform: uppercase;
+  font: 600 var(--fs-micro)/1.5 var(--sans); letter-spacing: .08em; text-transform: uppercase;
   color: var(--accent); border: 1px dashed currentColor;
 }
 
@@ -154,7 +178,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
   padding: .95rem 1.7rem; border-radius: 999px; text-decoration: none;
-  font: 600 .78rem/1 var(--sans); letter-spacing: .13em; text-transform: uppercase;
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .12em; text-transform: uppercase;
   background: var(--btn-bg); color: var(--btn-fg); border: 1px solid var(--btn-bg);
   transition: transform .2s, background .2s, color .2s;
 }
@@ -165,7 +189,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .alink {
   display: inline-flex; align-items: center; gap: .55rem; text-decoration: none;
-  font: 600 .78rem/1 var(--sans); letter-spacing: .13em; text-transform: uppercase;
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .12em; text-transform: uppercase;
   color: var(--fg-strong); padding-bottom: .35rem; border-bottom: 1px solid currentColor;
 }
 .alink::after { content: "→"; transition: transform .2s; }
@@ -228,6 +252,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ---------- En-tête ---------- */
+/* Lu par les lecteurs d'écran et les moteurs, invisible à l'œil. */
+.sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 999;
   background: var(--c-green); color: var(--c-cream); padding: .8rem 1.2rem;
@@ -246,12 +276,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .logo { display: flex; align-items: baseline; gap: .65rem; text-decoration: none; color: var(--c-green); flex: none; }
 .logo__n { font: 500 1.75rem/1 var(--serif); letter-spacing: -.02em; }
 .logo__n i { font-style: italic; }
-.logo__t { font: 600 .62rem/1.3 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--c-ink-soft); max-width: 9rem; }
+.logo__t { font: 600 var(--fs-micro)/1.3 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--c-ink-soft); max-width: 9rem; }
 
 .nav { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2rem); }
 .nav a {
   text-decoration: none; color: var(--c-green); padding-block: .35rem;
-  font: 600 .76rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase;
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .11em; text-transform: uppercase;
   border-bottom: 1px solid transparent;
 }
 .nav a:hover { border-bottom-color: var(--c-brass); }
@@ -286,6 +316,34 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .nav__tel { margin-top: 1.2rem; justify-content: center; }
 }
 
+/* ---------------------------------------------------------------------------
+   AU DOIGT
+
+   Un doigt vise moins bien qu'un curseur : au-dessous de 44 px de haut, on
+   rate. Les liens de liste, les liens fléchés et les entrées de sommaire sont
+   donc élargis là où le pointeur est grossier — sans rien changer là où l'on
+   a une souris, où ces mêmes hauteurs seraient du vide.
+   --------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  a, button, summary { touch-action: manipulation; }
+
+  .foot ul a,
+  .ct-links a,
+  .alink,
+  .toc a,
+  .nav a,
+  .infobar__item,
+  .strip__i {
+    min-height: var(--cible);
+  }
+  .foot ul a, .ct-links a, .alink, .toc a {
+    display: inline-flex; align-items: center;
+  }
+  /* Le sceau du pied et l'enseigne de l'en-tête sont des liens à part entière :
+     on leur donne la même surface de frappe. */
+  .logo { min-height: var(--cible); align-items: center; }
+}
+
 /* ---------- Photos et emplacements ----------
    Tant que le fichier n'existe pas, le cadre affiche son nom : on sait quoi
    déposer et où. Les emplacements marqués data-optional disparaissent. */
@@ -302,8 +360,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .dark .ph__slot { color: var(--c-cream); outline-color: rgba(244,239,227,.25); }
 .ph__slot svg { width: 26px; height: 26px; opacity: .55; margin-bottom: .3rem; }
 .ph__slot b { font: 500 1.05rem/1.2 var(--serif); }
-.ph__slot span { font-size: .8rem; opacity: .7; }
-.ph__slot code { font-size: .7rem; opacity: .55; letter-spacing: .02em; }
+.ph__slot span { font-size: var(--fs-mini); opacity: .7; }
+.ph__slot code { font-size: var(--fs-micro); opacity: .55; letter-spacing: .02em; }
 .ph.ready .ph__slot { display: none; }
 .ph--z:hover > img { transform: scale(1.04); }
 .ph figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1.2rem .9rem;
@@ -315,16 +373,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         --illu: var(--c-cream); --illu-opacity: .16; }
 .foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.1fr; gap: 2.5rem;
               padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
-.foot h4 { font: 600 .64rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--c-brass); margin-bottom: 1.1rem; }
+.foot h4 { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass); margin-bottom: 1.1rem; }
 .foot a { text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
 .foot ul { display: grid; gap: .5rem; }
 .foot .logo, .foot .logo__n { color: var(--c-cream); }
 .foot .logo__t { color: rgba(244,239,227,.55); display: block; margin-top: .55rem; max-width: none; }
-.foot__tag { margin: 1.1rem 0 0; max-width: 21em; color: rgba(244,239,227,.68); font-size: .93rem; }
+.foot__tag { margin: 1.1rem 0 0; max-width: 21em; color: rgba(244,239,227,.68); font-size: var(--fs-sm); }
 .foot__end { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem;
              padding: 1.3rem 0 2rem; border-top: 1px solid rgba(244,239,227,.14);
-             font-size: .76rem; color: rgba(244,239,227,.5); }
+             font-size: var(--fs-mini); color: rgba(244,239,227,.5); }
 @media (max-width: 900px) { .foot__grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .foot__grid { grid-template-columns: 1fr; gap: 2rem; } }
 

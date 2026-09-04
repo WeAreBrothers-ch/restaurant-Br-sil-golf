@@ -39,36 +39,27 @@
   overflow: hidden;
 }
 
-/* Le bloc central. Les écarts sont serrés : le premier écran doit tenir d'un
-   seul regard, sans que l'œil ait à traverser du vide entre le sceau et le
-   premier bouton. */
-.home-hero__mid {
+/* LE SCEAU.
+
+   Il occupe une bande centrale que les dessins ne franchissent jamais. Sa
+   largeur est bornée par l'écran ET par une valeur en pixels : au-delà, un
+   sceau qui grandit avec la fenêtre finit par avoir l'air d'un fond d'écran.
+
+   Il s'efface et remonte pendant que les dessins tombent. */
+.mono {
   position: relative;
   z-index: 2;
+  margin: 0;
   display: grid;
   justify-items: center;
-  gap: clamp(1.1rem, 2.2vh, 1.8rem);
-  text-align: center;
-  max-width: 36rem;
-  /* Le bloc s'efface et remonte en même temps que les dessins tombent. */
+  color: var(--c-green);
   transform: translateY(calc(var(--p) * -2.5rem)) scale(calc(1 - var(--p) * .05));
   opacity: calc(1 - var(--p) * .9);
 }
+.mono .seal { width: min(72vw, 15rem); aspect-ratio: 1; }
 
-.mono { display: grid; justify-items: center; margin: 0; color: var(--c-green); }
-.mono .seal { --w: clamp(210px, 30vw, 330px); }
-
-.home-hero__say {
-  margin: 0;
-  font: italic 400 clamp(1.15rem, 1.9vw, 1.45rem)/1.4 var(--serif);
-  color: var(--fg-soft);
-}
-.home-hero__loc {
-  display: block; margin-top: .5rem;
-  font: 600 .68rem/1 var(--sans); font-style: normal;
-  letter-spacing: .24em; text-transform: uppercase; color: var(--accent);
-}
-.home-hero__go { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem 1.1rem; }
+@media (min-width: 600px)  { .mono .seal { width: min(56vw, 20rem); } }
+@media (min-width: 1100px) { .mono .seal { width: min(42vw, 25rem); } }
 
 /* Le champ de dessins couvre tout l'écran. Il s'efface en partant sans
    disparaître tout à fait : il en reste une trace quand le bandeau arrive. */
@@ -139,30 +130,37 @@
 
    Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
    Sur un téléphone il barre l'écran d'un bord à l'autre : il ne reste plus une
-   couronne mais deux bandes, l'une au-dessus, l'autre en dessous. Les dessins
-   s'y répartissent en quinconce, jamais deux à la même hauteur.
+   couronne mais DEUX BANDES, l'une au-dessus, l'autre en dessous.
 
-   Aucun n'est coupé sur les côtés : sur un écran étroit, un dessin à moitié
-   sorti se lit comme une erreur, pas comme un parti pris. */
+   Les huit dessins s'y répartissent quatre en haut, quatre en bas, en
+   quinconce : jamais deux à la même hauteur, jamais deux du même côté l'un
+   sous l'autre. C'est ce qui évite les trous.
+
+   Aucun n'est coupé par le bord gauche ou droit : sur un écran étroit, un
+   dessin à moitié sorti se lit comme une erreur, pas comme un parti pris.
+   Seuls ceux du bas peuvent l'être, et par le bas, là où la page continue. */
 @media (max-width: 699px) {
-  .piece--assiette  { --x: 27%; --y: 9%;  --r: -6deg; }
-  .piece--bouteille { --x: 62%; --y: 7%;  --r: 6deg; }
-  .piece--swing     { --x: 13%; --y: 21%; --r: -8deg; }
-  .piece--trait     { --x: 85%; --y: 19%; --r: 5deg; }
-  .piece--sac       { --x: 10%; --y: 66%; --r: -6deg; }
-  .piece--table     { --x: 28%; --y: 89%; --r: 4deg; }
-  .piece--clubs     { --x: 80%; --y: 86%; --r: 10deg; }
-  /* Le chef est le plus large des dessins : il ne rentre dans aucune des deux
-     bandes sans venir au contact du sceau. */
-  .piece--chef      { display: none; }
+  .piece--assiette  { --x: 26%; --y: 11%; --r: -6deg; }
+  .piece--bouteille { --x: 72%; --y: 8%;  --r: 7deg; }
+  .piece--swing     { --x: 13%; --y: 27%; --r: -8deg; }
+  .piece--trait     { --x: 86%; --y: 24%; --r: 5deg; }
+  .piece--sac       { --x: 11%; --y: 73%; --r: -7deg; }
+  .piece--table     { --x: 39%; --y: 87%; --r: 4deg; }
+  .piece--clubs     { --x: 76%; --y: 74%; --r: 11deg; }
+  .piece--chef      { --x: 66%; --y: 92%; --r: -5deg; }
 }
 
-/* Sur un écran couché et bas, il ne reste plus de bande du tout : seuls
-   quelques dessins de bord survivent. */
+/* Écran très étroit : les dessins gardaient leur taille pendant que l'écran
+   rétrécissait, ils finissaient par se toucher. Un cran d'échelle en dessous. */
+@media (max-width: 379px) {
+  .piece--chef { display: none; }
+}
+
+/* Sur un écran couché et bas, il ne reste plus de bande du tout : seuls les
+   dessins de bord survivent, et le sceau se fait plus petit. */
 @media (max-height: 560px) and (min-width: 700px) {
   .piece--assiette, .piece--bouteille, .piece--sac, .piece--clubs { display: none; }
-  .mono .seal { --w: clamp(150px, 24vh, 210px); }
-  .home-hero__down { display: none; }
+  .mono .seal { width: min(38vw, 13rem); }
 }
 
 /* ---------------------------------------------------------------------------
@@ -192,20 +190,12 @@
   from { opacity: 0; --p: -0.35; }
 }
 
-/* Le sceau se pose aussi, mais sans retard : c'est lui qu'on voit en premier. */
-[data-js] .home-hero__mid { animation: hero-pose var(--dur-pose) var(--expo) backwards; }
+/* Le sceau se pose aussi, sans retard : c'est lui qu'on voit en premier. */
+[data-js] .mono { animation: hero-pose var(--dur-pose) var(--expo) backwards; }
 @keyframes hero-pose {
   from { opacity: 0; transform: translateY(1.5rem) scale(.985); }
 }
 
-.home-hero__down {
-  position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); z-index: 2;
-  display: grid; justify-items: center; gap: .45rem; text-decoration: none;
-  font: 600 .58rem/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: var(--fg-soft);
-  opacity: calc(1 - var(--p) * 2);
-}
-.home-hero__down::after { content: ""; width: 1px; height: 2rem; background: currentColor; opacity: .45; animation: fall 2.6s ease-in-out infinite; }
-@keyframes fall { 0%,100% { transform: scaleY(0); transform-origin: top } 45%,55% { transform: scaleY(1) } 56% { transform-origin: bottom } }
 
 /* Bandeau d'infos : quatre colonnes séparées par des filets */
 .strip { border-block: 1px solid var(--line); }
@@ -213,7 +203,7 @@
 .strip__i { display: grid; gap: .35rem; padding: 1.5rem clamp(1rem, 2vw, 1.8rem); text-decoration: none; border-right: 1px solid var(--line); transition: background .2s; }
 .strip__i:last-child { border-right: 0; }
 .strip__i:hover { background: var(--bg-2); }
-.strip__k { font: 600 .63rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.strip__k { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
 .strip__v { font: 500 1.22rem/1.25 var(--serif); color: var(--fg-strong); }
 @media (max-width: 900px) { .strip__g { grid-template-columns: 1fr 1fr; } .strip__i:nth-child(2n) { border-right: 0; } .strip__i:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
 @media (max-width: 480px) { .strip__g { grid-template-columns: 1fr; } .strip__i { border-right: 0; border-bottom: 1px solid var(--line); } .strip__i:last-child { border-bottom: 0; } }
@@ -226,13 +216,13 @@
 .doors__c:nth-child(2) { margin-top: clamp(1.5rem, 4vw, 3.5rem); }
 .doors__c:nth-child(3) { margin-top: clamp(3rem, 8vw, 7rem); }
 .doors .ph { --ar: 3/4; }
-.doors__n { display: block; margin-top: .9rem; font: 600 .64rem/1 var(--sans); letter-spacing: .2em; color: var(--accent); }
+.doors__n { display: block; margin-top: .9rem; font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; color: var(--accent); }
 .doors__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--line); transition: border-color .25s; }
 .doors__c:hover .doors__h { border-bottom-color: var(--accent); }
 .doors__h b { font: 500 1.3rem/1.15 var(--serif); color: var(--fg-strong); }
 .doors__h span { font-size: 1rem; color: var(--accent); transition: transform .25s; }
 .doors__c:hover .doors__h span { transform: translateX(4px); }
-.doors__p { margin: .7rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--fg-soft); }
+.doors__p { margin: .7rem 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
 @media (max-width: 900px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2) { margin-top: clamp(1.5rem,5vw,3rem); } }
 @media (max-width: 560px) { .doors { grid-template-columns: 1fr; gap: 2rem; } .doors__c:nth-child(n) { margin-top: 0; } }
 
@@ -244,8 +234,8 @@
 /* =========================================================================
    2 · LE RESTAURANT — récit en colonne étroite, images en débord alterné
    ========================================================================= */
-.rest-top { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(2rem, 5vw, 5rem); align-items: end;
-            padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3rem); }
+.rest-top { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem, 5vw, 5rem); align-items: end;
+            padding-block: clamp(2.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3rem); }
 .rest-top__r { padding-bottom: .6rem; }
 @media (max-width: 860px) { .rest-top { grid-template-columns: 1fr; align-items: start; } }
 
@@ -255,7 +245,7 @@
 @media (max-width: 700px) { .rest-band .ph { --ar: 4/3; } }
 
 /* Le récit : texte étroit, images qui sortent de la colonne */
-.story { display: grid; gap: clamp(3rem, 7vw, 6rem); }
+.story { display: grid; gap: clamp(2.25rem, 7vw, 6rem); }
 .story__b { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center; }
 .story__b--l .story__txt { grid-column: 1 / span 5; }
 .story__b--l .story__img { grid-column: 7 / span 6; }
@@ -263,11 +253,15 @@
 .story__b--r .story__img { grid-column: 1 / span 5; grid-row: 1; }
 .story__img .ph { --ar: 5/4; }
 .story__img--tall .ph { --ar: 1/1; }
-.story h3 { margin-bottom: 1rem; }
+.story h3, .story .t-2 { margin-bottom: 1.1rem; }
 @media (max-width: 860px) {
   .story__b { grid-template-columns: 1fr; }
   .story__b .story__txt, .story__b .story__img { grid-column: 1 / -1; grid-row: auto; }
-  .story__b--r .story__img { order: -1; }
+  /* Sur grand écran l'image peut précéder le texte : l'œil les prend ensemble.
+     En colonne unique elle arriverait avant qu'on sache de quoi il s'agit, on
+     remet donc le titre devant. */
+  .story__b--r .story__img { order: 0; }
+  .story__img { margin-top: .4rem; }
 }
 
 /* Le chef : portrait rond, texte à côté */
@@ -285,14 +279,14 @@
 .marks__i { padding: 2rem clamp(1rem, 2vw, 2rem); border-right: 1px solid var(--line); }
 .marks__i:last-child { border-right: 0; }
 .marks__n { font: 500 2.4rem/1 var(--serif); color: var(--accent); }
-.marks__t { margin: .5rem 0 0; font-size: .95rem; color: var(--fg-soft); }
+.marks__t { margin: .5rem 0 0; font-size: var(--fs-sm); color: var(--fg-soft); }
 @media (max-width: 720px) { .marks { grid-template-columns: 1fr; } .marks__i { border-right: 0; border-bottom: 1px solid var(--line); } .marks__i:last-child { border-bottom: 0; } }
 
 /* =========================================================================
    3 · LA CARTE — sommaire collant à gauche, carte à droite, fond sombre
    ========================================================================= */
 .menu-page { min-height: 100vh; }
-.menu-head { padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3rem); }
+.menu-head { padding-block: clamp(2.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3rem); }
 .menu-head__g { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
 @media (max-width: 860px) { .menu-head__g { grid-template-columns: 1fr; align-items: start; } }
 
@@ -300,7 +294,7 @@
              padding-bottom: clamp(4rem, 8vw, 7rem); }
 .toc { position: sticky; top: calc(var(--head-h) + 2rem); display: grid; gap: .1rem; }
 .toc a { display: block; padding: .5rem 0; text-decoration: none; color: var(--fg-soft);
-         font: 600 .72rem/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase;
+         font: 600 var(--fs-mini)/1.3 var(--sans); letter-spacing: .11em; text-transform: uppercase;
          border-left: 1px solid var(--line); padding-left: 1rem; transition: color .2s, border-color .2s; }
 .toc a:hover, .toc a.on { color: var(--fg-strong); border-left-color: var(--accent); }
 @media (max-width: 900px) {
@@ -309,19 +303,19 @@
   .toc a { border: 1px solid var(--line); border-radius: 999px; padding: .5rem .9rem; }
 }
 
-.fam { padding-top: .5rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); scroll-margin-top: calc(var(--head-h) + 1.5rem); }
+.fam { padding-top: .5rem; margin-bottom: clamp(2rem, 5vw, 4rem); scroll-margin-top: calc(var(--head-h) + 1.5rem); }
 .fam__h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .3rem; }
 .fam__h h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
-.fam__h em { font: 500 .68rem/1 var(--sans); font-style: normal; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
-.fam__n { margin: 0 0 1.2rem; font-size: .87rem; color: var(--fg-soft); }
+.fam__h em { font: 600 var(--fs-micro)/1 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.fam__n { margin: 0 0 1.2rem; font-size: var(--fs-sm); color: var(--fg-soft); }
 .fam__l { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
 @media (max-width: 780px) { .fam__l { columns: 1; } }
 
 .dish { break-inside: avoid; display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.2rem;
         padding: .8rem 0; border-bottom: 1px solid var(--line); }
 .dish__n { font: 500 1.12rem/1.3 var(--serif); }
-.dish__p { font: 600 .88rem/1.5 var(--sans); font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
-.dish__d { grid-column: 1 / -1; margin: .2rem 0 0; font-size: .87rem; color: var(--fg-soft); }
+.dish__p { font: 600 var(--fs-sm)/1.5 var(--sans); font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
+.dish__d { grid-column: 1 / -1; margin: .2rem 0 0; font-size: var(--fs-sm); color: var(--fg-soft); }
 
 .menu-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem 2rem;
              padding-top: 2rem; border-top: 1px solid var(--line); }
@@ -331,7 +325,18 @@
    ========================================================================= */
 .terr-hero { position: relative; height: min(78svh, 720px); background: var(--c-green-deep); overflow: hidden; }
 .terr-hero .ph { position: absolute; inset: 0; --ar: auto; height: 100%; border-radius: 0; }
-.terr-hero .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,41,31,.25) 0%, rgba(16,41,31,.1) 40%, rgba(16,41,31,.8) 100%); }
+.terr-hero .ph::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(16,41,31,.25) 0%, rgba(16,41,31,.1) 38%, rgba(16,41,31,.86) 100%);
+}
+@media (max-width: 699px) {
+  /* Écran étroit : le titre occupe presque toute la hauteur du bandeau, il lui
+     faut un fond plus franc pour rester lisible sur l'herbe claire. */
+  .terr-hero { height: min(74svh, 620px); }
+  .terr-hero .ph::after {
+    background: linear-gradient(180deg, rgba(16,41,31,.3) 0%, rgba(16,41,31,.2) 26%, rgba(16,41,31,.92) 82%, rgba(16,41,31,.96) 100%);
+  }
+}
 .terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
 .terr-hero__t h1 { color: var(--c-cream); max-width: 16ch; }
 .terr-hero__t .kicker { color: var(--c-brass); }
@@ -352,13 +357,13 @@
 /* Encadré : la citation presse */
 .press { display: grid; gap: .8rem; padding: clamp(1.8rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: var(--r); text-align: center; }
 .press__q { margin: 0; font: italic 400 clamp(1.25rem, 2.4vw, 1.7rem)/1.35 var(--serif); color: var(--fg-strong); }
-.press cite { font: 600 .66rem/1 var(--sans); font-style: normal; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.press cite { font: 600 var(--fs-micro)/1.4 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
 
 /* =========================================================================
    5 · CONTACT — informations et plan côte à côte, horaires en dessous
    ========================================================================= */
-.ct-top { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2.5rem, 6vw, 5.5rem); align-items: start;
-          padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2.5rem, 5vw, 4rem); }
+.ct-top { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2rem, 6vw, 5.5rem); align-items: start;
+          padding-block: clamp(2.5rem, 7vw, 6rem) clamp(2rem, 5vw, 4rem); }
 @media (max-width: 900px) { .ct-top { grid-template-columns: 1fr; } }
 .ct-addr { font-style: normal; line-height: 1.75; }
 .ct-addr b { display: block; font: 500 1.3rem/1.3 var(--serif); color: var(--fg-strong); margin-bottom: .3rem; }
@@ -370,16 +375,16 @@
 .ct-map { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3; background: var(--bg-2); border: 1px solid var(--line); }
 .ct-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.55) contrast(1.03); }
 .ct-way { display: grid; gap: .9rem; margin-top: 1.8rem; }
-.ct-way li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .8rem; font-size: .95rem; color: var(--fg-soft); }
+.ct-way li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .8rem; font-size: var(--fs-sm); color: var(--fg-soft); }
 .ct-way svg { width: 17px; height: 17px; margin-top: .25rem; color: var(--accent); }
 
 /* Horaires : une ligne par jour, sur toute la largeur */
 .hours { border-top: 1px solid var(--line); }
 .hours__r { display: grid; grid-template-columns: 12rem 1fr auto; gap: 1rem 2rem; align-items: baseline;
             padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
-.hours__d { font: 600 .95rem/1.4 var(--sans); }
+.hours__d { font: 600 var(--fs-base)/1.4 var(--sans); }
 .hours__v { font: 500 1.15rem/1.3 var(--serif); color: var(--fg-strong); }
-.hours__v .tbc { font: 400 .9rem/1.4 var(--sans); color: var(--fg-soft); border-bottom: 1px dashed currentColor; }
+.hours__v .tbc { font: 400 var(--fs-sm)/1.4 var(--sans); color: var(--fg-soft); border-bottom: 1px dashed currentColor; }
 .hours__v .off { color: var(--accent); }
 @media (max-width: 560px) { .hours__r { grid-template-columns: 1fr auto; } }
 
@@ -389,6 +394,11 @@
              font: 500 clamp(2.4rem, 6.5vw, 4.2rem)/1 var(--serif); font-variant-numeric: tabular-nums;
              color: var(--fg-strong); border-bottom: 1px solid var(--accent); }
 .book p { max-width: 38em; margin-inline: auto; }
+/* Un lien au milieu d'une phrase ne peut pas grandir sans décoller les lignes :
+   on lui donne de la marge de frappe sans toucher au flux. */
+@media (pointer: coarse) {
+  .book p a { display: inline-block; padding-block: .55rem; }
+}
 
 /* Horaires : le rappel à gauche, la grille des jours à droite */
 .ct-hours { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }

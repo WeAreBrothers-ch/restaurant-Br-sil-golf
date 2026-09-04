@@ -7,7 +7,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Le sceau au centre, huit dessins autour, tout en mouvement. Puis un bandeau d'accès direct et trois entrées en escalier. |
+| `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct et trois entrées en escalier. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, récit en blocs alternés, portrait du chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes, trois photographies en respiration |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, bande de photos qui défile |
@@ -15,6 +15,28 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page et les dessins
 en fond sont communs.
+
+## Pensé pour le téléphone
+
+C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
+
+- **Le premier écran ne porte que le sceau.** Pas de phrase, pas de bouton :
+  ce qu'on veut savoir tout de suite est dans le bandeau juste dessous, et le
+  nom de la maison est déjà dans le sceau. La phrase qui situe le restaurant
+  reste dans le document pour les moteurs et les lecteurs d'écran.
+  Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
+  Sur un téléphone il barre l'écran : il ne reste plus une couronne mais deux
+  bandes, quatre dessins au-dessus et quatre en dessous, en quinconce, et aucun
+  n'est coupé sur les côtés.
+- **Rien ne descend sous 13 px** au doigt. Les libellés en capitales espacées,
+  les plus durs à lire, montent d'un cran sous 700 px.
+- **Aucune cible tactile sous 44 px de haut.** Les liens de liste, les liens
+  fléchés et les entrées de sommaire sont élargis là où le pointeur est
+  grossier, sans rien changer là où l'on a une souris.
+- **Les blocs se recomposent plutôt que de rétrécir** : le sommaire de la carte
+  devient une rangée de pastilles, le récit passe en colonne unique avec le
+  titre avant sa photo, les horaires se resserrent en deux colonnes.
+- Vérifié à 360, 390 et 430 px de large.
 
 ## Le mouvement
 
