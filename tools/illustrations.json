@@ -1,15 +1,16 @@
 {
-  "_lisez-moi": "Réglages par fichier pour tools/process_illustrations.py. Sans entrée ici, le script se règle tout seul. threshold = écart minimal à la couleur du fond (0-255) ; min_area = taille minimale d'une tache conservée, en pixels (sert à effacer les mentions de banque d'images).",
-
+  "_lisez-moi": "Réglages par fichier pour tools/process_illustrations.py. Sans entrée ici, le script se règle tout seul. threshold = écart minimal à la couleur du fond (0-255) ; min_area = taille minimale d'une tache conservée, en pixels (sert à effacer les mentions de banque d'images) ; thicken = épaississement du trait en pixels, pour que les dessins fins restent lisibles une fois réduits et posés en fond.",
   "assiette-couverts.jpg": {
     "threshold": 120,
     "min_area": 250,
-    "_note": "Filigrane en diagonale : un seuil plus bas garde les traits fins continus, le nettoyage des petites taches enlève le filigrane."
+    "_note": "Filigrane en diagonale : un seuil plus bas garde les traits fins continus, le nettoyage des petites taches enlève le filigrane. Trait épaissi de 2 px pour rester lisible en fond de page.",
+    "thicken": 2
   },
   "bouteille-verre.jpg": {
     "threshold": 120,
     "min_area": 250,
-    "_note": "Même cas : trait très fin, filigrane 123RF répété."
+    "_note": "Même cas : trait très fin, filigrane 123RF répété.",
+    "thicken": 2
   },
   "clubs-croises.jpg": {
     "min_area": 3000,
@@ -17,7 +18,9 @@
   },
   "chef-cloche.jpg": {
     "threshold": 130,
-    "min_area": 200
+    "min_area": 200,
+    "thicken": 2,
+    "_note": "Dessin d'un seul trait : au-delà de 2 px d'épaississement, les boucles se referment."
   },
   "golfeur-silhouette.jpg": {
     "min_area": 400,

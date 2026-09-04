@@ -95,6 +95,9 @@
 
 /* Le chef : portrait rond, texte à côté */
 .chef { display: grid; grid-template-columns: 260px 1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+/* Si le portrait n'a pas encore été déposé, le texte reprend toute la largeur
+   au lieu de rester coincé dans la colonne de 260 px. */
+.chef:has(> .ph.gone) { grid-template-columns: 1fr; }
 .chef .ph { --ar: 1; border-radius: 50%; }
 .chef .ph__slot { outline-offset: -14px; border-radius: 50%; }
 @media (max-width: 680px) { .chef { grid-template-columns: 1fr; justify-items: start; } .chef .ph { width: 190px; } }

@@ -30,9 +30,11 @@
   --btn-bg:    var(--c-green);
   --btn-fg:    var(--c-cream);
 
-  /* --- Dessins en fond : une seule couleur, une seule opacité --- */
-  --illu:         var(--c-sage);
-  --illu-opacity: .30;
+  /* --- Dessins en fond : une seule couleur, une seule opacité ---
+     Assez présents pour se voir, assez discrets pour rester du décor.
+     Baisser --illu-opacity pour les estomper, la monter pour les affirmer. */
+  --illu:         var(--c-green);
+  --illu-opacity: .45;
 
   /* --- Typographie --- */
   --serif: "Cormorant Garamond", "Iowan Old Style", Palatino, Georgia, serif;
@@ -57,7 +59,7 @@
   --btn-bg:    var(--c-cream);
   --btn-fg:    var(--c-green-deep);
   --illu:      var(--c-cream);
-  --illu-opacity: .11;
+  --illu-opacity: .26;
   background: var(--bg);
   color: var(--fg);
 }
@@ -147,15 +149,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .illu {
   position: absolute; z-index: 0; pointer-events: none; user-select: none;
   width: var(--w, 140px); aspect-ratio: var(--ar, 1);
-  left: min(var(--x, 0px), calc(100% - var(--w, 140px))); top: var(--y, 0);
+  left: var(--x, 0); top: var(--y, 0);
+  /* --x place le dessin par rapport à la fenêtre.
+     data-side="l" ou "r" l'accroche au contraire au bord de la colonne de
+     texte : il déborde alors toujours de --in pixels sur le contenu, quelle
+     que soit la largeur de l'écran, au lieu de rentrer dedans quand la fenêtre
+     rétrécit. C'est ce qui permet de les laisser mordre le bord de page. */
   transform: rotate(var(--r, 0deg));
   background-color: var(--illu); opacity: var(--illu-opacity);
   -webkit-mask: var(--src) center/contain no-repeat;
           mask: var(--src) center/contain no-repeat;
 }
-.i-assiette { --src: url("../assets/illustrations/dist/assiette-couverts.svg");  --ar: 481/345; }
-.i-bouteille{ --src: url("../assets/illustrations/dist/bouteille-verre.svg");    --ar: 425/589; }
-.i-chef     { --src: url("../assets/illustrations/dist/chef-cloche.svg");        --ar: 386/394; }
+.illu[data-side="l"] { left: calc(max(var(--pad), 50% - var(--wrap) / 2) - var(--w) + var(--in, 32px)); }
+.illu[data-side="r"] { left: auto; right: calc(max(var(--pad), 50% - var(--wrap) / 2) - var(--w) + var(--in, 32px)); }
+
+.i-assiette { --src: url("../assets/illustrations/dist/assiette-couverts.svg");  --ar: 485/349; }
+.i-bouteille{ --src: url("../assets/illustrations/dist/bouteille-verre.svg");    --ar: 429/593; }
+.i-chef     { --src: url("../assets/illustrations/dist/chef-cloche.svg");        --ar: 390/398; }
 .i-clubs    { --src: url("../assets/illustrations/dist/clubs-croises.svg");      --ar: 506/538; }
 .i-golfeur  { --src: url("../assets/illustrations/dist/golfeur-silhouette.svg"); --ar: 255/453; }
 .i-swing    { --src: url("../assets/illustrations/dist/golfeur-vintage.svg");    --ar: 299/518; }
@@ -163,7 +173,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 1180px) { .illu[data-hide~="lg"] { display: none; } }
 @media (max-width: 860px)  { .illu[data-hide~="md"] { display: none; } }
 @media (max-width: 620px) {
-  .illu { width: calc(var(--w, 140px) * .55); left: min(var(--mx, var(--x, 0px)), calc(100% - var(--w,140px) * .55)); top: var(--my, var(--y, 0)); }
+  .illu { width: calc(var(--w, 140px) * .55); left: var(--mx, var(--x, 0)); top: var(--my, var(--y, 0)); }
+  /* Sur mobile il n'y a plus de marge : les dessins ancrés se collent au bord
+     et restent entiers, plutôt que d'être rognés aux deux tiers. */
+  .illu[data-side="l"] { left: 0; }
+  .illu[data-side="r"] { left: auto; right: 0; }
   .illu[data-hide~="sm"] { display: none; }
 }
 
@@ -268,7 +282,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- Pied de page ---------- */
 .foot { background: var(--c-green-deep); color: var(--c-cream); position: relative; overflow: hidden;
-        --illu: var(--c-cream); --illu-opacity: .07; }
+        --illu: var(--c-cream); --illu-opacity: .16; }
 .foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.1fr; gap: 2.5rem;
               padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
 .foot h4 { font: 600 .64rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--c-brass); margin-bottom: 1.1rem; }

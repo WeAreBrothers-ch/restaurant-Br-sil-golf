@@ -23,7 +23,7 @@ un aplat blanc sur fond vert sont donc traités correctement.
 
 Options par fichier (facultatif) dans tools/illustrations.json :
   { "chef.jpg": { "threshold": 40, "min_area": 60, "svg": false },
-    "autre.png": { "mode": "luminance" },
+    "autre.png": { "mode": "luminance", "thicken": 3 },
     "encore.png": { "background": [255, 255, 255] } }
 
 Dépendances : Pillow, numpy, potracer (pip install Pillow numpy potracer)
@@ -140,6 +140,27 @@ def ink_alpha(dist: np.ndarray, threshold: float, softness: float = 18.0) -> np.
     """
     a = (dist - threshold) / max(softness, 1e-6)
     return np.clip(a, 0.0, 1.0).astype(np.float32)
+
+
+def thicken(alpha: np.ndarray, amount: float) -> np.ndarray:
+    """
+    Épaissit le trait de `amount` pixels (à la résolution de l'image d'origine).
+
+    Un dessin au trait fin, réduit à 150 px de large et posé en fond à faible
+    opacité, disparaît presque : son trait fait alors une fraction de pixel.
+    L'épaissir ici, sur l'image en pleine résolution, le rend lisible une fois
+    réduit, sans toucher aux silhouettes pleines qui n'en ont pas besoin.
+    """
+    if amount <= 0:
+        return alpha
+    img = Image.fromarray(np.round(alpha * 255).astype(np.uint8))
+    r = int(round(amount))
+    # MaxFilter n'accepte que des tailles impaires ; on répète pour aller plus loin.
+    while r > 0:
+        step = min(r, 4)
+        img = img.filter(ImageFilter.MaxFilter(2 * step + 1))
+        r -= step
+    return (np.asarray(img, dtype=np.float32) / 255.0).astype(np.float32)
 
 
 def remove_small_components(mask: np.ndarray, min_area: int) -> np.ndarray:
@@ -307,6 +328,10 @@ def process(path: Path, out_dir: Path, opts: dict, want_svg: bool, verbose=True)
     keep_img = Image.fromarray((keep * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3))
     keep = np.asarray(keep_img) > 0
     alpha = np.where(keep, alpha, 0.0).astype(np.float32)
+
+    grow = float(opts.get("thicken", 0))
+    if grow:
+        alpha = thicken(alpha, grow)
 
     box = bbox(alpha > 0.05, pad=int(opts.get("pad", 8)))
     if box is None:

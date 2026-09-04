@@ -74,15 +74,48 @@ ou un aplat blanc sur fond vert. Il retire les filigranes des banques d'images,
 les liserés et les petites taches, puis sort un PNG transparent et un SVG en
 `fill="currentColor"`. Les réglages par fichier sont dans `tools/illustrations.json`.
 
-Placement dans les pages :
+### Les placer dans une page
+
+Deux façons, selon l'endroit.
+
+**Posé librement**, quelque part dans la section :
 
 ```html
-<div class="illu i-chef" style="--x:5%; --y:58%; --w:170px; --r:3deg; --mx:0%; --my:77%"></div>
+<div class="illu i-clubs" style="--x:20%; --y:80%; --w:115px; --r:-9deg"></div>
 ```
 
-`--x` `--y` position, `--w` largeur, `--r` rotation, `--mx` `--my` position sur
-mobile. `data-hide="lg"` retire le dessin sous 1180 px, `"md"` sous 860 px,
-`"sm"` sous 620 px.
+**Accroché au bord de la colonne de texte**, ce qui le fait mordre le bord de
+page sur les écrans étroits et le laisse entier dans la marge sur les larges :
+
+```html
+<div class="illu i-chef" data-side="l" style="--y:58%; --w:170px; --in:0px"></div>
+```
+
+| Variable | Rôle |
+|---|---|
+| `--x` `--y` | position, en pourcentage de la section |
+| `--w` | largeur |
+| `--r` | rotation |
+| `--mx` `--my` | position sur mobile, si elle doit différer |
+| `--in` | de combien le dessin mord sur la colonne de texte, avec `data-side` |
+
+`data-side="l"` ou `"r"` accroche le dessin au bord gauche ou droit du contenu.
+`data-hide="lg"` le retire sous 1180 px, `"md"` sous 860 px, `"sm"` sous 620 px.
+
+### Les rendre plus ou moins présents
+
+Deux réglages, dans `css/base.css` :
+
+- `--illu-opacity` : 0,45 sur fond clair, 0,26 sur fond sombre, 0,16 dans le pied.
+- `thicken` dans `tools/illustrations.json` : épaissit le trait à la source. Les
+  trois dessins au trait fin sont à 2 px ; au-delà leurs boucles se referment.
+
+### Vérifier qu'aucun dessin ne passe sous un texte
+
+Un dessin est du décor : il ne doit jamais gêner la lecture. Le contrôle a été
+fait à 390, 430, 620, 760, 900, 1024, 1280, 1440 et 1920 px, en mesurant les
+rectangles de chaque dessin et de chaque bloc de texte. Après un déplacement,
+refaire cette vérification à plusieurs largeurs.
 
 ## Les photos
 
