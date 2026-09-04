@@ -1,0 +1,270 @@
+/* =============================================================================
+   pages.css — compositions propres à chaque page.
+   Chaque page a sa grille : rien n'est réutilisé d'une page à l'autre en dehors
+   de l'en-tête, du pied de page et des dessins.
+   ============================================================================= */
+
+/* =========================================================================
+   1 · ACCUEIL — le logo au centre, les dessins autour, puis quatre entrées
+   ========================================================================= */
+.home-hero {
+  position: relative; overflow: hidden;
+  min-height: calc(100svh - var(--head-h));
+  display: grid; place-items: center;
+  padding: clamp(3rem, 8vh, 6rem) var(--pad);
+}
+.home-hero__mid { position: relative; z-index: 2; text-align: center; max-width: 40rem; }
+.mono { display: inline-grid; justify-items: center; gap: .8rem; color: var(--c-green); text-decoration: none; }
+.mono__n { font: 500 clamp(5.5rem, 16vw, 11rem)/.85 var(--serif); letter-spacing: -.04em; }
+.mono__n i { font-style: italic; }
+.mono__bar { width: 4rem; height: 1px; background: var(--c-brass); }
+.mono__t { font: 600 clamp(.66rem, 1.1vw, .8rem)/1 var(--sans); letter-spacing: .34em; text-transform: uppercase; }
+.home-hero__say { margin: 2rem 0 0; font: italic 400 clamp(1.2rem, 2vw, 1.5rem)/1.45 var(--serif); color: var(--fg-soft); }
+.home-hero__loc { display: block; margin-top: .7rem; font: 600 .7rem/1 var(--sans); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+.home-hero__go { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem 1.4rem; margin-top: 2.6rem; }
+.home-hero__down {
+  position: absolute; left: 50%; bottom: 1.4rem; transform: translateX(-50%); z-index: 2;
+  display: grid; justify-items: center; gap: .5rem; text-decoration: none;
+  font: 600 .6rem/1 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--fg-soft);
+}
+.home-hero__down::after { content: ""; width: 1px; height: 2.4rem; background: currentColor; opacity: .45; animation: fall 2.6s ease-in-out infinite; }
+@keyframes fall { 0%,100% { transform: scaleY(0); transform-origin: top } 45%,55% { transform: scaleY(1) } 56% { transform-origin: bottom } }
+
+/* Bandeau d'infos : quatre colonnes séparées par des filets */
+.strip { border-block: 1px solid var(--line); }
+.strip__g { display: grid; grid-template-columns: repeat(4, 1fr); }
+.strip__i { display: grid; gap: .35rem; padding: 1.5rem clamp(1rem, 2vw, 1.8rem); text-decoration: none; border-right: 1px solid var(--line); transition: background .2s; }
+.strip__i:last-child { border-right: 0; }
+.strip__i:hover { background: var(--bg-2); }
+.strip__k { font: 600 .63rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.strip__v { font: 500 1.22rem/1.25 var(--serif); color: var(--fg-strong); }
+@media (max-width: 900px) { .strip__g { grid-template-columns: 1fr 1fr; } .strip__i:nth-child(2n) { border-right: 0; } .strip__i:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+@media (max-width: 480px) { .strip__g { grid-template-columns: 1fr; } .strip__i { border-right: 0; border-bottom: 1px solid var(--line); } .strip__i:last-child { border-bottom: 0; } }
+
+/* Quatre portes d'entrée, en escalier */
+.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2vw, 1.8rem); align-items: start; }
+.doors__c { position: relative; display: block; text-decoration: none; color: inherit; }
+.doors__c:nth-child(2) { margin-top: clamp(1.5rem, 4vw, 4rem); }
+.doors__c:nth-child(3) { margin-top: clamp(.75rem, 2vw, 2rem); }
+.doors__c:nth-child(4) { margin-top: clamp(2.25rem, 6vw, 6rem); }
+.doors .ph { --ar: 3/4; }
+.doors__n { display: block; margin-top: .9rem; font: 600 .64rem/1 var(--sans); letter-spacing: .2em; color: var(--accent); }
+.doors__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--line); transition: border-color .25s; }
+.doors__c:hover .doors__h { border-bottom-color: var(--accent); }
+.doors__h b { font: 500 1.3rem/1.15 var(--serif); color: var(--fg-strong); }
+.doors__h span { font-size: 1rem; color: var(--accent); transition: transform .25s; }
+.doors__c:hover .doors__h span { transform: translateX(4px); }
+.doors__p { margin: .7rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--fg-soft); }
+@media (max-width: 1000px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2n) { margin-top: clamp(1.5rem,5vw,3rem); } }
+@media (max-width: 560px) { .doors { grid-template-columns: 1fr; gap: 2rem; } .doors__c:nth-child(n) { margin-top: 0; } }
+
+/* Mot d'accueil : une ligne large, centrée, sur fond sombre */
+.word { text-align: center; }
+.word__q { max-width: 22ch; margin-inline: auto; font: 500 clamp(1.8rem, 4vw, 3.1rem)/1.15 var(--serif); }
+.word__s { max-width: 44ch; margin: 1.6rem auto 0; }
+
+/* =========================================================================
+   2 · LE RESTAURANT — récit en colonne étroite, images en débord alterné
+   ========================================================================= */
+.rest-top { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(2rem, 5vw, 5rem); align-items: end;
+            padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3rem); }
+.rest-top__r { padding-bottom: .6rem; }
+@media (max-width: 860px) { .rest-top { grid-template-columns: 1fr; align-items: start; } }
+
+/* Bande photo pleine largeur juste après le titre */
+.rest-band { position: relative; }
+.rest-band .ph { --ar: 21/8; border-radius: 0; }
+@media (max-width: 700px) { .rest-band .ph { --ar: 4/3; } }
+
+/* Le récit : texte étroit, images qui sortent de la colonne */
+.story { display: grid; gap: clamp(3rem, 7vw, 6rem); }
+.story__b { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center; }
+.story__b--l .story__txt { grid-column: 1 / span 5; }
+.story__b--l .story__img { grid-column: 7 / span 6; }
+.story__b--r .story__txt { grid-column: 7 / span 6; }
+.story__b--r .story__img { grid-column: 1 / span 5; grid-row: 1; }
+.story__img .ph { --ar: 5/4; }
+.story__img--tall .ph { --ar: 1/1; }
+.story h3 { margin-bottom: 1rem; }
+@media (max-width: 860px) {
+  .story__b { grid-template-columns: 1fr; }
+  .story__b .story__txt, .story__b .story__img { grid-column: 1 / -1; grid-row: auto; }
+  .story__b--r .story__img { order: -1; }
+}
+
+/* Le chef : portrait rond, texte à côté */
+.chef { display: grid; grid-template-columns: 260px 1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+.chef .ph { --ar: 1; border-radius: 50%; }
+.chef .ph__slot { outline-offset: -14px; border-radius: 50%; }
+@media (max-width: 680px) { .chef { grid-template-columns: 1fr; justify-items: start; } .chef .ph { width: 190px; } }
+
+/* Trois repères chiffrés, séparés par des filets verticaux */
+.marks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.marks__i { padding: 2rem clamp(1rem, 2vw, 2rem); border-right: 1px solid var(--line); }
+.marks__i:last-child { border-right: 0; }
+.marks__n { font: 500 2.4rem/1 var(--serif); color: var(--accent); }
+.marks__t { margin: .5rem 0 0; font-size: .95rem; color: var(--fg-soft); }
+@media (max-width: 720px) { .marks { grid-template-columns: 1fr; } .marks__i { border-right: 0; border-bottom: 1px solid var(--line); } .marks__i:last-child { border-bottom: 0; } }
+
+/* =========================================================================
+   3 · LA CARTE — sommaire collant à gauche, carte à droite, fond sombre
+   ========================================================================= */
+.menu-page { min-height: 100vh; }
+.menu-head { padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3rem); }
+.menu-head__g { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
+@media (max-width: 860px) { .menu-head__g { grid-template-columns: 1fr; align-items: start; } }
+
+.menu-body { display: grid; grid-template-columns: 210px 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start;
+             padding-bottom: clamp(4rem, 8vw, 7rem); }
+.toc { position: sticky; top: calc(var(--head-h) + 2rem); display: grid; gap: .1rem; }
+.toc a { display: block; padding: .5rem 0; text-decoration: none; color: var(--fg-soft);
+         font: 600 .72rem/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase;
+         border-left: 1px solid var(--line); padding-left: 1rem; transition: color .2s, border-color .2s; }
+.toc a:hover, .toc a.on { color: var(--fg-strong); border-left-color: var(--accent); }
+@media (max-width: 900px) {
+  .menu-body { grid-template-columns: 1fr; }
+  .toc { position: static; display: flex; flex-wrap: wrap; gap: .4rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
+  .toc a { border: 1px solid var(--line); border-radius: 999px; padding: .5rem .9rem; }
+}
+
+.fam { padding-top: .5rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); scroll-margin-top: calc(var(--head-h) + 1.5rem); }
+.fam__h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .3rem; }
+.fam__h h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+.fam__h em { font: 500 .68rem/1 var(--sans); font-style: normal; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.fam__n { margin: 0 0 1.2rem; font-size: .87rem; color: var(--fg-soft); }
+.fam__l { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
+@media (max-width: 780px) { .fam__l { columns: 1; } }
+
+.dish { break-inside: avoid; display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.2rem;
+        padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.dish__n { font: 500 1.12rem/1.3 var(--serif); }
+.dish__p { font: 600 .88rem/1.5 var(--sans); font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
+.dish__d { grid-column: 1 / -1; margin: .2rem 0 0; font-size: .87rem; color: var(--fg-soft); }
+
+.menu-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem 2rem;
+             padding-top: 2rem; border-top: 1px solid var(--line); }
+
+/* =========================================================================
+   4 · LES PLATS — mosaïque plein écran, les photos en premier rôle
+   ========================================================================= */
+.plates-head { padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
+.plates-head .lead { margin-inline: auto; }
+
+/* Mosaïque : 6 colonnes, chaque photo occupe une zone différente */
+.mosaic { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(.6rem, 1.2vw, 1.1rem); grid-auto-flow: row dense; }
+.mosaic .ph { --ar: 1; }
+.mosaic figure:nth-child(1) { grid-column: span 4; --ar: 16/11; }
+.mosaic figure:nth-child(2) { grid-column: span 2; --ar: 3/4; align-self: end; }
+.mosaic figure:nth-child(3) { grid-column: span 2; --ar: 4/5; }
+.mosaic figure:nth-child(4) { grid-column: span 2; --ar: 1; margin-top: clamp(1rem, 3vw, 3rem); }
+.mosaic figure:nth-child(5) { grid-column: span 2; --ar: 3/4; }
+.mosaic figure:nth-child(6) { grid-column: span 3; --ar: 4/3; }
+.mosaic figure:nth-child(7) { grid-column: span 3; --ar: 4/3; margin-top: clamp(1rem, 3vw, 3rem); }
+.mosaic figure:nth-child(8) { grid-column: span 2; --ar: 4/5; }
+.mosaic figure:nth-child(9) { grid-column: span 4; --ar: 16/10; }
+.mosaic figure:nth-child(10){ grid-column: span 3; --ar: 1; }
+.mosaic figure:nth-child(11){ grid-column: span 3; --ar: 1; margin-top: clamp(1rem, 3vw, 2.5rem); }
+.mosaic figure:nth-child(12){ grid-column: span 6; --ar: 21/9; }
+@media (max-width: 1000px) {
+  .mosaic { grid-template-columns: repeat(4, 1fr); }
+  .mosaic figure:nth-child(n) { grid-column: span 2; margin-top: 0; }
+  .mosaic figure:nth-child(1), .mosaic figure:nth-child(9), .mosaic figure:nth-child(12) { grid-column: span 4; }
+}
+@media (max-width: 620px) {
+  .mosaic { grid-template-columns: 1fr; }
+  .mosaic figure:nth-child(n) { grid-column: 1 / -1; --ar: 4/3; }
+}
+.mosaic .ph { cursor: zoom-in; }
+.mosaic .ph:not(.ready) { cursor: default; }
+
+/* Visionneuse plein écran */
+.viewer { position: fixed; inset: 0; z-index: 200; display: none; place-items: center;
+          background: rgba(12,32,24,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+          padding: clamp(1rem, 4vw, 3rem); }
+.viewer[open], .viewer.show { display: grid; }
+.viewer img { max-width: 100%; max-height: 86svh; object-fit: contain; border-radius: var(--r); margin-inline: auto; }
+.viewer__c { position: absolute; top: 1rem; right: 1.2rem; width: 46px; height: 46px; color: var(--c-cream);
+             display: grid; place-items: center; border: 1px solid rgba(244,239,227,.3); border-radius: 50%; }
+.viewer__c:hover { background: rgba(244,239,227,.12); }
+.viewer__n { margin-top: 1rem; color: rgba(244,239,227,.75); font: 500 1.05rem/1.4 var(--serif); text-align: center; }
+.viewer__a { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; color: var(--c-cream);
+             display: grid; place-items: center; border: 1px solid rgba(244,239,227,.3); border-radius: 50%; font-size: 1.1rem; }
+.viewer__a:hover { background: rgba(244,239,227,.12); }
+.viewer__a--p { left: clamp(.5rem, 2vw, 2rem); }
+.viewer__a--n { right: clamp(.5rem, 2vw, 2rem); }
+
+/* Rappel de la carte en bas de la galerie */
+.plates-cta { display: grid; gap: 1.2rem; justify-items: center; text-align: center; }
+
+/* =========================================================================
+   5 · LA TERRASSE — panoramique en tête, texte en colonnes de journal
+   ========================================================================= */
+.terr-hero { position: relative; height: min(78svh, 720px); background: var(--c-green-deep); overflow: hidden; }
+.terr-hero .ph { position: absolute; inset: 0; --ar: auto; height: 100%; border-radius: 0; }
+.terr-hero .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,41,31,.25) 0%, rgba(16,41,31,.1) 40%, rgba(16,41,31,.8) 100%); }
+.terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
+.terr-hero__t h1 { color: var(--c-cream); max-width: 16ch; }
+.terr-hero__t .kicker { color: var(--c-brass); }
+
+/* Texte en deux colonnes, façon journal */
+.paper { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
+.paper p:first-child::first-letter { float: left; font: 500 3.6rem/.8 var(--serif); color: var(--accent); padding: .1em .12em 0 0; }
+@media (max-width: 760px) { .paper { columns: 1; } }
+
+/* Bande de photos qui défile horizontalement */
+.rail { display: flex; gap: clamp(.7rem, 1.5vw, 1.2rem); overflow-x: auto; scroll-snap-type: x mandatory;
+        padding-bottom: 1rem; scrollbar-width: thin; }
+.rail figure { flex: 0 0 clamp(240px, 30vw, 400px); scroll-snap-align: start; }
+.rail::after { content: ""; flex: 0 0 1px; }
+.rail .ph { --ar: 3/4; }
+.rail figure:nth-child(even) .ph { --ar: 4/3; }
+
+/* Encadré : la citation presse */
+.press { display: grid; gap: .8rem; padding: clamp(1.8rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: var(--r); text-align: center; }
+.press__q { margin: 0; font: italic 400 clamp(1.25rem, 2.4vw, 1.7rem)/1.35 var(--serif); color: var(--fg-strong); }
+.press cite { font: 600 .66rem/1 var(--sans); font-style: normal; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+
+/* =========================================================================
+   6 · CONTACT — informations et plan côte à côte, horaires en dessous
+   ========================================================================= */
+.ct-top { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2.5rem, 6vw, 5.5rem); align-items: start;
+          padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2.5rem, 5vw, 4rem); }
+@media (max-width: 900px) { .ct-top { grid-template-columns: 1fr; } }
+.ct-addr { font-style: normal; line-height: 1.75; }
+.ct-addr b { display: block; font: 500 1.3rem/1.3 var(--serif); color: var(--fg-strong); margin-bottom: .3rem; }
+.ct-links { display: grid; gap: .2rem; margin: 1.7rem 0 2rem; }
+.ct-links a { display: inline-flex; align-items: center; gap: .7rem; width: max-content; text-decoration: none;
+              font: 500 1.3rem/1.6 var(--serif); color: var(--fg-strong); border-bottom: 1px solid var(--line); }
+.ct-links a:hover { border-bottom-color: var(--accent); }
+.ct-links svg { width: 17px; height: 17px; opacity: .65; }
+.ct-map { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3; background: var(--bg-2); border: 1px solid var(--line); }
+.ct-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.55) contrast(1.03); }
+.ct-way { display: grid; gap: .9rem; margin-top: 1.8rem; }
+.ct-way li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .8rem; font-size: .95rem; color: var(--fg-soft); }
+.ct-way svg { width: 17px; height: 17px; margin-top: .25rem; color: var(--accent); }
+
+/* Horaires : une ligne par jour, sur toute la largeur */
+.hours { border-top: 1px solid var(--line); }
+.hours__r { display: grid; grid-template-columns: 12rem 1fr auto; gap: 1rem 2rem; align-items: baseline;
+            padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.hours__d { font: 600 .95rem/1.4 var(--sans); }
+.hours__v { font: 500 1.15rem/1.3 var(--serif); color: var(--fg-strong); }
+.hours__v .tbc { font: 400 .9rem/1.4 var(--sans); color: var(--fg-soft); border-bottom: 1px dashed currentColor; }
+.hours__v .off { color: var(--accent); }
+@media (max-width: 560px) { .hours__r { grid-template-columns: 1fr auto; } }
+
+/* Bandeau réservation en bas de page */
+.book { text-align: center; }
+.book__tel { display: inline-block; margin: .8rem 0 1rem; padding-bottom: .25rem; text-decoration: none;
+             font: 500 clamp(2.4rem, 6.5vw, 4.2rem)/1 var(--serif); font-variant-numeric: tabular-nums;
+             color: var(--fg-strong); border-bottom: 1px solid var(--accent); }
+.book p { max-width: 38em; margin-inline: auto; }
+
+/* Horaires : le rappel à gauche, la grille des jours à droite */
+.ct-hours { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (max-width: 860px) { .ct-hours { grid-template-columns: 1fr; } }
+
+/* Emplacement vide retiré de la page : la classe est posée par le JS APRÈS
+   l'échec du chargement. Masquer en CSS empêcherait le navigateur de charger
+   l'image (un parent en display:none ne déclenche jamais le chargement). */
+.ph.gone { display: none !important; }

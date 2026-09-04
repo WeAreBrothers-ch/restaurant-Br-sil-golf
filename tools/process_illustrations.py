@@ -17,8 +17,14 @@ Usage :
   python3 tools/process_illustrations.py chef.jpg -t 110 # un fichier, seuil manuel
   python3 tools/process_illustrations.py --no-svg        # PNG uniquement
 
+Le détourage se fait par écart à la couleur du fond (déduite du pourtour), pas
+par simple noirceur : un trait noir sur blanc, une silhouette verte sur gris et
+un aplat blanc sur fond vert sont donc traités correctement.
+
 Options par fichier (facultatif) dans tools/illustrations.json :
-  { "chef.jpg": { "threshold": 110, "min_area": 40, "svg": false } }
+  { "chef.jpg": { "threshold": 40, "min_area": 60, "svg": false },
+    "autre.png": { "mode": "luminance" },
+    "encore.png": { "background": [255, 255, 255] } }
 
 Dépendances : Pillow, numpy, potracer (pip install Pillow numpy potracer)
 """
@@ -46,22 +52,46 @@ EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".tif", ".tiff"}
 # ----------------------------------------------------------------------------
 # Lecture et mesure
 # ----------------------------------------------------------------------------
-def load_luminance(path: Path) -> np.ndarray:
-    """Image aplatie sur blanc, retournée en luminance 0..255 (float32)."""
+def load_rgb(path: Path) -> np.ndarray:
+    """Image aplatie sur blanc, en RGB float32 (0..255)."""
     im = Image.open(path).convert("RGBA")
     bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
     bg.alpha_composite(im)
-    rgb = np.asarray(bg.convert("RGB"), dtype=np.float32)
-    # Le "trait" est ce qui est le plus foncé ; pour un dessin coloré (vert sur
-    # blanc) le canal le plus clair reste bas, donc on prend une luminance
-    # pondérée vers le max des canaux : robuste au vert, au rouge, au noir.
-    lum = 0.299 * rgb[..., 0] + 0.587 * rgb[..., 1] + 0.114 * rgb[..., 2]
-    return lum
+    return np.asarray(bg.convert("RGB"), dtype=np.float32)
+
+
+def luminance(rgb: np.ndarray) -> np.ndarray:
+    return 0.299 * rgb[..., 0] + 0.587 * rgb[..., 1] + 0.114 * rgb[..., 2]
+
+
+def background_color(rgb: np.ndarray, border: int = 6) -> np.ndarray:
+    """
+    Couleur du fond : médiane des pixels du pourtour. Robuste au fond blanc,
+    gris, ou coloré (le golfeur sur fond vert), et à une texture légère.
+    """
+    h, w, _ = rgb.shape
+    b = max(1, min(border, h // 4, w // 4))
+    edge = np.concatenate([
+        rgb[:b, :, :].reshape(-1, 3), rgb[-b:, :, :].reshape(-1, 3),
+        rgb[:, :b, :].reshape(-1, 3), rgb[:, -b:, :].reshape(-1, 3),
+    ])
+    return np.median(edge, axis=0)
+
+
+def ink_distance(rgb: np.ndarray, bg: np.ndarray) -> np.ndarray:
+    """
+    Distance de chaque pixel à la couleur de fond, ramenée sur 0..255.
+    C'est cette distance qui définit l'encre : tout ce qui s'écarte du fond est
+    du dessin, quelle que soit sa couleur (trait noir, silhouette verte, et le
+    pantalon blanc du golfeur sur fond vert, que la luminance seule perdait).
+    """
+    d = np.sqrt(((rgb - bg.reshape(1, 1, 3)) ** 2).sum(axis=2))
+    return np.clip(d / np.sqrt(3.0), 0, 255).astype(np.float32)
 
 
 def otsu(values: np.ndarray) -> float:
-    """Seuil d'Otsu sur un tableau de luminances (0..255)."""
-    hist, edges = np.histogram(values, bins=256, range=(0, 256))
+    """Seuil d'Otsu sur un tableau de valeurs 0..255."""
+    hist, _ = np.histogram(values, bins=256, range=(0, 256))
     hist = hist.astype(np.float64)
     total = hist.sum()
     if total == 0:
@@ -76,45 +106,39 @@ def otsu(values: np.ndarray) -> float:
     return float(np.argmax(sigma))
 
 
-def auto_threshold(lum: np.ndarray) -> float:
+def auto_threshold(dist: np.ndarray) -> float:
     """
-    Seuil automatique.
-    - Le fond est la valeur la plus fréquente de l'image (blanc, gris ou couleur).
-    - Le trait est l'amas le plus sombre parmi les pixels nettement plus foncés
-      que le fond. S'il reste un amas intermédiaire (filigrane gris, ombre), un
-      Otsu sur ces pixels sombres le sépare du trait ; sinon on garde presque
-      tout (anticrénelage compris) en restant sous le fond.
+    Seuil sur la distance au fond.
+    Otsu sépare le fond (distance ~0) du reste. S'il subsiste dans ce reste
+    deux amas nettement séparés — filigrane pâle et trait franc — un second
+    Otsu les départage et on garde le trait. Sinon on descend au ras du fond
+    pour conserver l'anticrénelage.
     """
-    hist = np.bincount(np.clip(lum, 0, 255).astype(np.uint8).ravel(), minlength=256).astype(np.float64)
-    smooth = np.convolve(hist, np.ones(9) / 9.0, mode="same")
-    bg = int(np.argmax(smooth))
-    dark = lum[lum < bg - 25]
-    if dark.size < 50:
-        return float(max(bg - 40, 1))
-    t2 = otsu(dark)
-    a, b = dark[dark < t2], dark[dark >= t2]
-    sep = 0.0
-    if a.size and b.size and dark.var() > 1e-6:
-        between = (a.size * b.size) / float(dark.size ** 2) * (a.mean() - b.mean()) ** 2
-        sep = float(between / dark.var())
-    if sep > 0.6 and (b.mean() - a.mean()) > 60:
-        thr = t2 + 0.35 * (b.mean() - t2)  # un peu au-dessus du trait, sous l'amas clair
-    else:
-        thr = float(np.percentile(dark, 97))
-    return float(min(thr, bg - 25))
+    t1 = otsu(dist)
+    fg = dist[dist > t1]
+    if fg.size < 50:
+        return max(t1, 10.0)
+    t2 = otsu(fg)
+    low, high = fg[fg < t2], fg[fg >= t2]
+    if low.size and high.size and fg.var() > 1e-6:
+        between = (low.size * high.size) / float(fg.size ** 2) * (low.mean() - high.mean()) ** 2
+        sep = float(between / fg.var())
+        # un filigrane est pâle ET occupe une bonne part du "premier plan"
+        if sep > 0.55 and (high.mean() - low.mean()) > 45 and low.size > 0.15 * fg.size:
+            return float(t2 + 0.25 * (high.mean() - t2))
+    return float(max(t1 * 0.6, 8.0))
 
 
 # ----------------------------------------------------------------------------
 # Masque d'encre et nettoyage
 # ----------------------------------------------------------------------------
-def ink_alpha(lum: np.ndarray, threshold: float, softness: float = 24.0) -> np.ndarray:
+def ink_alpha(dist: np.ndarray, threshold: float, softness: float = 18.0) -> np.ndarray:
     """
-    Alpha 0..1 : 1 quand le pixel est plus foncé que `threshold - softness`,
-    0 quand il est plus clair que `threshold`, rampe douce entre les deux
-    (garde l'anticrénelage du trait, supprime le fond et les filigranes clairs).
+    Alpha 0..1 sur la distance au fond : 0 en deçà de `threshold`, 1 au-delà de
+    `threshold + softness`, rampe douce entre les deux. La rampe conserve
+    l'anticrénelage du trait ; le seuil élimine fond et filigranes pâles.
     """
-    lo = threshold - softness
-    a = (threshold - lum) / max(softness, 1e-6)
+    a = (dist - threshold) / max(softness, 1e-6)
     return np.clip(a, 0.0, 1.0).astype(np.float32)
 
 
@@ -244,7 +268,7 @@ def write_svg(binary: np.ndarray, out: Path, turdsize: int = 3, alphamax: float 
     d = "".join(parts)
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" '
            f'role="img" aria-hidden="true" focusable="false">\n'
-           f'  <path fill="currentColor" fill-rule="evenodd" d="{d}"/>\n</svg>\n')
+           f'  <path fill="currentColor" d="{d}"/>\n</svg>\n')
     out.write_text(svg, encoding="utf-8")
     return len(path)
 
@@ -253,13 +277,22 @@ def write_svg(binary: np.ndarray, out: Path, turdsize: int = 3, alphamax: float 
 # Pipeline
 # ----------------------------------------------------------------------------
 def process(path: Path, out_dir: Path, opts: dict, want_svg: bool, verbose=True):
-    lum = load_luminance(path)
-    h, w = lum.shape
+    rgb = load_rgb(path)
+    h, w, _ = rgb.shape
+
+    mode = opts.get("mode", "color")
+    if mode == "luminance":
+        # Repli : le dessin est simplement ce qui est sombre (fond clair garanti).
+        metric = 255.0 - luminance(rgb)
+    else:
+        bg = np.array(opts["background"], dtype=np.float32) if "background" in opts \
+            else background_color(rgb)
+        metric = ink_distance(rgb, bg)
 
     thr = opts.get("threshold")
-    thr = float(thr) if thr is not None else auto_threshold(lum)
-    softness = float(opts.get("softness", 24))
-    alpha = ink_alpha(lum, thr, softness)
+    thr = float(thr) if thr is not None else auto_threshold(metric)
+    softness = float(opts.get("softness", 18))
+    alpha = ink_alpha(metric, thr, softness)
 
     # Bords : un liseré (cadre, ombre de scan) collé au bord est retiré
     edge = int(opts.get("edge", 2))
@@ -303,7 +336,7 @@ def process(path: Path, out_dir: Path, opts: dict, want_svg: bool, verbose=True)
 
     if verbose:
         ah, aw = alpha.shape
-        msg = (f"  ✓ {path.name:32s} seuil {thr:5.0f}  netteté {sharp:.2f}  "
+        msg = (f"  ✓ {path.name:26s} {mode:9s} seuil {thr:5.1f}  netteté {sharp:.2f}  "
                f"→ {png.name} {size[0]}×{size[1]}")
         if svg_path:
             msg += f"  + {svg_path.name} ({ncurves} contours)"

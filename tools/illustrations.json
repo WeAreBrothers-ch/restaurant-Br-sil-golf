@@ -1,0 +1,30 @@
+{
+  "_lisez-moi": "Réglages par fichier pour tools/process_illustrations.py. Sans entrée ici, le script se règle tout seul. threshold = écart minimal à la couleur du fond (0-255) ; min_area = taille minimale d'une tache conservée, en pixels (sert à effacer les mentions de banque d'images).",
+
+  "assiette-couverts.jpg": {
+    "threshold": 120,
+    "min_area": 250,
+    "_note": "Filigrane en diagonale : un seuil plus bas garde les traits fins continus, le nettoyage des petites taches enlève le filigrane."
+  },
+  "bouteille-verre.jpg": {
+    "threshold": 120,
+    "min_area": 250,
+    "_note": "Même cas : trait très fin, filigrane 123RF répété."
+  },
+  "clubs-croises.jpg": {
+    "min_area": 3000,
+    "_note": "Efface la mention Adobe Stock en bas à gauche ; les deux clubs sont bien plus gros que ce seuil."
+  },
+  "chef-cloche.jpg": {
+    "threshold": 130,
+    "min_area": 200
+  },
+  "golfeur-silhouette.jpg": {
+    "min_area": 400,
+    "_note": "Sticker : le liseré blanc est proche du fond gris, il tombe avec lui."
+  },
+  "golfeur-vintage.jpg": {
+    "min_area": 300,
+    "_note": "Fond vert texturé, pantalon blanc : le détourage par écart au fond garde la figure entière."
+  }
+}
