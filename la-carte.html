@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages.css">
+<script src="js/amorce.js"></script>
 </head>
 <body data-slots="show">
 <a class="skip" href="#main">Aller au contenu</a>
@@ -32,7 +33,6 @@
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <a href="le-restaurant.html">Le restaurant</a>
       <a href="la-carte.html" aria-current="page">La carte</a>
-      <a href="les-plats.html">Les plats</a>
       <a href="la-terrasse.html">La terrasse</a>
       <a href="contact.html">Contact</a>
       <a class="nav__tel" href="tel:+41218822419"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> 021 882 24 19</a>
@@ -43,17 +43,17 @@
 <main id="main">
 
   <div class="dark menu-page">
-    <div class="illu i-bouteille" data-side="r" style="--y:5%;  --w:145px; --in:2px; --r:6deg" data-hide="lg"></div>
+    <div class="illu i-bouteille" data-side="r" style="--y:9%;  --w:145px; --in:2px; --r:6deg" data-hide="lg"></div>
     <div class="illu i-assiette"  data-side="l" style="--y:44%; --w:200px; --in:0px; --r:-6deg" data-hide="lg"></div>
     <div class="illu i-sac"       data-side="r" style="--y:80%; --w:95px;  --in:6px; --r:8deg" data-hide="lg"></div>
 
     <div class="wrap menu-head">
       <div class="menu-head__g">
-        <div class="rv">
+        <div data-reveal>
           <p class="kicker">La carte</p>
           <h1 class="t-1">Ce que la cuisine<br>propose aujourd&rsquo;hui</h1>
         </div>
-        <div class="rv rv-2">
+        <div data-reveal style="--vu-retard:.10s">
           <p class="lead">Une carte courte qui suit les saisons. Les prix sont en francs suisses, service compris.</p>
           <p class="sm soft" style="margin:0">
             <span class="todo">Exemple, à valider</span><br>
@@ -77,7 +77,7 @@
         <a href="#menu">Menu « 3 notes »</a>
       </nav>
       <div>
-    <section class="fam rv" id="entrees">
+    <section class="fam" data-reveal id="entrees">
       <div class="fam__h"><h2>Les entrées</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -105,7 +105,11 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="viandes">
+        <figure class="ph ph--z ph--derive fam-photo" style="--ar:3/2" data-reveal data-file="plat-02.jpg">
+          <img src="assets/photos/plat-02.jpg" alt="Foie gras mi-cuit et pain grillé, au Le 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une entrée</span><code>plat-02.jpg</code></span>
+        </figure>
+    <section class="fam" data-reveal id="viandes">
       <div class="fam__h"><h2>Les viandes</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -135,7 +139,7 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="poissons">
+    <section class="fam" data-reveal id="poissons">
       <div class="fam__h"><h2>Les poissons</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -150,7 +154,7 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="pates">
+    <section class="fam" data-reveal id="pates">
       <div class="fam__h"><h2>Les pâtes</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -165,7 +169,11 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="salades">
+        <figure class="ph ph--z ph--derive fam-photo" style="--ar:3/2" data-reveal data-file="plat-04.jpg">
+          <img src="assets/photos/plat-04.jpg" alt="Côte de bœuf, gratin et sauce aux morilles, au Le 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Un plat</span><code>plat-04.jpg</code></span>
+        </figure>
+    <section class="fam" data-reveal id="salades">
       <div class="fam__h"><h2>Les salades</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -178,7 +186,7 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="golfeurs">
+    <section class="fam" data-reveal id="golfeurs">
       <div class="fam__h"><h2>La carte des golfeurs</h2> <em>Service rapide</em></div>
       <p class="fam__n">Pour déjeuner entre deux parcours sans y passer l’après-midi.</p>
       <ul class="fam__l">
@@ -198,7 +206,7 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="enfants">
+    <section class="fam" data-reveal id="enfants">
       <div class="fam__h"><h2>La carte des enfants</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -217,7 +225,7 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="desserts">
+    <section class="fam" data-reveal id="desserts">
       <div class="fam__h"><h2>Les desserts</h2></div>
       <ul class="fam__l">
         <li class="dish">
@@ -254,7 +262,11 @@
         </li>
       </ul>
     </section>
-    <section class="fam rv" id="menu">
+        <figure class="ph ph--z ph--derive fam-photo" style="--ar:3/2" data-reveal data-file="plat-01.jpg">
+          <img src="assets/photos/plat-01.jpg" alt="Saint-Jacques et écume verte, au Le 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette</span><code>plat-01.jpg</code></span>
+        </figure>
+    <section class="fam" data-reveal id="menu">
       <div class="fam__h"><h2>Menu « 3 notes »</h2> <em>Entrée, plat, dessert</em></div>
       <p class="fam__n">Composé par la cuisine, au gré du marché.</p>
       <ul class="fam__l">
@@ -273,7 +285,7 @@
         </li>
       </ul>
     </section>
-        <div class="menu-foot rv">
+        <div class="menu-foot" data-reveal>
           <p class="sm soft" style="margin:0; max-width:34em">Allergies, intolérances, régimes particuliers : dites-le-nous à la réservation ou au moment de commander.</p>
           <div style="display:flex; flex-wrap:wrap; gap:1rem 1.6rem; align-items:center">
             <a class="btn" href="tel:+41218822419">Réserver · 021 882 24 19</a>
@@ -319,7 +331,7 @@
           <li><a href="index.html">Accueil</a></li>
           <li><a href="le-restaurant.html">Le restaurant</a></li>
           <li><a href="la-carte.html">La carte</a></li>
-          <li><a href="les-plats.html">Les plats</a></li>
+          <li></li>
           <li><a href="la-terrasse.html">La terrasse</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>

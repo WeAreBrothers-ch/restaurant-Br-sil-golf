@@ -7,22 +7,54 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Logo au centre, dessins autour, bandeau d'infos, quatre entrées en escalier |
+| `index.html` | Accueil | Le sceau au centre, huit dessins autour, tout en mouvement. Puis un bandeau d'accès direct et trois entrées en escalier. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, récit en blocs alternés, portrait du chef, trois repères |
-| `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes |
-| `les-plats.html` | Les plats | Mosaïque de douze photos en pleine largeur, visionneuse au clic |
+| `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes, trois photographies en respiration |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, bande de photos qui défile |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, bloc réservation |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page et les dessins
 en fond sont communs.
 
-## Arborescence
+## Le mouvement
+
+Trois mécaniques, toutes désactivées si le système demande un mouvement réduit.
+
+**Le premier écran.** Tout tient dans un seul nombre, `--p`, l'avancée du
+premier défilement de 0 à 1. Le script `js/hero.js` ne fait qu'écrire ce nombre ;
+c'est la feuille de style qui en tire la chute et la vrille de chacun des huit
+dessins. Une écriture par image de rendu, pas huit, et le navigateur compose sur
+la carte graphique. Passé le premier écran, plus rien n'est écrit.
+
+Le même nombre sert à l'arrivée : les dessins entrent depuis `--p: -0.35`, un
+peu plus haut et penchés dans l'autre sens, avec un retard échelonné. Le geste
+d'arrivée et le geste de départ sont le même mouvement joué à l'envers.
+
+Chaque dessin porte cinq réglages et rien d'autre : sa position, sa largeur, sa
+pente au repos, sa chute et sa vrille. Chute et vrille changent de valeur et de
+signe d'un dessin à l'autre : c'est ce qui donne l'impression d'un désordre
+alors que chaque position est choisie.
+
+**Les apparitions.** Un bloc marqué `data-reveal` monte de quelques millimètres
+et se révèle une seule fois, quand son haut atteint le bas de l'écran. Le script
+`js/amorce.js`, seul fichier chargé sans `defer`, pose l'attribut `data-js`
+avant le premier affichage : sans lui les blocs apparaîtraient une fois en
+clair avant de sauter à leur position de départ.
+
+**La dérive.** Les dessins posés dans le flux descendent lentement pendant qu'on
+les dépasse et se redressent en chemin ; les grandes photographies suivent le
+doigt dans leur cadre. C'est tenu par le défilement lui-même, sans JavaScript.
+Là où le navigateur ne connaît pas encore cette mécanique, tout est simplement
+immobile.
+
+## Arborescence## Arborescence
 
 ```
 css/base.css                   variables, typographie, en-tête, pied, dessins
 css/pages.css                  la composition de chaque page
-js/main.js                     menu, visionneuse, apparition au défilement
+js/amorce.js                   pose data-js avant le premier affichage
+js/main.js                     menu, apparitions, sommaire actif
+js/hero.js                     le mouvement du premier écran
 assets/illustrations/source/   les dessins d'origine
 assets/illustrations/dist/     les dessins servis par le site (une seule couleur)
 assets/photos/source/          les photos d'origine

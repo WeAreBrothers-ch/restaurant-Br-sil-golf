@@ -5,30 +5,206 @@
    ============================================================================= */
 
 /* =========================================================================
-   1 · ACCUEIL — le logo au centre, les dessins autour, puis quatre entrées
+   1 · ACCUEIL — le sceau au centre, les dessins autour, tout en mouvement
+
+   Le premier écran est la signature de la maison : c'est la seule chose que
+   le site partage avec L'Étoile, l'autre restaurant du même propriétaire.
+
+   Tout le mouvement tient dans un seul nombre, --p, l'avancée du premier
+   défilement, de 0 (rien n'a bougé) à 1 (l'écran est passé). Le script se
+   contente d'écrire ce nombre ; c'est ici que chaque dessin en tire sa chute
+   et sa vrille. Une écriture par image de rendu, pas dix.
+
+   Le même nombre sert à l'arrivée : les dessins entrent depuis --p:-0.35,
+   c'est-à-dire un peu plus haut et penchés dans l'autre sens. Le geste
+   d'arrivée et le geste de départ sont le même mouvement, joué à l'envers.
    ========================================================================= */
+
+/* Déclarer --p lui donne un type : il devient un vrai nombre, interpolable,
+   et il vaut 0 tant que personne ne l'écrit, y compris sans JavaScript. */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 .home-hero {
-  position: relative; overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
   min-height: calc(100svh - var(--head-h));
-  display: grid; place-items: center;
-  padding: clamp(3rem, 8vh, 6rem) var(--pad);
+  padding: clamp(1.5rem, 4vh, 3rem) var(--pad);
+  /* Des dessins débordent volontairement : on les coupe ici, jamais avec une
+     barre de défilement. */
+  overflow: hidden;
 }
-.home-hero__mid { position: relative; z-index: 2; text-align: center; max-width: 40rem; }
-.mono { display: inline-grid; justify-items: center; margin: 0; color: var(--c-green); }
-.mono .seal { --w: clamp(200px, 27vw, 310px); }
-.mono__n { font: 500 clamp(5.5rem, 16vw, 11rem)/.85 var(--serif); letter-spacing: -.04em; }
-.mono__n i { font-style: italic; }
-.mono__bar { width: 4rem; height: 1px; background: var(--c-brass); }
-.mono__t { font: 600 clamp(.66rem, 1.1vw, .8rem)/1 var(--sans); letter-spacing: .34em; text-transform: uppercase; }
-.home-hero__say { margin: 2rem 0 0; font: italic 400 clamp(1.2rem, 2vw, 1.5rem)/1.45 var(--serif); color: var(--fg-soft); }
-.home-hero__loc { display: block; margin-top: .7rem; font: 600 .7rem/1 var(--sans); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
-.home-hero__go { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem 1.4rem; margin-top: 2.6rem; }
+
+/* Le bloc central. Les écarts sont serrés : le premier écran doit tenir d'un
+   seul regard, sans que l'œil ait à traverser du vide entre le sceau et le
+   premier bouton. */
+.home-hero__mid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.1rem, 2.2vh, 1.8rem);
+  text-align: center;
+  max-width: 36rem;
+  /* Le bloc s'efface et remonte en même temps que les dessins tombent. */
+  transform: translateY(calc(var(--p) * -2.5rem)) scale(calc(1 - var(--p) * .05));
+  opacity: calc(1 - var(--p) * .9);
+}
+
+.mono { display: grid; justify-items: center; margin: 0; color: var(--c-green); }
+.mono .seal { --w: clamp(210px, 30vw, 330px); }
+
+.home-hero__say {
+  margin: 0;
+  font: italic 400 clamp(1.15rem, 1.9vw, 1.45rem)/1.4 var(--serif);
+  color: var(--fg-soft);
+}
+.home-hero__loc {
+  display: block; margin-top: .5rem;
+  font: 600 .68rem/1 var(--sans); font-style: normal;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--accent);
+}
+.home-hero__go { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem 1.1rem; }
+
+/* Le champ de dessins couvre tout l'écran. Il s'efface en partant sans
+   disparaître tout à fait : il en reste une trace quand le bandeau arrive. */
+.home-champ {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none; user-select: none;
+  opacity: calc(1 - var(--p) * .72);
+  --echelle: .5;
+}
+@media (max-width: 379px) { .home-champ { --echelle: .42; } }
+@media (min-width: 700px)  { .home-champ { --echelle: .68; } }
+@media (min-width: 1100px) { .home-champ { --echelle: 1; } }
+
+/*
+  Chaque dessin porte six réglages, et rien d'autre :
+
+    --x --y ... où il est, en pourcentage de l'écran
+    --l ....... sa largeur de référence, ramenée par --echelle
+    --r ....... de combien il penche au repos
+    --chute ... de combien il descend quand on quitte l'écran
+    --vrille .. de combien il tourne en descendant
+
+  Chute et vrille changent de valeur ET DE SIGNE d'un dessin à l'autre : c'est
+  ce qui donne l'impression d'un désordre alors que chaque position est
+  choisie. Deux dessins qui tomberaient à la même vitesse se liraient comme
+  une grille qui glisse.
+*/
+.piece {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: calc(var(--l) * var(--echelle));
+  aspect-ratio: var(--ar, 1);
+  background-color: var(--illu);
+  opacity: var(--illu-opacity);
+  -webkit-mask: var(--src) center/contain no-repeat;
+          mask: var(--src) center/contain no-repeat;
+  transform: translate(-50%, -50%)
+             translateY(calc(var(--p) * var(--chute)))
+             rotate(calc(var(--r) + var(--p) * var(--vrille)));
+}
+/* On ne prévient le navigateur que là où il y a de quoi tenir dix couches. */
+@media (min-width: 1100px) { .piece { will-change: transform; } }
+
+/* LA COURONNE.
+
+   Le sceau occupe une bande centrale qu'aucun dessin ne franchit. Au-dessus et
+   en dessous, en revanche, le centre est libre : c'est là que passent les
+   dessins larges et bas.
+
+   --l est une LARGEUR. Nos dessins n'ont pas du tout les mêmes proportions :
+   le sac de golf fait deux fois et demie sa largeur en hauteur, l'assiette
+   dressée les trois quarts. Les largeurs sont donc calculées pour que chacun
+   fasse à peu près la même hauteur à l'écran, autour de 200 à 240 px, sans
+   quoi les golfeurs écraseraient tout le reste.
+
+   Deux golfeurs seulement, un de chaque côté : trois se lisaient comme une
+   répétition. Le troisième reste sur les autres pages. */
+.piece--swing     { --x: 8%;  --y: 30%; --l: 145px; --r: -11deg; --chute: 245px; --vrille: 14deg; }
+.piece--chef      { --x: 10%; --y: 74%; --l: 185px; --r: 5deg;   --chute: 175px; --vrille: -16deg; }
+.piece--assiette  { --x: 31%; --y: 12%; --l: 200px; --r: 7deg;   --chute: 165px; --vrille: -12deg; }
+.piece--bouteille { --x: 61%; --y: 15%; --l: 125px; --r: -9deg;  --chute: 135px; --vrille: 18deg; }
+.piece--trait     { --x: 88%; --y: 27%; --l: 150px; --r: 6deg;   --chute: 230px; --vrille: -13deg; }
+.piece--table     { --x: 87%; --y: 72%; --l: 180px; --r: -6deg;  --chute: 200px; --vrille: 11deg; }
+.piece--sac       { --x: 18%; --y: 82%; --l: 85px;  --r: -7deg;  --chute: 110px; --vrille: 20deg; }
+.piece--clubs     { --x: 72%; --y: 86%; --l: 140px; --r: 13deg;  --chute: 130px; --vrille: -21deg; }
+
+/* AU DOIGT, LA COMPOSITION CHANGE DE NATURE.
+
+   Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
+   Sur un téléphone il barre l'écran d'un bord à l'autre : il ne reste plus une
+   couronne mais deux bandes, l'une au-dessus, l'autre en dessous. Les dessins
+   s'y répartissent en quinconce, jamais deux à la même hauteur.
+
+   Aucun n'est coupé sur les côtés : sur un écran étroit, un dessin à moitié
+   sorti se lit comme une erreur, pas comme un parti pris. */
+@media (max-width: 699px) {
+  .piece--assiette  { --x: 27%; --y: 9%;  --r: -6deg; }
+  .piece--bouteille { --x: 62%; --y: 7%;  --r: 6deg; }
+  .piece--swing     { --x: 13%; --y: 21%; --r: -8deg; }
+  .piece--trait     { --x: 85%; --y: 19%; --r: 5deg; }
+  .piece--sac       { --x: 10%; --y: 66%; --r: -6deg; }
+  .piece--table     { --x: 28%; --y: 89%; --r: 4deg; }
+  .piece--clubs     { --x: 80%; --y: 86%; --r: 10deg; }
+  /* Le chef est le plus large des dessins : il ne rentre dans aucune des deux
+     bandes sans venir au contact du sceau. */
+  .piece--chef      { display: none; }
+}
+
+/* Sur un écran couché et bas, il ne reste plus de bande du tout : seuls
+   quelques dessins de bord survivent. */
+@media (max-height: 560px) and (min-width: 700px) {
+  .piece--assiette, .piece--bouteille, .piece--sac, .piece--clubs { display: none; }
+  .mono .seal { --w: clamp(150px, 24vh, 210px); }
+  .home-hero__down { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   L'ARRIVÉE
+
+   Elle n'existe que si le script a marqué la page. Sans JavaScript, ou si le
+   système demande un mouvement réduit, les dessins sont simplement là.
+
+   `backwards` et non `both` : passé la dernière image la règle rend la main,
+   et --p redevient celui qu'écrit le défilement. Sans quoi le dessin resterait
+   figé à sa position d'arrivée.
+   --------------------------------------------------------------------------- */
+[data-js] .piece {
+  animation: piece-arrivee var(--dur-pose) var(--expo) backwards;
+  animation-delay: var(--retard, 0s);
+}
+.piece--bouteille { --retard: 60ms; }
+.piece--assiette  { --retard: 130ms; }
+.piece--trait     { --retard: 200ms; }
+.piece--swing     { --retard: 270ms; }
+.piece--sac       { --retard: 340ms; }
+.piece--clubs     { --retard: 410ms; }
+.piece--table     { --retard: 480ms; }
+.piece--chef      { --retard: 550ms; }
+
+@keyframes piece-arrivee {
+  from { opacity: 0; --p: -0.35; }
+}
+
+/* Le sceau se pose aussi, mais sans retard : c'est lui qu'on voit en premier. */
+[data-js] .home-hero__mid { animation: hero-pose var(--dur-pose) var(--expo) backwards; }
+@keyframes hero-pose {
+  from { opacity: 0; transform: translateY(1.5rem) scale(.985); }
+}
+
 .home-hero__down {
-  position: absolute; left: 50%; bottom: 1.4rem; transform: translateX(-50%); z-index: 2;
-  display: grid; justify-items: center; gap: .5rem; text-decoration: none;
-  font: 600 .6rem/1 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--fg-soft);
+  position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); z-index: 2;
+  display: grid; justify-items: center; gap: .45rem; text-decoration: none;
+  font: 600 .58rem/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: var(--fg-soft);
+  opacity: calc(1 - var(--p) * 2);
 }
-.home-hero__down::after { content: ""; width: 1px; height: 2.4rem; background: currentColor; opacity: .45; animation: fall 2.6s ease-in-out infinite; }
+.home-hero__down::after { content: ""; width: 1px; height: 2rem; background: currentColor; opacity: .45; animation: fall 2.6s ease-in-out infinite; }
 @keyframes fall { 0%,100% { transform: scaleY(0); transform-origin: top } 45%,55% { transform: scaleY(1) } 56% { transform-origin: bottom } }
 
 /* Bandeau d'infos : quatre colonnes séparées par des filets */
@@ -43,11 +219,12 @@
 @media (max-width: 480px) { .strip__g { grid-template-columns: 1fr; } .strip__i { border-right: 0; border-bottom: 1px solid var(--line); } .strip__i:last-child { border-bottom: 0; } }
 
 /* Quatre portes d'entrée, en escalier */
-.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2vw, 1.8rem); align-items: start; }
+.doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2.4rem); align-items: start; }
 .doors__c { position: relative; display: block; text-decoration: none; color: inherit; }
-.doors__c:nth-child(2) { margin-top: clamp(1.5rem, 4vw, 4rem); }
-.doors__c:nth-child(3) { margin-top: clamp(.75rem, 2vw, 2rem); }
-.doors__c:nth-child(4) { margin-top: clamp(2.25rem, 6vw, 6rem); }
+/* Les trois entrées sont posées en escalier : la lecture descend en diagonale
+   au lieu de buter sur une rangée bien alignée. */
+.doors__c:nth-child(2) { margin-top: clamp(1.5rem, 4vw, 3.5rem); }
+.doors__c:nth-child(3) { margin-top: clamp(3rem, 8vw, 7rem); }
 .doors .ph { --ar: 3/4; }
 .doors__n { display: block; margin-top: .9rem; font: 600 .64rem/1 var(--sans); letter-spacing: .2em; color: var(--accent); }
 .doors__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--line); transition: border-color .25s; }
@@ -56,7 +233,7 @@
 .doors__h span { font-size: 1rem; color: var(--accent); transition: transform .25s; }
 .doors__c:hover .doors__h span { transform: translateX(4px); }
 .doors__p { margin: .7rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--fg-soft); }
-@media (max-width: 1000px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2n) { margin-top: clamp(1.5rem,5vw,3rem); } }
+@media (max-width: 900px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2) { margin-top: clamp(1.5rem,5vw,3rem); } }
 @media (max-width: 560px) { .doors { grid-template-columns: 1fr; gap: 2rem; } .doors__c:nth-child(n) { margin-top: 0; } }
 
 /* Mot d'accueil : une ligne large, centrée, sur fond sombre */
@@ -74,7 +251,7 @@
 
 /* Bande photo pleine largeur juste après le titre */
 .rest-band { position: relative; }
-.rest-band .ph { --ar: 21/8; border-radius: 0; }
+.rest-band .ph { --ar: 2/1; border-radius: 0; }
 @media (max-width: 700px) { .rest-band .ph { --ar: 4/3; } }
 
 /* Le récit : texte étroit, images qui sortent de la colonne */
@@ -94,9 +271,10 @@
 }
 
 /* Le chef : portrait rond, texte à côté */
-.chef { display: grid; grid-template-columns: 260px 1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
-/* Si le portrait n'a pas encore été déposé, le texte reprend toute la largeur
-   au lieu de rester coincé dans la colonne de 260 px. */
+/* Deux colonnes quand le portrait du chef est là, une seule sinon : la grille
+   compte ses enfants plutôt que de garder une colonne vide. */
+.chef { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+.chef:has(> .ph) { grid-template-columns: 260px 1fr; }
 .chef:has(> .ph.gone) { grid-template-columns: 1fr; }
 .chef .ph { --ar: 1; border-radius: 50%; }
 .chef .ph__slot { outline-offset: -14px; border-radius: 50%; }
@@ -149,59 +327,7 @@
              padding-top: 2rem; border-top: 1px solid var(--line); }
 
 /* =========================================================================
-   4 · LES PLATS — mosaïque plein écran, les photos en premier rôle
-   ========================================================================= */
-.plates-head { padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
-.plates-head .lead { margin-inline: auto; }
-
-/* Mosaïque : six colonnes, une composition asymétrique par ligne.
-   Les emplacements au-delà du sixième sont facultatifs : ils n'apparaissent
-   qu'une fois les fichiers déposés. */
-.mosaic { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(.6rem, 1.2vw, 1.1rem); grid-auto-flow: row dense; }
-.mosaic figure { --ar: 3/4; }
-.mosaic figure:nth-child(1) { grid-column: span 4; --ar: 4/3; }
-.mosaic figure:nth-child(2) { grid-column: span 2; --ar: 3/4; }
-.mosaic figure:nth-child(3) { grid-column: span 2; --ar: 3/4; }
-.mosaic figure:nth-child(4) { grid-column: span 4; --ar: 4/3; }
-.mosaic figure:nth-child(5) { grid-column: span 3; --ar: 1; }
-.mosaic figure:nth-child(6) { grid-column: span 3; --ar: 1; }
-.mosaic figure:nth-child(7) { grid-column: span 2; --ar: 3/4; }
-.mosaic figure:nth-child(8) { grid-column: span 4; --ar: 4/3; }
-.mosaic figure:nth-child(9) { grid-column: span 3; --ar: 4/3; }
-.mosaic figure:nth-child(10){ grid-column: span 3; --ar: 4/3; }
-@media (max-width: 1000px) {
-  .mosaic { grid-template-columns: repeat(4, 1fr); }
-  .mosaic figure:nth-child(n) { grid-column: span 2; }
-  .mosaic figure:nth-child(1), .mosaic figure:nth-child(4) { grid-column: span 4; }
-}
-@media (max-width: 620px) {
-  .mosaic { grid-template-columns: 1fr; }
-  .mosaic figure:nth-child(n) { grid-column: 1 / -1; --ar: 4/3; }
-}
-.mosaic .ph { cursor: zoom-in; }
-.mosaic .ph:not(.ready) { cursor: default; }
-
-/* Visionneuse plein écran */
-.viewer { position: fixed; inset: 0; z-index: 200; display: none; place-items: center;
-          background: rgba(12,32,24,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-          padding: clamp(1rem, 4vw, 3rem); }
-.viewer[open], .viewer.show { display: grid; }
-.viewer img { max-width: 100%; max-height: 86svh; object-fit: contain; border-radius: var(--r); margin-inline: auto; }
-.viewer__c { position: absolute; top: 1rem; right: 1.2rem; width: 46px; height: 46px; color: var(--c-cream);
-             display: grid; place-items: center; border: 1px solid rgba(244,239,227,.3); border-radius: 50%; }
-.viewer__c:hover { background: rgba(244,239,227,.12); }
-.viewer__n { margin-top: 1rem; color: rgba(244,239,227,.75); font: 500 1.05rem/1.4 var(--serif); text-align: center; }
-.viewer__a { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; color: var(--c-cream);
-             display: grid; place-items: center; border: 1px solid rgba(244,239,227,.3); border-radius: 50%; font-size: 1.1rem; }
-.viewer__a:hover { background: rgba(244,239,227,.12); }
-.viewer__a--p { left: clamp(.5rem, 2vw, 2rem); }
-.viewer__a--n { right: clamp(.5rem, 2vw, 2rem); }
-
-/* Rappel de la carte en bas de la galerie */
-.plates-cta { display: grid; gap: 1.2rem; justify-items: center; text-align: center; }
-
-/* =========================================================================
-   5 · LA TERRASSE — panoramique en tête, texte en colonnes de journal
+   4 · LA TERRASSE — panoramique en tête, texte en colonnes de journal
    ========================================================================= */
 .terr-hero { position: relative; height: min(78svh, 720px); background: var(--c-green-deep); overflow: hidden; }
 .terr-hero .ph { position: absolute; inset: 0; --ar: auto; height: 100%; border-radius: 0; }
@@ -229,7 +355,7 @@
 .press cite { font: 600 .66rem/1 var(--sans); font-style: normal; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
 
 /* =========================================================================
-   6 · CONTACT — informations et plan côte à côte, horaires en dessous
+   5 · CONTACT — informations et plan côte à côte, horaires en dessous
    ========================================================================= */
 .ct-top { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2.5rem, 6vw, 5.5rem); align-items: start;
           padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2.5rem, 5vw, 4rem); }
@@ -272,3 +398,13 @@
    l'échec du chargement. Masquer en CSS empêcherait le navigateur de charger
    l'image (un parent en display:none ne déclenche jamais le chargement). */
 .ph.gone { display: none !important; }
+
+/* Une photographie posée entre deux familles de plats : la carte est une longue
+   colonne de texte, elle a besoin de reprendre son souffle. */
+.fam-photo {
+  /* Bornée à 820 px. La dérive au défilement agrandit l'image de 10 % : c'est
+     le prix du procédé, il crée la réserve dans laquelle elle se déplace. À
+     820 px elle est donc rendue sur 900, sous les 1000 px dont on dispose. */
+  max-width: 820px;
+  margin: clamp(2rem, 4vw, 3.5rem) auto clamp(2.5rem, 5vw, 4rem);
+}

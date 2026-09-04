@@ -36,17 +36,20 @@ OUT = ROOT / "assets" / "photos"
 # flèches de navigation présentes sur les captures d'écran d'origine.
 DERIVES = [
     # --- Les plats : une entrée par photo, format portrait ---------------------
-    ("nourriture.jpg",                   "plat-01.jpg", 3/4,  1400, .50, .55),
-    ("nourriture 2.jpg",                 "plat-02.jpg", 3/4,  1400, .50, .55),
-    ("caption.jpg",                      "plat-03.jpg", 3/4,  1400, .50, .50),
+    ("nourriture.jpg",                   "plat-01.jpg", 3/4,  1000, .50, .55),
+    ("nourriture 2.jpg",                 "plat-02.jpg", 3/4,  1000, .50, .55),
+    ("caption.jpg",                      "plat-03.jpg", 3/4,  1000, .50, .50),
     ("viande.jpg",                       "plat-04.jpg", 3/4,  1400, .50, .48),
-    ("img-20190316-wa0006-largejpg.jpg", "plat-05.jpg", 3/4,  1400, .50, .55),
-    ("20180714-120531-largejpg.jpg",     "plat-06.jpg", 3/4,  1100, .50, .48),
+    ("img-20190316-wa0006-largejpg.jpg", "plat-05.jpg", 3/4,  1000, .50, .55),
+    ("20180714-120531-largejpg.jpg",     "plat-06.jpg", 3/4,   653, .50, .48),
 
     # --- Le lieu et la terrasse ----------------------------------------------
     # La bande pleine largeur vient de la photo la mieux définie (2296 px).
-    ("le9_barolo_terrasse_HD.png",         "lieu-pano.jpg",     21/8, 2200, .54, .55, (.045, 0, .01, 0)),
-    ("le9_terrasse_coucher_soleil_HD.png", "terrasse-pano.jpg", 21/9, 2200, .48, .52, (.01, 0, .045, 0)),
+    # Les deux bandeaux : cadrage large plutôt que serré. En 21/8 ils ne
+    # gardaient qu'un tiers de la photo, et la vue sur le parcours — ce qu'on
+    # vient voir — passait presque entièrement à la trappe.
+    ("le9_barolo_terrasse_HD.png",         "lieu-pano.jpg",      2/1, 2170, .54, .58, (.045, 0, .01, 0)),
+    ("le9_terrasse_coucher_soleil_HD.png", "terrasse-pano.jpg", 16/9, 2170, .48, .55, (.01, 0, .045, 0)),
     ("le9_barolo_terrasse_HD.png",         "terrasse-01.jpg",   3/4,  1400, .38, .55, (.045, 0, .01, 0)),
     ("le9_terrasse_coucher_soleil_HD.png", "terrasse-02.jpg",   3/4,  1400, .44, .55, (.01, 0, .045, 0)),
     ("le9_barolo_terrasse_HD.png",         "terrasse-03.jpg",   4/3,  1600, .56, .50, (.045, 0, .01, 0)),
@@ -54,7 +57,7 @@ DERIVES = [
 
     # --- La salle -------------------------------------------------------------
     # Photo d'origine en 900 px : réservée à un cadre de taille modeste.
-    ("une-vue-imprenable-sur.jpg", "salle-01.jpg", 4/3, 786, .50, .50),
+    ("une-vue-imprenable-sur.jpg", "salle-01.jpg", 4/3, 675, .50, .50),
 ]
 
 QUALITY = 82
@@ -130,6 +133,7 @@ def main(argv=None):
         print()
 
     total = 0
+    petites = []
     for entry in DERIVES:
         src, dst, ratio, width, fx, fy = entry[:6]
         inset = entry[6] if len(entry) > 6 else (0, 0, 0, 0)
@@ -149,12 +153,19 @@ def main(argv=None):
         im = crop_to_ratio(im, ratio, fx, fy)
         if im.width > width:
             im = im.resize((width, int(round(width / ratio))), Image.LANCZOS)
+        if im.width < width:
+            petites.append((dst, im.width, width))
         kb = save_jpeg(im, OUT / dst)
         total += kb
         print(f"  ✓ {src[:34]:36s} -> {dst:20s} {im.width}×{im.height}  {kb} Ko")
 
     if not args.list:
         print(f"\nTotal des images servies : {total} Ko")
+        if petites:
+            print("\nPlus petites que la largeur demandée (elles ne sont pas agrandies,")
+            print("mais seront un peu molles si la page les affiche en grand) :")
+            for nom, eu, voulu in petites:
+                print(f"  {nom:20s} {eu} px au lieu de {voulu}")
     return 0
 
 

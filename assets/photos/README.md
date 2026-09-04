@@ -50,11 +50,16 @@ Ces emplacements existent dans les pages mais restent invisibles tant que le
 fichier n'est pas là. Déposer les photos dans `source/`, ajouter la ligne
 correspondante dans `tools/prepare_photos.py`, relancer le script.
 
-| Fichier attendu | Où | Cadrage |
+| Fichier attendu | Où il irait | Cadrage |
 |---|---|---|
-| `chef.jpg` | le restaurant, portrait rond | carré, visage centré |
-| `plat-07.jpg` à `plat-10.jpg` | galerie | portrait ou paysage |
-| `parcours.jpg` | bande de la terrasse | paysage |
+| `chef.jpg` | le restaurant, portrait rond à côté du texte « En cuisine » | carré, visage centré |
+| `parcours.jpg` | bande de photos de la terrasse | paysage |
+| plats supplémentaires | respirations de la carte, entrées du site | portrait ou paysage |
+
+Ces emplacements ne sont pas dans le code : un cadre qui pointe vers un fichier
+absent déclenche une requête en échec à chaque visite. Déposez la photo dans
+`source/`, ajoutez sa ligne dans `tools/prepare_photos.py`, relancez le script,
+et dites-le-moi : je remets l'emplacement dans la page.
 
 Une vraie photo de la salle serait utile : la seule dont nous disposons fait
 900 px de large, ce qui est juste pour un grand format. Idéalement une vue de la

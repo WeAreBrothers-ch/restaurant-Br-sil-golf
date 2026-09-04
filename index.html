@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages.css">
+<script src="js/amorce.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -51,7 +52,6 @@
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <a href="le-restaurant.html">Le restaurant</a>
       <a href="la-carte.html">La carte</a>
-      <a href="les-plats.html">Les plats</a>
       <a href="la-terrasse.html">La terrasse</a>
       <a href="contact.html">Contact</a>
       <a class="nav__tel" href="tel:+41218822419"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> 021 882 24 19</a>
@@ -62,22 +62,25 @@
 <main id="main">
 
   <section class="home-hero">
-    <div class="illu i-swing"     data-side="l" style="--y:12%; --w:140px; --in:0px; --r:-4deg; --my:9%"></div>
-    <div class="illu i-assiette"  style="--x:25%; --y:7%;  --w:165px; --r:5deg"  data-hide="lg"></div>
-    <div class="illu i-bouteille" style="--x:63%; --y:6%;  --w:100px; --r:-7deg; --mx:66%; --my:6%" data-hide="lg"></div>
-    <div class="illu i-trait"     data-side="r" style="--y:14%; --w:140px; --in:0px; --r:4deg; --my:13%"></div>
-    <div class="illu i-chef"      data-side="l" style="--y:58%; --w:170px; --in:0px; --r:3deg; --my:84%"></div>
-    <div class="illu i-sac"       style="--x:21%; --y:74%; --w:80px;  --r:-5deg" data-hide="lg"></div>
-    <div class="illu i-table"     style="--x:70%; --y:78%; --w:135px; --r:4deg"  data-hide="lg"></div>
-    <div class="illu i-assiette"  data-side="r" style="--y:66%; --w:185px; --in:0px; --r:-5deg; --my:87%"></div>
+    <!-- Le champ de dessins. Chaque pièce ne porte que sa position, sa taille,
+         sa pente au repos, sa chute et sa vrille : le reste est dans le CSS. -->
+    <div class="home-champ" aria-hidden="true">
+      <i class="piece piece--swing     i-swing"></i>
+      <i class="piece piece--assiette  i-assiette"></i>
+      <i class="piece piece--bouteille i-bouteille"></i>
+      <i class="piece piece--trait     i-trait"></i>
+      <i class="piece piece--chef      i-chef"></i>
+      <i class="piece piece--sac       i-sac"></i>
+      <i class="piece piece--table     i-table"></i>
+      <i class="piece piece--clubs     i-clubs"></i>
+    </div>
 
     <div class="home-hero__mid">
-      <!-- Le sceau de la maison, redessiné d'après le filigrane des photos.
-           Remplacer assets/logo/le9.svg si le fichier d'origine est retrouvé. -->
+      <!-- Le sceau de la maison, redessiné d'après le filigrane des photos. -->
       <h1 class="mono">
         <span class="seal" role="img" aria-label="Le 9, Restaurant du Golf du Brésil"></span>
       </h1>
-      <p class="home-hero__say">Une table au calme,<br>au bord du parcours.
+      <p class="home-hero__say">Une table au calme, au bord du parcours.
         <span class="home-hero__loc">Goumoens-le-Jux · Vaud</span>
       </p>
       <div class="home-hero__go">
@@ -112,12 +115,12 @@
   <section class="sect" id="entrer">
     <div class="illu i-clubs" data-side="r" style="--y:6%; --w:115px; --in:8px; --r:11deg" data-hide="lg"></div>
     <div class="wrap">
-      <div class="rv" style="max-width:38rem; margin-bottom:clamp(2.5rem,5vw,4rem)">
+      <div data-reveal style="max-width:38rem; margin-bottom:clamp(2.5rem,5vw,4rem)">
         <p class="kicker">Bienvenue au 9</p>
-        <h2 class="t-1">Quatre raisons<br>de pousser la porte</h2>
+        <h2 class="t-1">Trois raisons<br>de pousser la porte</h2>
       </div>
       <div class="doors">
-        <a class="doors__c rv" href="le-restaurant.html">
+        <a class="doors__c" data-reveal href="le-restaurant.html">
           <figure class="ph ph--z" data-file="terrasse-02.jpg">
       <img src="assets/photos/terrasse-02.jpg" alt="Une table dressée sur la terrasse du 9" loading="lazy" decoding="async">
       <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une table dressée</span><code>terrasse-02.jpg</code></span>
@@ -126,7 +129,7 @@
           <span class="doors__n">01</span>
           <span class="doors__p">Le lieu, la cuisine du chef, l&rsquo;esprit de la maison.</span>
         </a>
-        <a class="doors__c rv rv-2" href="la-carte.html">
+        <a class="doors__c" data-reveal style="--vu-retard:.10s" href="la-carte.html">
           <figure class="ph ph--z" data-file="plat-01.jpg">
       <img src="assets/photos/plat-01.jpg" alt="Un plat de la carte" loading="lazy" decoding="async">
       <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Un plat de la carte</span><code>plat-01.jpg</code></span>
@@ -135,22 +138,13 @@
           <span class="doors__n">02</span>
           <span class="doors__p">Entrées, viandes, poissons, desserts et carte des golfeurs.</span>
         </a>
-        <a class="doors__c rv rv-3" href="les-plats.html">
-          <figure class="ph ph--z" data-file="plat-02.jpg">
-      <img src="assets/photos/plat-02.jpg" alt="Une assiette dressée au restaurant Le 9" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette dressée</span><code>plat-02.jpg</code></span>
-    </figure>
-          <span class="doors__h"><b>Les plats</b><span aria-hidden="true">&rarr;</span></span>
-          <span class="doors__n">03</span>
-          <span class="doors__p">Ce qui sort de la cuisine, en images.</span>
-        </a>
-        <a class="doors__c rv rv-3" href="la-terrasse.html">
+        <a class="doors__c" data-reveal style="--vu-retard:.20s" href="la-terrasse.html">
           <figure class="ph ph--z" data-file="terrasse-01.jpg">
       <img src="assets/photos/terrasse-01.jpg" alt="La terrasse du 9 et le parcours de golf" loading="lazy" decoding="async">
       <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La terrasse</span><code>terrasse-01.jpg</code></span>
     </figure>
           <span class="doors__h"><b>La terrasse</b><span aria-hidden="true">&rarr;</span></span>
-          <span class="doors__n">04</span>
+          <span class="doors__n">03</span>
           <span class="doors__p">La vue sur le green, du déjeuner au coucher du soleil.</span>
         </a>
       </div>
@@ -160,7 +154,7 @@
   <section class="sect dark word">
     <div class="illu i-chef"    data-side="l" style="--y:20%; --w:165px; --in:6px; --r:-3deg" data-hide="lg"></div>
     <div class="illu i-golfeur" data-side="r" style="--y:26%; --w:135px; --in:8px; --r:5deg" data-hide="lg"></div>
-    <div class="wrap-sm rv">
+    <div class="wrap-sm" data-reveal>
       <p class="kicker kicker--plain" style="justify-content:center">Le 9, à Goumoens-le-Jux</p>
       <p class="word__q">Un golf, une cuisine soignée, et le calme de la campagne vaudoise à vingt minutes de Lausanne.</p>
       <p class="word__s soft">Golfeur ou non, la maison accueille tout le monde : déjeuner de travail, repas de famille, verre en fin d&rsquo;après-midi ou dîner face au parcours.</p>
@@ -202,7 +196,7 @@
           <li><a href="index.html">Accueil</a></li>
           <li><a href="le-restaurant.html">Le restaurant</a></li>
           <li><a href="la-carte.html">La carte</a></li>
-          <li><a href="les-plats.html">Les plats</a></li>
+          <li></li>
           <li><a href="la-terrasse.html">La terrasse</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -217,5 +211,6 @@
 </footer>
 
 <script src="js/main.js" defer></script>
+<script src="js/hero.js" defer></script>
 </body>
 </html>

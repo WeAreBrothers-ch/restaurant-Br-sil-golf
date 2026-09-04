@@ -40,6 +40,16 @@
   --serif: "Cormorant Garamond", "Iowan Old Style", Palatino, Georgia, serif;
   --sans:  "Manrope", "Helvetica Neue", Arial, sans-serif;
 
+  /* --- Mouvement ---
+     Une pose longue et molle : c'est ce qui sépare une page qui se pose d'une
+     page qui s'affiche. La courbe est une approximation de expo.out, dont
+     l'essentiel du déplacement se fait dans le premier tiers. */
+  --dur-pose:  1.9s;
+  --dur-vif:   .22s;
+  --expo:      cubic-bezier(.16, 1, .3, 1);
+  --montee:    1.4rem;
+  --retard-vu: .05s;
+
   /* --- Mesures --- */
   --wrap:    1240px;
   --wrap-sm: 900px;
@@ -66,14 +76,17 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--head-h) + 1rem); }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--head-h) + 1rem);
+}
 body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
   font: 400 1.0625rem/1.65 var(--sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 img, svg, video { display: block; max-width: 100%; }
 a { color: inherit; text-underline-offset: .2em; }
@@ -86,6 +99,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Des dessins débordent volontairement des bords. La coupe est posée sur les
+   sections qui les portent, et non sur la page entière : sur l'élément racine,
+   la valeur est propagée à la fenêtre et n'y coupe rien, la page glissait donc
+   de quelques dizaines de pixels vers la droite. `clip` plutôt que `hidden` :
+   il ne crée pas de conteneur de défilement, et l'en-tête collant continue de
+   coller. */
+.sect, .foot, .menu-page, .rest-top, .rest-band, .home-hero, .ct-top, .terr-hero {
+  /* `position: relative` autant que la coupe : un dessin est en positionnement
+     absolu, et une section ne le coupe que si elle est son bloc conteneur,
+     c'est-à-dire si elle est elle-même positionnée. */
+  position: relative;
+  overflow-x: clip;
 }
 
 /* ---------- Grille ---------- */
@@ -301,9 +328,85 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 900px) { .foot__grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .foot__grid { grid-template-columns: 1fr; gap: 2rem; } }
 
-/* ---------- Apparition au défilement ---------- */
-.js .rv { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
-.js .rv.in { opacity: 1; transform: none; }
-.js .rv-2 { transition-delay: .09s; }
-.js .rv-3 { transition-delay: .18s; }
-@media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; transform: none; } }
+/* ---------------------------------------------------------------------------
+   LES APPARITIONS
+
+   Un bloc monte de quelques millimètres et se révèle une seule fois, quand son
+   haut atteint le bas de l'écran. Rien ne rejoue au retour : une animation
+   qu'on remarque deux fois est une animation ratée.
+
+   Le mouvement est long et mou à dessein. C'est ce qui sépare une page qui se
+   pose d'une page qui s'affiche.
+
+   Sans JavaScript, `data-js` n'est jamais posé et tout s'affiche normalement.
+   --------------------------------------------------------------------------- */
+[data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--montee));
+}
+[data-js] [data-reveal][data-vu] {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-pose) var(--expo), transform var(--dur-pose) var(--expo);
+  /* Le retard commun laisse à l'œil le temps d'arriver sur le bloc ; le retard
+     particulier, posé au cas par cas, échelonne les séries. */
+  transition-delay: calc(var(--retard-vu) + var(--vu-retard, 0s));
+}
+
+/* ---------------------------------------------------------------------------
+   LA DÉRIVE AU DÉFILEMENT
+
+   Les dessins posés dans le flux descendent lentement pendant qu'on les
+   dépasse, et se redressent en chemin : c'est le mouvement du premier écran,
+   en beaucoup plus discret. Quelques millimètres et six degrés sur toute la
+   traversée, contre deux cents pixels là-haut.
+
+   Elle est tenue par le défilement lui-même, sans JavaScript : le navigateur
+   compose seul, rien ne tourne sur le fil principal. Là où cette mécanique
+   n'existe pas encore, les dessins sont simplement immobiles. Rien à charger,
+   rien à rattraper.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .illu {
+      animation: derive linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    /* Une photographie dans son cadre suit le doigt à la vitesse qu'on lui
+       donne. L'agrandissement est le prix du procédé : c'est lui qui crée la
+       réserve dans laquelle l'image se déplace. Il n'est écrit que dans les
+       images-clés, donc là où la dérive n'a pas lieu la photo n'est pas
+       recadrée du tout. */
+    .ph--derive.ready > img {
+      animation: photo-derive linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+@keyframes derive {
+  from { transform: translateY(.9rem) rotate(calc(var(--r, 0deg) - 3deg)); }
+  to   { transform: translateY(-.9rem) rotate(calc(var(--r, 0deg) + 3deg)); }
+}
+@keyframes photo-derive {
+  from { transform: scale(1.1) translateY(-3.5%); }
+  to   { transform: scale(1.1) translateY(3.5%); }
+}
+
+/* ---------------------------------------------------------------------------
+   MOUVEMENT RÉDUIT
+
+   Quand le système le demande, il ne reste que les changements de couleur :
+   aucun déplacement, aucun fondu d'entrée.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    transition-duration: .12s !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  html { scroll-behavior: auto; }
+  [data-js] [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
