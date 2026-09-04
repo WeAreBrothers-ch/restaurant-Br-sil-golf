@@ -395,7 +395,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (pointer: coarse) {
   a, button, summary { touch-action: manipulation; }
 
-  .foot ul a,
+  .foot__col a,
+  .foot__nav a,
   .ct-links a,
   .alink,
   .toc a,
@@ -404,7 +405,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .strip__i {
     min-height: var(--cible);
   }
-  .foot ul a, .ct-links a, .alink, .toc a {
+  .foot__col a, .foot__nav a, .ct-links a, .alink, .toc a {
     display: inline-flex; align-items: center;
   }
   /* Le sceau du pied et l'enseigne de l'en-tête sont des liens à part entière :
@@ -436,23 +437,102 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: linear-gradient(transparent, rgba(16,41,31,.85)); color: var(--c-cream);
   font: 500 1.05rem/1.3 var(--serif); }
 
-/* ---------- Pied de page ---------- */
-.foot { background: var(--c-green-deep); color: var(--c-cream); position: relative; overflow: hidden;
-        --illu: var(--c-cream); --illu-opacity: .2; }
-.foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.1fr; gap: 2.5rem;
-              padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
-.foot h4 { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass); margin-bottom: 1.1rem; }
-.foot a { text-decoration: none; }
-.foot a:hover { text-decoration: underline; }
-.foot ul { display: grid; gap: .5rem; }
-.foot .logo, .foot .logo__n { color: var(--c-cream); }
-.foot .logo__t { color: rgba(244,239,227,.55); display: block; margin-top: .55rem; max-width: none; }
-.foot__tag { margin: 1.1rem 0 0; max-width: 21em; color: rgba(244,239,227,.68); font-size: var(--fs-sm); }
-.foot__end { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem;
-             padding: 1.3rem 0 2rem; border-top: 1px solid rgba(244,239,227,.14);
-             font-size: var(--fs-mini); color: rgba(244,239,227,.5); }
-@media (max-width: 900px) { .foot__grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 540px) { .foot__grid { grid-template-columns: 1fr; gap: 2rem; } }
+/* ---------------------------------------------------------------------------
+   LE PIED DE PAGE
+
+   Il portait quatre colonnes qui devenaient quatre pavés empilés au doigt :
+   plus d'un écran et demi de défilement pour une adresse et un numéro. Il tient
+   maintenant en trois temps à toutes les tailles — la maison, les coordonnées,
+   les pages — et l'adresse et le contact restent côte à côte même sur un
+   téléphone.
+   --------------------------------------------------------------------------- */
+.foot {
+  background: var(--c-green-deep); color: var(--c-cream);
+  --illu: var(--c-cream); --illu-opacity: .2;
+  padding-block: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+}
+
+.foot__haut {
+  display: grid; gap: .9rem;
+  padding-bottom: clamp(1.5rem, 3vw, 2rem);
+  border-bottom: 1px solid rgba(244,239,227,.16);
+}
+.foot__marque { display: grid; gap: .3rem; text-decoration: none; color: var(--c-cream); }
+.foot__nom  { font: 500 clamp(1.7rem, 5vw, 2.1rem)/1 var(--serif); letter-spacing: -.02em; }
+.foot__nom i { font-style: italic; }
+.foot__sous { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass); }
+.foot__mot  { margin: 0; max-width: 34ch; color: rgba(244,239,227,.66); font-size: var(--fs-sm); line-height: 1.6; }
+
+/* Les coordonnées : deux colonnes, toujours. C'est le format le plus court, et
+   personne ne cherche une adresse en la lisant sur trois lignes de large. */
+.foot__cols {
+  display: grid;
+  /* La colonne de droite est un peu plus large : l'adresse de courriel y tient
+     alors sur une ligne au lieu de se couper après le point. */
+  grid-template-columns: 1fr 1.2fr;
+  /* Gouttière serrée au doigt : à 24 px, « 1376 Goumoens-le-Jux » ne tenait
+     plus sur une ligne et l'adresse s'étirait sur quatre. */
+  gap: 1.4rem 1rem;
+  padding-block: clamp(1.5rem, 3vw, 2rem);
+  border-bottom: 1px solid rgba(244,239,227,.16);
+}
+@media (min-width: 600px) { .foot__cols { grid-template-columns: 1fr 1fr; gap: 1.5rem clamp(1.5rem, 4vw, 3rem); } }
+.foot__col h2 {
+  margin: 0 0 .6rem;
+  font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--c-brass);
+}
+.foot__col address, .foot__col p {
+  margin: 0; font-style: normal; line-height: 1.7;
+  color: rgba(244,239,227,.82);
+  text-wrap: pretty;
+  /* Un cran en dessous du texte courant au doigt : à 16 px, « 1376
+     Goumoens-le-Jux » dépassait de trois pixels et l'adresse s'étirait sur
+     cinq lignes au lieu de trois. */
+  font-size: var(--fs-mini);
+}
+@media (min-width: 600px) {
+  .foot__col address, .foot__col p { font-size: var(--fs-sm); line-height: 1.9; }
+}
+.foot__col a {
+  color: inherit; text-decoration: none; border-bottom: 1px solid rgba(244,239,227,.28);
+  /* Une adresse de courriel n'a pas d'espace où se couper : sur une colonne
+     étroite, elle sortirait du cadre plutôt que de passer à la ligne. */
+  overflow-wrap: anywhere;
+}
+.foot__col a:hover { border-bottom-color: var(--c-brass); }
+
+/* Les pages, sur une seule ligne : elles sont déjà dans l'en-tête et dans le
+   menu, ce n'est ici qu'un rappel. */
+.foot__nav {
+  display: flex; flex-wrap: wrap; gap: .2rem 1.4rem;
+  padding-block: clamp(1rem, 2.5vw, 1.4rem);
+  border-bottom: 1px solid rgba(244,239,227,.16);
+}
+.foot__nav a {
+  color: rgba(244,239,227,.82); text-decoration: none;
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
+}
+.foot__nav a:hover { color: var(--c-brass); }
+
+.foot__end {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: .35rem 2rem;
+  margin: 0; padding-top: 1.1rem;
+  font-size: var(--fs-mini); color: rgba(244,239,227,.52);
+}
+
+/* Sur un écran large, la maison et sa devise se placent côte à côte, et les
+   coordonnées prennent la moitié droite. */
+@media (min-width: 900px) {
+  .foot__haut { grid-template-columns: auto 1fr; align-items: end; gap: 3rem; }
+  .foot__mot { justify-self: end; text-align: right; }
+  .foot__cols { grid-template-columns: repeat(2, minmax(0, 15rem)); justify-content: start; }
+}
+
+/* La barre d'appel occupe le bas de l'écran : le pied s'arrête au-dessus. */
+@media (max-width: 1080px) {
+  .foot { padding-bottom: calc(1.5rem + 56px + env(safe-area-inset-bottom)); }
+}
 
 /* ---------------------------------------------------------------------------
    LES APPARITIONS
@@ -581,4 +661,3 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .barre__a svg { color: var(--c-brass); }
 
 /* Le pied de page ne doit pas finir sous la barre. */
-@media (max-width: 1080px) { .foot__end { padding-bottom: calc(2rem + 56px); } }

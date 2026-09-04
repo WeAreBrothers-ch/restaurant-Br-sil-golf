@@ -43,6 +43,11 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   les deux seules choses qu'on veut faire depuis un téléphone devant un site de
   restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
   saisie d'un champ, pour ne pas se poser sur le clavier.
+- **Le pied de page tient en trois temps** à toutes les tailles : la maison,
+  les coordonnées, les pages. L'adresse et le contact restent côte à côte même
+  sur un téléphone, et les pages sont une simple ligne de liens. Il portait
+  quatre colonnes qui devenaient quatre pavés empilés : 1148 px de défilement
+  pour une adresse et un numéro, contre 653 aujourd'hui.
 - **Le menu est un vrai `<dialog>`** ouvert en modal : le piégeage du focus, la
   touche Échap et le rôle de dialogue sont assurés par le navigateur. Il occupe
   tout l'écran, en vert profond, et les liens y sont composés dans le serif des
