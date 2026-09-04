@@ -275,24 +275,87 @@
 .rest-band .ph { --ar: 2/1; border-radius: 0; }
 @media (max-width: 700px) { .rest-band .ph { --ar: 4/3; } }
 
-/* Le récit : texte étroit, images qui sortent de la colonne */
-.story { display: grid; gap: clamp(2.25rem, 7vw, 6rem); }
-.story__b { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center; }
-.story__b--l .story__txt { grid-column: 1 / span 5; }
-.story__b--l .story__img { grid-column: 7 / span 6; }
-.story__b--r .story__txt { grid-column: 7 / span 6; }
-.story__b--r .story__img { grid-column: 1 / span 5; grid-row: 1; }
-.story__img .ph { --ar: 5/4; }
-.story__img--tall .ph { --ar: 1/1; }
-.story h3, .story .t-2 { margin-bottom: 1.1rem; }
-@media (max-width: 860px) {
-  .story__b { grid-template-columns: 1fr; }
-  .story__b .story__txt, .story__b .story__img { grid-column: 1 / -1; grid-row: auto; }
-  /* Sur grand écran l'image peut précéder le texte : l'œil les prend ensemble.
-     En colonne unique elle arriverait avant qu'on sache de quoi il s'agit, on
-     remet donc le titre devant. */
-  .story__b--r .story__img { order: 0; }
-  .story__img { margin-top: .4rem; }
+/* ---------------------------------------------------------------------------
+   LE RÉCIT EN DEUX MOUVEMENTS
+
+   Deux compositions, et pas deux fois la même : une photographie posée à côté
+   d'un paragraphe, répétée, c'est ce que fait n'importe quel gabarit.
+
+   1. LE DIPTYQUE. Une grande photographie en paysage, et une seconde en
+      portrait qui vient la mordre par en dessous en débordant sur la colonne
+      de texte. Le liseré crème autour de la petite la décolle de la grande :
+      sans lui les deux images se touchent et l'œil ne sait plus laquelle il
+      regarde.
+
+   2. LE CONTREPOINT. Une photographie qui sort du cadre par la gauche jusqu'au
+      bord de l'écran, et le texte posé par-dessus son bas, sur un aplat crème.
+      C'est l'inverse exact du premier bloc : là le texte était à côté, ici il
+      est dedans.
+   --------------------------------------------------------------------------- */
+.story { display: grid; gap: clamp(3.5rem, 9vw, 8rem); }
+
+/* --- 1. Le diptyque --- */
+.dip { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; }
+.dip__txt { grid-column: 1 / span 4; grid-row: 1; z-index: 2; }
+.dip__a   { grid-column: 6 / span 7; grid-row: 1; }
+.dip__a .ph { --ar: 3/2; }
+.dip__b {
+  /* Elle commence après la colonne de texte : elle mord la grande
+     photographie, jamais un mot. */
+  grid-column: 5 / span 4; grid-row: 1;
+  align-self: end; z-index: 3;
+  /* Elle descend sous la grande et mord la colonne de texte : c'est ce
+     décalage qui fait la composition, pas la juxtaposition. */
+  transform: translateY(26%);
+  padding: 8px; background: var(--bg); border-radius: calc(var(--r) + 6px);
+}
+.dip__b .ph { --ar: 4/5; }
+/* La rangée qui suit doit laisser passer ce qui dépasse. */
+.dip { padding-bottom: clamp(2rem, 6vw, 4.5rem); }
+
+/* --- 2. Le contrepoint --- */
+.cp { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; }
+.cp__img {
+  grid-column: 1 / span 6; grid-row: 1;
+  /* Elle sortait du cadre jusqu'au bord de l'écran. La seule photographie de
+     la salle dont nous disposons fait 675 px de large : à cette taille elle
+     était affichée sur près du double et devenait molle. Le débordement
+     reviendra le jour où nous aurons la vue en haute définition. */
+}
+.cp__img .ph { --ar: 16/10; }
+.cp__txt {
+  grid-column: 6 / span 7; grid-row: 1; z-index: 2;
+  padding: clamp(1.6rem, 3vw, 2.6rem);
+  background: var(--bg);
+  border-radius: var(--r);
+  box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgba(16,41,31,.4);
+}
+
+/* La légende d'une photographie : discrète, à sa place, jamais dessus. */
+.leg {
+  margin: .65rem 0 0;
+  font: 600 var(--fs-micro)/1.5 var(--sans); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--fg-soft);
+}
+
+@media (max-width: 900px) {
+  /* En colonne unique, les chevauchements n'ont plus de sens : ils demandent
+     de la largeur. On garde le décalage, en beaucoup plus court. */
+  .dip, .cp { grid-template-columns: 1fr; gap: 1rem; padding-bottom: 0; }
+  .dip__txt, .dip__a, .dip__b, .cp__img, .cp__txt { grid-column: 1 / -1; grid-row: auto; }
+  .dip__txt { margin-bottom: .6rem; }
+  .dip__a .ph { --ar: 4/3; }
+  .dip__b {
+    justify-self: end; width: 62%;
+    transform: translateY(-18%); margin-bottom: -12%;
+    padding: 6px;
+  }
+  .dip__b .ph { --ar: 1; }
+  .cp__img .ph { --ar: 4/3; }
+  .cp__txt {
+    width: calc(100% - 2rem); justify-self: center;
+    transform: translateY(-2rem); margin-bottom: -2rem;
+  }
 }
 
 /* Le chef : portrait rond, texte à côté */
@@ -384,15 +447,55 @@
 .paper p:first-child::first-letter { float: left; font: 500 3.6rem/.8 var(--serif); color: var(--accent); padding: .1em .12em 0 0; }
 @media (max-width: 760px) { .paper { columns: 1; } }
 
-/* Bande de photos qui défile horizontalement */
-.rail { display: flex; gap: clamp(.7rem, 1.5vw, 1.2rem); overflow-x: auto; scroll-snap-type: x mandatory;
-        padding-bottom: 1rem; scrollbar-width: thin; }
-.rail figure { flex: 0 0 clamp(240px, 30vw, 400px); scroll-snap-align: start; }
-.rail::after { content: ""; flex: 0 0 1px; }
-.rail .ph { --ar: 3/4; }
-.rail figure:nth-child(even) .ph { --ar: 4/3; }
+/* ---------------------------------------------------------------------------
+   LE SALON
 
-/* Encadré : la citation presse */
+   Quatre photographies posées en escalier plutôt qu'alignées. Aucune ne fait
+   la même hauteur que sa voisine, aucune ne commence à la même ligne : c'est
+   ce décalage qui fait qu'on les regarde une par une au lieu de balayer une
+   rangée.
+
+   Rien ne défile sur le côté : on ne demande pas à quelqu'un de faire glisser
+   une bande pour voir ce qu'on avait à lui montrer. Tout est là, du premier
+   coup d'œil.
+   --------------------------------------------------------------------------- */
+.salon {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 2vw, 1.8rem) clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+}
+/* Deux colonnes, dont la seconde démarre plus bas : c'est ce seul décalage qui
+   fait la composition. Aucune image n'en recouvre une autre, aucune ne recouvre
+   un mot — un chevauchement qui mange du texte n'est pas une audace, c'est un
+   défaut. */
+.salon__col { display: grid; gap: clamp(1rem, 2vw, 1.8rem); }
+.salon__col--2 { margin-top: clamp(2.5rem, 8vw, 7rem); }
+
+.salon__a .ph { --ar: 4/5; }
+.salon__b .ph { --ar: 4/3; }
+/* Carrée : en portrait, la colonne de droite dépassait la gauche de trois
+   cents pixels et le décalage se lisait comme un défaut d'alignement. */
+.salon__c .ph { --ar: 1; }
+
+/* Un mot posé entre deux images, à la place d'une cinquième : c'est ce qui
+   empêche la composition de se lire comme une planche-contact. */
+.salon__mot { padding: clamp(.5rem, 2vw, 1.5rem) 0; }
+.salon__mot p {
+  margin: 0; max-width: 26ch;
+  font: italic 400 clamp(1.1rem, 1.6vw, 1.35rem)/1.5 var(--serif);
+  color: var(--fg-soft);
+}
+
+@media (max-width: 700px) {
+  /* En colonne unique, le décalage n'a plus d'objet : il ne ferait qu'ajouter
+     du vide entre deux images déjà l'une sous l'autre. */
+  .salon { grid-template-columns: 1fr; gap: 1rem; }
+  .salon__col--2 { margin-top: 0; }
+  .salon__mot { text-align: center; }
+  .salon__mot p { margin-inline: auto; }
+}
+
+/* Encadré : la citation presse *//* Encadré : la citation presse */
 .press { display: grid; gap: .8rem; padding: clamp(1.8rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: var(--r); text-align: center; }
 .press__q { margin: 0; font: italic 400 clamp(1.25rem, 2.4vw, 1.7rem)/1.35 var(--serif); color: var(--fg-strong); }
 .press cite { font: 600 var(--fs-micro)/1.4 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }

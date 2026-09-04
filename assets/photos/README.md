@@ -62,8 +62,13 @@ absent déclenche une requête en échec à chaque visite. Déposez la photo dan
 et dites-le-moi : je remets l'emplacement dans la page.
 
 Une vraie photo de la salle serait utile : la seule dont nous disposons fait
-900 px de large, ce qui est juste pour un grand format. Idéalement une vue de la
-salle vide, une table dressée à l'intérieur, et le chef en cuisine.
+900 px de large, et n'en donne que 675 une fois recadrée. Elle a donc dû rester
+dans le cadre sur la page « Le restaurant », là où la composition prévoyait de
+la faire sortir jusqu'au bord de l'écran. Une vue en haute définition rendrait
+ce débordement possible.
+
+Idéalement : une vue de la salle vide, une table dressée à l'intérieur, et le
+chef en cuisine.
 
 ## Légender une photo de la galerie
 

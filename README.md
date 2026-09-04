@@ -8,9 +8,9 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | Fichier | Page | Composition |
 |---|---|---|
 | `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct et trois entrées en escalier. |
-| `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, récit en blocs alternés, portrait du chef, trois repères |
+| `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes, trois photographies en respiration |
-| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, bande de photos qui défile |
+| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, trois photos en salon |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page et les dessins
@@ -53,6 +53,31 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   tout l'écran, en vert profond, et les liens y sont composés dans le serif des
   titres, à la taille où on les lit sans viser.
 - Vérifié à 360, 390 et 430 px de large.
+
+## Les compositions photographiques
+
+Une photographie posée à côté d'un paragraphe, répétée trois fois, c'est ce que
+fait n'importe quel gabarit. Chaque page en a donc une qui lui est propre.
+
+**Le diptyque** (page « Le restaurant », premier bloc). Une grande
+photographie en paysage, et une seconde en portrait qui vient la mordre par en
+dessous. Elle commence après la colonne de texte : elle mord la photographie,
+jamais un mot. Le liseré crème autour de la petite la décolle de la grande ;
+sans lui les deux images se touchent et l'œil ne sait plus laquelle il regarde.
+
+**Le contrepoint** (page « Le restaurant », second bloc). Le texte est posé
+par-dessus le bas de la photographie, sur un aplat crème. C'est l'inverse exact
+du premier bloc : là le texte était à côté, ici il est dedans.
+
+**Le salon** (page « La terrasse »). Deux colonnes dont la seconde démarre plus
+bas : c'est ce seul décalage qui fait la composition. Aucune image n'en recouvre
+une autre, aucune ne recouvre un mot. Un mot posé entre deux images, à la place
+d'une troisième, empêche l'ensemble de se lire comme une planche-contact.
+
+**Rien ne défile sur le côté.** On ne demande pas à quelqu'un de faire glisser
+une bande pour voir ce qu'on avait à lui montrer : tout est là du premier coup
+d'œil. Au doigt, les chevauchements disparaissent — ils demandent de la largeur
+— et il ne reste que les décalages verticaux.
 
 ## Le mouvement
 

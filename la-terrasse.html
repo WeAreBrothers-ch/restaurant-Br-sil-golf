@@ -102,29 +102,41 @@
     </div>
   </section>
 
-  <section class="sect" style="padding-top:0">
-    <div class="bleed">
-      <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.6rem">
-        <h2 class="t-2">La terrasse en images</h2>
-        <p class="xs soft" style="margin:0; letter-spacing:.12em; text-transform:uppercase">Faites glisser &rarr;</p>
+  <section class="sect" style="padding-top:0" aria-labelledby="titre-images">
+    <div class="wrap">
+      <div data-reveal style="max-width:34rem; margin-bottom:clamp(1.6rem,3vw,2.4rem)">
+        <p class="kicker">En images</p>
+        <h2 class="t-2" id="titre-images">Du déjeuner au coucher du soleil</h2>
       </div>
-      <div class="rail" data-reveal>
-      <figure class="ph ph--z" data-file="terrasse-02.jpg">
-      <img src="assets/photos/terrasse-02.jpg" alt="Le 9, la terrasse, vue rapprochée" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La terrasse, vue rapprochée</span><code>terrasse-02.jpg</code></span>
-    </figure>
-      <figure class="ph ph--z" data-file="terrasse-03.jpg">
-      <img src="assets/photos/terrasse-03.jpg" alt="Le 9, le parcours depuis la terrasse" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Le parcours depuis la terrasse</span><code>terrasse-03.jpg</code></span>
-    </figure>
-      <figure class="ph ph--z" data-file="plat-03.jpg">
-      <img src="assets/photos/plat-03.jpg" alt="Le 9, une assiette servie en terrasse" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette en terrasse</span><code>plat-03.jpg</code></span>
-    </figure>
-      <figure class="ph ph--z" data-file="terrasse-04.jpg">
-      <img src="assets/photos/terrasse-04.jpg" alt="Le 9, la terrasse en soirée" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La terrasse en soirée</span><code>terrasse-04.jpg</code></span>
-    </figure>
+
+      <!-- LE SALON : quatre photographies en escalier. Rien ne défile sur le
+           côté : tout est visible du premier coup d'œil. -->
+      <div class="salon" data-reveal>
+        <div class="salon__col">
+          <div class="salon__a">
+            <figure class="ph ph--z ph--derive" data-file="terrasse-01.jpg">
+              <img src="assets/photos/terrasse-01.jpg" alt="Une table dressée sur la terrasse du 9, face au parcours" loading="lazy" decoding="async">
+              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La table, en fin de journée</span><code>terrasse-01.jpg</code></span>
+            </figure>
+          </div>
+          <div class="salon__mot">
+            <p>Le déjeuner s&rsquo;y étire, l&rsquo;apéritif s&rsquo;y prolonge, et le soir le soleil se couche derrière les fairways.</p>
+          </div>
+        </div>
+        <div class="salon__col salon__col--2">
+          <div class="salon__b">
+            <figure class="ph ph--z ph--derive" data-file="terrasse-04.jpg">
+              <img src="assets/photos/terrasse-04.jpg" alt="Le parcours du Golf du Brésil vu de la terrasse, au coucher du soleil" loading="lazy" decoding="async">
+              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Le parcours au couchant</span><code>terrasse-04.jpg</code></span>
+            </figure>
+          </div>
+          <div class="salon__c">
+            <figure class="ph ph--z" data-file="plat-03.jpg">
+              <img src="assets/photos/plat-03.jpg" alt="Une assiette servie sur la terrasse du 9" loading="lazy" decoding="async">
+              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette en terrasse</span><code>plat-03.jpg</code></span>
+            </figure>
+          </div>
+        </div>
       </div>
     </div>
   </section>

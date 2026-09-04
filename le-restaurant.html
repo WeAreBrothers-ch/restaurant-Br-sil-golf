@@ -94,33 +94,43 @@
     <div class="illu i-table"     data-side="r" style="--y:50%; --w:165px; --in:8px; --r:5deg" data-hide="lg"></div>
     <div class="wrap story">
 
-      <div class="story__b story__b--l" data-reveal>
-        <div class="story__txt">
+      <!-- LE DIPTYQUE : une grande photographie, une seconde qui vient la
+           mordre par en dessous en débordant sur la colonne de texte. -->
+      <div class="dip" data-reveal>
+        <div class="dip__txt">
           <h2 class="t-2">La table</h2>
           <p>La carte suit les saisons et reste courte : ce qui est proposé est travaillé sur place. Entrées, viandes, poissons, pâtes et desserts, avec le label Fait Maison.</p>
           <p class="soft">Une carte des golfeurs, plus rapide, permet de déjeuner entre deux parcours sans y passer l&rsquo;après-midi.</p>
           <p style="margin-top:1.7rem"><a class="alink" href="la-carte.html">Voir la carte</a></p>
         </div>
-        <div class="story__img">
-          <figure class="ph ph--z" data-file="plat-04.jpg">
-      <img src="assets/photos/plat-04.jpg" alt="Une côte de bœuf servie au restaurant Le 9" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Un plat</span><code>plat-04.jpg</code></span>
-    </figure>
+        <div class="dip__a">
+          <figure class="ph ph--z ph--derive " data-file="plat-04.jpg">
+          <img src="assets/photos/plat-04.jpg" alt="Côte de bœuf, gratin et sauce aux morilles, au Le 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Un plat</span><code>plat-04.jpg</code></span>
+        </figure>
+        </div>
+        <div class="dip__b">
+          <figure class="ph ph--z " data-file="plat-01.jpg">
+          <img src="assets/photos/plat-01.jpg" alt="Saint-Jacques et écume verte, au Le 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une entrée</span><code>plat-01.jpg</code></span>
+        </figure>
         </div>
       </div>
 
-      <div class="story__b story__b--r" data-reveal>
-        <div class="story__txt">
+      <!-- LE CONTREPOINT : la photographie sort du cadre par la gauche, le
+           texte se pose par-dessus son bas. L'inverse exact du bloc du dessus. -->
+      <div class="cp" data-reveal>
+        <div class="cp__img">
+          <figure class="ph ph--z ph--derive " data-file="salle-01.jpg">
+          <img src="assets/photos/salle-01.jpg" alt="La vue sur le parcours depuis une table de la salle du 9" loading="lazy" decoding="async">
+          <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La vue depuis la salle</span><code>salle-01.jpg</code></span>
+        </figure>
+        </div>
+        <div class="cp__txt">
           <h2 class="t-2">La salle</h2>
           <p>Une salle sobre, des tables espacées, de grandes baies tournées vers le parcours. On entend le service, pas la table d&rsquo;à côté.</p>
           <!-- TODO à vérifier : capacité de la salle, privatisation, service traiteur -->
-          <p class="soft">Repas de famille, réunion d&rsquo;entreprise, événement privé : la maison prend les groupes. <span class="todo">capacité à préciser</span></p>
-        </div>
-        <div class="story__img">
-          <figure class="ph ph--z" data-file="salle-01.jpg">
-      <img src="assets/photos/salle-01.jpg" alt="La vue sur le parcours depuis une table de la salle" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La vue depuis la salle</span><code>salle-01.jpg</code></span>
-    </figure>
+          <p class="soft" style="margin-bottom:0">Repas de famille, réunion d&rsquo;entreprise, événement privé : la maison prend les groupes. <span class="todo">capacité à préciser</span></p>
         </div>
       </div>
 
