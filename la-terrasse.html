@@ -26,9 +26,8 @@
       <span class="logo__n">Le&nbsp;<i>9</i></span>
       <span class="logo__t">Restaurant du<br>Golf du Brésil</span>
     </a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
-      <svg class="m" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-      <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <a href="le-restaurant.html">Le restaurant</a>
@@ -39,6 +38,35 @@
     </nav>
   </div>
 </header>
+
+<!-- Le menu du téléphone. Il s'appuie sur <dialog> : le piégeage du focus, la
+     touche Échap et le rôle de dialogue sont assurés par le navigateur, pas
+     par nous. C'est moins de code et un comportement plus juste. -->
+<dialog id="menu" class="mm" aria-label="Navigation du site">
+  <div class="mm__in">
+    <div class="mm__haut">
+      <span class="mm__marque">Le&nbsp;<i>9</i></span>
+      <button type="button" class="mm__fermer" aria-label="Fermer le menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <nav class="mm__liens" aria-label="Navigation principale">
+      <a class="mm__lien" href="le-restaurant.html" style="--retard:0ms">Le restaurant<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="mm__lien" href="la-carte.html" style="--retard:45ms">La carte<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="mm__lien" href="la-terrasse.html" aria-current="page" style="--retard:90ms">La terrasse<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="mm__lien" href="contact.html" style="--retard:135ms">Contact<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></a>
+    </nav>
+
+    <div class="mm__bas">
+      <a class="mm__tel" href="tel:+41218822419">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        021 882 24 19
+      </a>
+      <p class="mm__adresse">Chemin du Brésil 4<br>1376 Goumoens-le-Jux</p>
+    </div>
+  </div>
+</dialog>
 
 <main id="main">
 
@@ -160,6 +188,23 @@
   </div>
 </footer>
 
+
+<!-- La barre d'appel du téléphone. Elle monte une fois le premier écran passé :
+     avant, le numéro est déjà à l'écran et elle ne ferait que masquer l'image.
+     Elle s'efface pendant la saisie d'un champ, pour ne pas venir se poser sur
+     le clavier. -->
+<div class="barre" data-visible="false" aria-label="Appeler ou venir">
+  <a class="barre__a" href="tel:+41218822419" tabindex="-1">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+    Appeler
+  </a>
+  <a class="barre__a barre__a--2" href="https://www.google.com/maps/dir/?api=1&amp;destination=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux" target="_blank" rel="noopener" tabindex="-1">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 0 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+    Itinéraire
+  </a>
+</div>
+
 <script src="js/main.js" defer></script>
+<script src="js/barre.js" defer></script>
 </body>
 </html>

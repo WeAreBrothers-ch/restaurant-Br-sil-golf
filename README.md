@@ -11,7 +11,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, récit en blocs alternés, portrait du chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes, trois photographies en respiration |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, bande de photos qui défile |
-| `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, bloc réservation |
+| `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page et les dessins
 en fond sont communs.
@@ -33,9 +33,20 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
 - **Aucune cible tactile sous 44 px de haut.** Les liens de liste, les liens
   fléchés et les entrées de sommaire sont élargis là où le pointeur est
   grossier, sans rien changer là où l'on a une souris.
-- **Les blocs se recomposent plutôt que de rétrécir** : le sommaire de la carte
-  devient une rangée de pastilles, le récit passe en colonne unique avec le
-  titre avant sa photo, les horaires se resserrent en deux colonnes.
+- **Les blocs se recomposent plutôt que de rétrécir.** Le bandeau d'accès
+  direct devient quatre carrés en deux lignes au lieu de quatre bandes
+  empilées. Les trois entrées de l'accueil prennent une vignette carrée à
+  gauche et le texte à droite, au lieu de trois photos plein cadre. Les repères
+  chiffrés passent côte à côte. Le sommaire de la carte devient une rangée de
+  pastilles. Le récit passe en colonne unique, titre avant photo.
+- **Une barre d'appel reste au bas de l'écran** avec le numéro et l'itinéraire,
+  les deux seules choses qu'on veut faire depuis un téléphone devant un site de
+  restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
+  saisie d'un champ, pour ne pas se poser sur le clavier.
+- **Le menu est un vrai `<dialog>`** ouvert en modal : le piégeage du focus, la
+  touche Échap et le rôle de dialogue sont assurés par le navigateur. Il occupe
+  tout l'écran, en vert profond, et les liens y sont composés dans le serif des
+  titres, à la taille où on les lit sans viser.
 - Vérifié à 360, 390 et 430 px de large.
 
 ## Le mouvement
@@ -77,6 +88,8 @@ css/pages.css                  la composition de chaque page
 js/amorce.js                   pose data-js avant le premier affichage
 js/main.js                     menu, apparitions, sommaire actif
 js/hero.js                     le mouvement du premier écran
+js/barre.js                    la barre d'appel du téléphone
+js/formulaire.js               validation et envoi du formulaire de contact
 assets/illustrations/source/   les dessins d'origine
 assets/illustrations/dist/     les dessins servis par le site (une seule couleur)
 assets/photos/source/          les photos d'origine
@@ -190,6 +203,11 @@ d'origine existe quelque part, il suffit de le mettre à la place de
 
 Chercher `TODO` dans les fichiers HTML.
 
+- **Formulaire de contact** : il poste vers un service de réception qui
+  transmet le message par courriel. Remplacer l'adresse de l'attribut `action`
+  dans `contact.html` par la vôtre (Formspree, Basin, Formcarry, ou un script
+  sur votre hébergement). Tant que ce n'est pas fait, l'envoi échoue et le
+  visiteur est renvoyé vers le téléphone.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Horaires** : les sources se contredisent sur le lundi, la grille est en « à confirmer ».
 - **Photos manquantes** : le chef, une vraie photo de salle en haute définition, quelques plats de plus. Voir `assets/photos/README.md`.

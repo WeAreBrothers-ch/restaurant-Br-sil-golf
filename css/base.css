@@ -33,8 +33,8 @@
   /* --- Dessins en fond : une seule couleur, une seule opacité ---
      Assez présents pour se voir, assez discrets pour rester du décor.
      Baisser --illu-opacity pour les estomper, la monter pour les affirmer. */
-  --illu:         var(--c-green);
-  --illu-opacity: .45;
+  --illu:         var(--c-green-deep);
+  --illu-opacity: .58;
 
   /* --- Typographie ---
      Le site est pensé pour le téléphone d'abord. Rien n'y descend sous 12 px,
@@ -90,7 +90,7 @@
   --btn-bg:    var(--c-cream);
   --btn-fg:    var(--c-green-deep);
   --illu:      var(--c-cream);
-  --illu-opacity: .26;
+  --illu-opacity: .34;
   background: var(--bg);
   color: var(--fg);
 }
@@ -303,20 +303,88 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 1080px) {
   .logo__t { display: none; }
   .burger { display: inline-flex; }
-  .nav {
-    position: fixed; inset: var(--head-h) 0 auto 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--c-cream); border-bottom: 1px solid var(--c-cream-3);
-    padding: .25rem var(--pad) 1.5rem; max-height: calc(100dvh - var(--head-h)); overflow-y: auto;
-    transform: translateY(-6px); opacity: 0; visibility: hidden; transition: all .2s;
-  }
-  .nav.open { transform: none; opacity: 1; visibility: visible; }
-  .nav a { padding: 1rem 0; border-bottom: 1px solid var(--c-cream-3); font-size: .84rem; }
-  .nav a[aria-current="page"] { color: var(--c-brass); }
-  .nav__tel { margin-top: 1.2rem; justify-content: center; }
+  .nav { display: none; }
 }
 
 /* ---------------------------------------------------------------------------
+   LE MENU DU TÉLÉPHONE
+
+   Un vrai <dialog> ouvert en modal : le navigateur se charge du piégeage du
+   focus, de la touche Échap et du rôle de dialogue. C'est moins de code qu'une
+   imitation, et un comportement plus juste.
+
+   Il occupe tout l'écran, en vert profond, et les liens y sont composés dans
+   le serif des titres, à la taille où on les lit sans viser. Ils arrivent l'un
+   après l'autre, comme les dessins du premier écran.
+   --------------------------------------------------------------------------- */
+.mm {
+  width: 100%; max-width: 100%; height: 100%; max-height: 100%;
+  margin: 0; padding: 0; border: 0;
+  overflow: auto; overscroll-behavior: contain;
+  background: var(--c-green-deep); color: var(--c-cream);
+}
+.mm::backdrop { background: rgb(8 22 16 / .96); }
+@media (min-width: 1081px) { .mm { display: none; } }
+
+.mm__in {
+  width: min(100% - 2 * var(--pad), var(--wrap));
+  margin-inline: auto;
+  display: grid; grid-template-rows: auto 1fr auto;
+  min-height: 100%;
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.mm__haut {
+  display: flex; align-items: center; justify-content: space-between;
+  height: var(--head-h); border-bottom: 1px solid rgba(244,239,227,.16);
+}
+.mm__marque { font: 500 1.7rem/1 var(--serif); letter-spacing: -.02em; }
+.mm__marque i { font-style: italic; }
+.mm__fermer {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; margin-right: -.6rem; color: var(--c-cream);
+}
+.mm__fermer:focus-visible { outline: 2px solid var(--c-brass); outline-offset: -4px; }
+
+.mm__liens { display: grid; align-content: start; padding-block: clamp(1rem, 4vh, 2.5rem); }
+.mm__lien {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+  padding-block: clamp(.9rem, 2.4vh, 1.3rem);
+  border-bottom: 1px solid rgba(244,239,227,.14);
+  font: 500 clamp(1.9rem, 7.5vw, 2.6rem)/1.1 var(--serif);
+  color: var(--c-cream); text-decoration: none;
+}
+.mm__lien svg { flex: none; color: var(--c-brass); transition: transform .25s var(--expo); }
+.mm__lien:active svg { transform: translateX(5px); }
+.mm__lien[aria-current="page"] { color: var(--c-brass); }
+
+.mm__bas { display: grid; gap: .9rem; padding-top: 1.5rem; }
+.mm__tel {
+  display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 52px; padding: 0 1.4rem; border-radius: 999px;
+  background: var(--c-cream); color: var(--c-green-deep); text-decoration: none;
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .12em; text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.mm__adresse {
+  margin: 0; text-align: center; font-size: var(--fs-sm); line-height: 1.6;
+  color: rgba(244,239,227,.6);
+}
+
+/* L'ouverture : le panneau monte, puis les liens arrivent l'un après l'autre.
+   Rien de tout cela si le système demande un mouvement réduit. */
+@media (prefers-reduced-motion: no-preference) {
+  .mm[open] { animation: mm-entree .42s var(--expo); }
+  .mm[open]::backdrop { animation: mm-fond .42s ease; }
+  .mm[open] .mm__lien { animation: mm-lien .5s var(--expo) backwards; animation-delay: calc(120ms + var(--retard, 0ms)); }
+  .mm[open] .mm__bas  { animation: mm-lien .5s var(--expo) backwards; animation-delay: 340ms; }
+}
+@keyframes mm-entree { from { transform: translateY(1.5rem); opacity: 0; } }
+@keyframes mm-fond   { from { opacity: 0; } }
+@keyframes mm-lien   { from { transform: translateY(.9rem); opacity: 0; } }
+
+/* ---------------------------------------------------------------------------
+   AU DOIGT/* ---------------------------------------------------------------------------
    AU DOIGT
 
    Un doigt vise moins bien qu'un curseur : au-dessous de 44 px de haut, on
@@ -370,7 +438,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- Pied de page ---------- */
 .foot { background: var(--c-green-deep); color: var(--c-cream); position: relative; overflow: hidden;
-        --illu: var(--c-cream); --illu-opacity: .16; }
+        --illu: var(--c-cream); --illu-opacity: .2; }
 .foot__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.1fr; gap: 2.5rem;
               padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
 .foot h4 { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass); margin-bottom: 1.1rem; }
@@ -468,3 +536,49 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   html { scroll-behavior: auto; }
   [data-js] [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   LA BARRE D'APPEL DU TÉLÉPHONE
+
+   Les deux seules choses qu'on veut faire depuis un téléphone devant un site
+   de restaurant : appeler, et savoir où c'est. Elles restent donc à portée du
+   pouce plutôt qu'au bout d'un long défilement.
+
+   Elle monte une fois le premier écran passé : avant, le numéro est déjà à
+   l'écran et elle ne ferait que masquer l'image. Tant qu'elle est cachée, ses
+   liens sortent de l'ordre de tabulation : une barre invisible ne doit pas être
+   atteignable au clavier.
+
+   Son placement n'est pas de notre ressort : `bottom: 0` suffit, les
+   navigateurs recalant d'eux-mêmes leurs éléments fixes quand leur barre
+   d'outils se replie. Une correction de notre part s'ajouterait à la leur.
+   --------------------------------------------------------------------------- */
+.barre {
+  position: fixed; bottom: 0; inset-inline: 0; z-index: 50;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--c-green-deep);
+  border-top: 1px solid rgba(244,239,227,.16);
+  transform: translateY(100%);
+  transition: transform .35s var(--expo);
+  will-change: transform;
+}
+.barre[data-visible="true"] { transform: none; }
+/* Le clavier occupe le bas de l'écran : la barre s'efface le temps de la
+   saisie plutôt que de venir se poser dessus. Écrit après la règle du dessus,
+   qui a la même force : c'est l'ordre qui tranche. */
+.barre[data-saisie="true"] { transform: translateY(100%); }
+@media (min-width: 1081px) { .barre { display: none; } }
+
+.barre__a {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  min-height: 56px; text-decoration: none;
+  color: var(--c-cream);
+  font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
+}
+.barre__a--2 { border-left: 1px solid rgba(244,239,227,.16); }
+.barre__a:active { background: rgba(244,239,227,.1); }
+.barre__a svg { color: var(--c-brass); }
+
+/* Le pied de page ne doit pas finir sous la barre. */
+@media (max-width: 1080px) { .foot__end { padding-bottom: calc(2rem + 56px); } }

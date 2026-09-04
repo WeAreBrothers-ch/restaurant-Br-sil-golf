@@ -5,22 +5,33 @@
 (function () {
   'use strict';
 
-  /* ---------------------------------------------------------------- menu ---*/
+  /* ---------------------------------------------------------------- menu ---
+     Le menu du téléphone est un vrai <dialog> : le navigateur se charge du
+     piégeage du focus, de la touche Échap et du rôle de dialogue. On ne fait
+     qu'ouvrir, fermer, et bloquer le défilement de la page derrière. */
+  var menu = document.getElementById('menu');
   var burger = document.querySelector('.burger');
-  var nav = document.getElementById('nav');
-  if (burger && nav) {
-    var setMenu = function (open) {
-      nav.classList.toggle('open', open);
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Menu');
-      document.body.style.overflow = open && window.innerWidth <= 1080 ? 'hidden' : '';
-    };
+  if (menu && burger && typeof menu.showModal === 'function') {
     burger.addEventListener('click', function () {
-      setMenu(burger.getAttribute('aria-expanded') !== 'true');
+      menu.showModal();
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
     });
-    nav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', function () { if (window.innerWidth > 1080) setMenu(false); });
+    menu.addEventListener('click', function (e) {
+      // Un lien, la croix, ou le fond hors du panneau : on part, donc on ferme.
+      if (e.target.closest('.mm__lien, .mm__fermer') || e.target === menu) menu.close();
+    });
+    menu.addEventListener('close', function () {
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  } else if (burger) {
+    // Navigateur sans showModal : le bouton mène au pied de page, qui porte la
+    // même navigation. Mieux qu'un bouton qui ne fait rien.
+    burger.addEventListener('click', function () {
+      var pied = document.querySelector('.foot');
+      if (pied) pied.scrollIntoView({ behavior: 'smooth' });
+    });
   }
 
   /* ------------------------------------------------- filet de l'en-tête ---*/
