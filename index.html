@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le 9 · Restaurant du Golf du Brésil, Goumoens-le-Jux</title>
+  <meta name="description" content="Le 9, restaurant du Golf du Domaine du Brésil à Goumoens-le-Jux (VD). Cuisine soignée, terrasse avec vue sur le parcours, cadre de campagne. Réservation au 021 882 24 19.">
+  <meta name="theme-color" content="#143229">
+  <meta property="og:title" content="Le 9 · Restaurant du Golf du Brésil">
+  <meta property="og:description" content="Une table au calme, au bord du parcours. Goumoens-le-Jux, Vaud.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23143229'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' fill='%23f3eee2'%3E9%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- =====================================================================
+     À REMPLIR / À VÉRIFIER (chercher le mot TODO dans ce fichier)
+     - Logo : remplacer le bloc .logo par <img src="assets/logo/le9.svg">
+     - Photos : déposer les fichiers dans assets/photos/ (noms indiqués)
+     - Carte : relevée sur un annuaire en ligne (2024), à valider
+     - Horaires : deux sources se contredisent, voir la section #horaires
+     ===================================================================== -->
+
+<header class="topbar" id="top">
+  <div class="container topbar__inner">
+    <a class="brand" href="#top" aria-label="Le 9, retour en haut de page">
+      <span class="brand__mark">Le&nbsp;<em>9</em></span>
+      <span class="brand__sub">Restaurant du Golf du Brésil</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="#restaurant">Le restaurant</a>
+      <a href="#carte">La carte</a>
+      <a href="#terrasse">La terrasse</a>
+      <a href="#horaires">Horaires</a>
+      <a href="#contact">Contact</a>
+      <a class="nav__phone" href="tel:+41218822419">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        021 882 24 19
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <!-- Illustrations dispersées : position/taille via variables, jamais sous le texte -->
+    <div class="illu illu--swing"     style="--x:5%;  --y:10%; --w:150px; --r:-4deg; --mx:4%;  --my:8%"></div>
+    <div class="illu illu--assiette"  style="--x:26%; --y:6%;  --w:150px; --r:6deg"  data-hide="mobile"></div>
+    <div class="illu illu--bouteille" style="--x:64%; --y:7%;  --w:105px; --r:-6deg; --mx:66%; --my:6%"></div>
+    <div class="illu illu--finish"    style="--x:85%; --y:16%; --w:135px; --r:5deg;  --mx:84%; --my:20%"></div>
+    <div class="illu illu--chef"      style="--x:4%;  --y:54%; --w:165px; --r:3deg;  --mx:2%;  --my:78%"></div>
+    <div class="illu illu--clubs"     style="--x:30%; --y:74%; --w:120px; --r:-8deg" data-hide="mobile"></div>
+    <div class="illu illu--bouteille" style="--x:66%; --y:70%; --w:95px;  --r:8deg"  data-hide="mobile"></div>
+    <div class="illu illu--assiette"  style="--x:82%; --y:66%; --w:175px; --r:-5deg; --mx:70%; --my:82%"></div>
+
+    <div class="hero__center">
+      <!-- TODO logo : remplacer ce bloc par <img class="logo" src="assets/logo/le9.svg" alt="Le 9, Restaurant du Golf du Brésil"> -->
+      <a class="logo" href="#top" id="hero-title">
+        <span class="logo__word">Le&nbsp;<em>9</em></span>
+        <span class="logo__rule" aria-hidden="true"></span>
+        <span class="logo__sub">Restaurant du Golf du Brésil</span>
+      </a>
+      <p class="hero__place">Une table au calme, au bord du parcours.<br><span class="hero__loc">Goumoens-le-Jux · Vaud</span></p>
+      <div class="hero__cta">
+        <a class="btn" href="#carte">Découvrir la carte</a>
+        <a class="btn btn--ghost" href="tel:+41218822419">Réserver · 021 882 24 19</a>
+      </div>
+    </div>
+    <a class="hero__scroll" href="#restaurant" aria-label="Défiler vers le contenu">Découvrir</a>
+  </section>
+
+  <!-- ================= BANDEAU INFOS ================= -->
+  <div class="infobar">
+    <div class="container infobar__grid">
+      <a class="infobar__item" href="#carte">
+        <span class="infobar__label">La carte</span>
+        <span class="infobar__value">Entrées, viandes, poissons, desserts</span>
+      </a>
+      <a class="infobar__item" href="#horaires">
+        <span class="infobar__label">Horaires</span>
+        <span class="infobar__value">Midi et soir <span class="todo">à confirmer</span></span>
+      </a>
+      <a class="infobar__item" href="#contact">
+        <span class="infobar__label">Adresse</span>
+        <span class="infobar__value">Chemin du Brésil 4, Goumoens-le-Jux</span>
+      </a>
+      <a class="infobar__item" href="tel:+41218822419">
+        <span class="infobar__label">Réserver</span>
+        <span class="infobar__value">021 882 24 19</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= LE RESTAURANT ================= -->
+  <section class="section" id="restaurant" aria-labelledby="restaurant-title">
+    <div class="illu illu--chef"  style="--x:74%; --y:72%; --w:170px; --r:-4deg" data-hide="tablet"></div>
+    <div class="illu illu--clubs" style="--x:90%; --y:4%;  --w:110px; --r:10deg" data-hide="mobile"></div>
+    <div class="container">
+      <div class="split">
+        <div class="reveal">
+          <p class="eyebrow">Le restaurant</p>
+          <h2 class="title-lg" id="restaurant-title">Une cuisine soignée,<br>un cadre de campagne</h2>
+          <p class="lead" style="margin-top:1.4rem">Au cœur du Gros-de-Vaud, Le 9 est le restaurant du Golf du Domaine du Brésil. On y vient pour la vue sur le parcours, le calme des lieux et une cuisine faite maison.</p>
+          <!-- TODO à vérifier : nom du chef (source : fiche annuaire 2024) et ouverture aux non-golfeurs -->
+          <p>La carte du chef Jérôme Rochat suit les saisons et porte le label Fait Maison. Golfeur ou non, la maison accueille tout le monde : déjeuner entre collègues, repas de famille, verre en fin d'après-midi ou dîner au coucher du soleil.</p>
+          <ul class="facts">
+            <li class="facts__item"><span class="facts__num">01</span><span class="facts__txt">Cuisine fait maison, produits de saison</span></li>
+            <li class="facts__item"><span class="facts__num">02</span><span class="facts__txt">Terrasse avec vue sur le parcours et les collines</span></li>
+            <li class="facts__item"><span class="facts__num">03</span><span class="facts__txt">Salle pour les repas de groupe et les événements</span></li>
+          </ul>
+        </div>
+        <div class="photo-pair reveal">
+          <figure class="ph ph--tall">
+            <img src="assets/photos/salle.jpg" alt="La salle du restaurant Le 9" loading="lazy">
+            <figcaption class="ph__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <strong>Photo à ajouter</strong><span>La salle</span><code>assets/photos/salle.jpg</code>
+            </figcaption>
+          </figure>
+          <figure class="ph ph--square ph--offset">
+            <img src="assets/photos/plat-01.jpg" alt="Un plat servi au restaurant Le 9" loading="lazy">
+            <figcaption class="ph__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <strong>Photo à ajouter</strong><span>Un plat</span><code>assets/photos/plat-01.jpg</code>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LA CARTE ================= -->
+  <section class="section section--dark" id="carte" aria-labelledby="carte-title">
+    <div class="illu illu--bouteille" style="--x:88%; --y:3%;  --w:150px; --r:6deg"  data-hide="mobile"></div>
+    <div class="illu illu--assiette"  style="--x:70%; --y:77%; --w:190px; --r:-6deg" data-hide="tablet"></div>
+    <div class="container">
+      <div class="carte__head">
+        <div class="reveal">
+          <p class="eyebrow">La carte</p>
+          <h2 class="title-lg" id="carte-title">Des entrées aux desserts,<br>en passant par la carte des golfeurs</h2>
+          <p class="lead" style="margin-top:1.4rem">Une carte courte qui suit les saisons, une carte des golfeurs pour un repas plus rapide, et un menu pour les enfants. Prix en CHF, service compris.</p>
+        </div>
+        <!-- TODO carte : plats et prix relevés sur un annuaire en ligne (fiche datée de 2024). À valider avec le restaurant avant mise en ligne. -->
+        <aside class="carte__note reveal">
+          <span class="todo">Exemple, à valider</span><br>
+          Cette carte a été relevée sur une fiche en ligne datant de 2024. Les plats et les prix sont à confirmer avec la cuisine avant publication.
+        </aside>
+      </div>
+
+      <div class="carte__cats">
+        <div class="cat reveal">
+          <h3 class="cat__title">Les entrées</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Salade de feuilles folles, vinaigrette miel et moutarde</span><span class="dish__price">6.–</span></li>
+            <li class="dish"><span class="dish__name">Salade de légumes en crus et cuits</span><span class="dish__price">12.–</span></li>
+            <li class="dish"><span class="dish__name">Bisque de homard maison</span><span class="dish__price">18.–</span></li>
+            <li class="dish"><span class="dish__name">Mousse de saumon fumé au sarment de vigne, poireaux vinaigrette à l'orange, émulsion champagne</span><span class="dish__price">21.–</span></li>
+            <li class="dish"><span class="dish__name">Foie gras mi-cuit au piment d'Espelette, chutney de pomme Granny Smith et brioche maison</span><span class="dish__price">25.–</span></li>
+          </ul>
+        </div>
+
+        <div class="cat reveal">
+          <h3 class="cat__title">Les viandes</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Entrecôte de bœuf 160 g</span><span class="dish__price">32.–</span></li>
+            <li class="dish"><span class="dish__name">Tartare de bœuf traditionnel 120 g</span><span class="dish__price">33.–</span></li>
+            <li class="dish"><span class="dish__name">Tartare de bœuf traditionnel 200 g, pain grillé et frites fraîches</span><span class="dish__price">41.–</span></li>
+            <li class="dish"><span class="dish__name">Vitello tonnato, frites maison et salade</span><span class="dish__price">35.–</span></li>
+            <li class="dish"><span class="dish__name">Flan de cochon cuit à basse température 12 heures</span><span class="dish__price">39.–</span></li>
+          </ul>
+        </div>
+
+        <div class="cat reveal">
+          <h3 class="cat__title">Les poissons</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Filets de perche meunière, sauce tartare, 120 g</span><span class="dish__price">29.–</span></li>
+            <li class="dish"><span class="dish__name">Gambas en persillade, tagliatelles à la crème safranée</span><span class="dish__price">32.–</span></li>
+          </ul>
+          <h3 class="cat__title" style="margin-top:2rem">Les pâtes</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Tagliatelles aux tomates séchées et pesto genovese</span><span class="dish__price">23.–</span></li>
+            <li class="dish"><span class="dish__name">Raviolis farcis au citron, beurre de sauge</span><span class="dish__price">26.–</span></li>
+          </ul>
+          <h3 class="cat__title" style="margin-top:2rem">Les salades</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Salade de poulpe au paprika fumé</span><span class="dish__price">25.–</span></li>
+            <li class="dish"><span class="dish__name">Salade terre et mer</span><span class="dish__price">37.–</span></li>
+          </ul>
+        </div>
+
+        <div class="cat reveal">
+          <h3 class="cat__title">Les desserts</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Crème brûlée du moment</span><span class="dish__price">13.–</span></li>
+            <li class="dish"><span class="dish__name">Sorbet arrosé</span><span class="dish__price">13.–</span></li>
+            <li class="dish"><span class="dish__name">Café gourmand, trois pièces</span><span class="dish__price">14.–</span></li>
+            <li class="dish"><span class="dish__name">Assortiment de fromages d'ici et d'ailleurs</span><span class="dish__price">14.–</span></li>
+            <li class="dish"><span class="dish__name">Abricots du Valais rôtis au miel, crème mascarpone, crumble et sorbet fraise-mélisse</span><span class="dish__price">15.–</span></li>
+            <li class="dish"><span class="dish__name">Cœur coulant au chocolat de Madagascar</span><span class="dish__price">15.–</span></li>
+            <li class="dish"><span class="dish__name">Glace ou sorbet, la boule</span><span class="dish__price">4.–</span></li>
+          </ul>
+        </div>
+
+        <div class="cat reveal">
+          <h3 class="cat__title">La carte des golfeurs <small>Service rapide</small></h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Burger du chef, pain brioché au sésame</span><span class="dish__price">25.–</span></li>
+            <li class="dish"><span class="dish__name">Tagliatelles aux vongoles et seiches</span><span class="dish__price">25.–</span></li>
+            <li class="dish"><span class="dish__name">Roastbeef froid, sauce tartare</span><span class="dish__price">28.–</span></li>
+          </ul>
+          <h3 class="cat__title" style="margin-top:2rem">La carte des enfants</h3>
+          <ul>
+            <li class="dish"><span class="dish__name">Pâtes nature</span><span class="dish__price">6.–</span></li>
+            <li class="dish"><span class="dish__name">Nuggets de poulet maison, frites</span><span class="dish__price">14.–</span></li>
+            <li class="dish"><span class="dish__name">Steak haché, frites</span><span class="dish__price">14.–</span></li>
+          </ul>
+        </div>
+
+        <div class="cat reveal">
+          <h3 class="cat__title">Menu « 3 notes »</h3>
+          <p class="cat__sub">Entrée, plat et dessert composés par la cuisine.</p>
+          <ul>
+            <li class="dish"><span class="dish__name">Petite faim</span><span class="dish__price">63.–</span></li>
+            <li class="dish"><span class="dish__name">Grande faim</span><span class="dish__price">78.–</span></li>
+            <li class="dish"><span class="dish__name">Accord mets et vins, trois verres</span><span class="dish__price">18.–</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="carte__foot reveal">
+        <p class="small muted" style="margin:0;max-width:34em">Allergies, intolérances, régimes particuliers : dites-le-nous à la réservation ou au moment de commander.</p>
+        <!-- TODO : déposer la carte en PDF dans assets/carte.pdf et retirer l'étiquette -->
+        <a class="link-arrow" href="assets/carte.pdf">Télécharger la carte <span class="todo">PDF à ajouter</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LA TERRASSE ================= -->
+  <section class="section" id="terrasse" aria-labelledby="terrasse-title">
+    <div class="illu illu--finish" style="--x:91%; --y:58%; --w:150px; --r:4deg" data-hide="tablet"></div>
+    <div class="illu illu--bouteille" style="--x:0.5%; --y:62%; --w:96px; --r:-7deg" data-hide="tablet"></div>
+    <div class="container">
+      <div class="terrasse__hero reveal">
+        <figure class="ph ph--wide">
+          <img src="assets/photos/terrasse-vue.jpg" alt="La terrasse du 9, avec vue sur le parcours du golf" loading="lazy">
+          <figcaption class="ph__label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            <strong>Photo à ajouter</strong><span>La terrasse, vue sur le parcours</span><code>assets/photos/terrasse-vue.jpg</code>
+          </figcaption>
+        </figure>
+        <!-- TODO : préciser la source de presse -->
+        <blockquote class="quote">
+          <p>Citée par la presse parmi les « 100 terrasses de rêve » pour passer un bel été.</p>
+          <cite>Source à préciser</cite>
+        </blockquote>
+      </div>
+
+      <div class="split terrasse__body">
+        <div class="reveal">
+          <p class="eyebrow">La terrasse</p>
+          <h2 class="title-lg" id="terrasse-title">Le parcours en vis-à-vis,<br>le ciel pour plafond</h2>
+          <p class="lead" style="margin-top:1.4rem">Aux beaux jours, la terrasse s'ouvre sur le green et les collines du Gros-de-Vaud. Le déjeuner s'y étire, l'apéritif s'y prolonge.</p>
+          <!-- TODO à vérifier : partie couverte et vitrée (d'après les photos) -->
+          <p>Une partie de la terrasse est couverte et vitrée : la vue reste, quel que soit le temps. Le soir, le soleil se couche derrière les fairways.</p>
+          <a class="link-arrow" href="tel:+41218822419">Réserver une table en terrasse</a>
+        </div>
+        <div class="photo-pair reveal">
+          <figure class="ph ph--landscape">
+            <img src="assets/photos/terrasse-01.jpg" alt="Table dressée sur la terrasse" loading="lazy">
+            <figcaption class="ph__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <strong>Photo à ajouter</strong><span>Table dressée, terrasse</span><code>assets/photos/terrasse-01.jpg</code>
+            </figcaption>
+          </figure>
+          <figure class="ph ph--tall ph--offset">
+            <img src="assets/photos/plat-02.jpg" alt="Un plat servi en terrasse" loading="lazy">
+            <figcaption class="ph__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <strong>Photo à ajouter</strong><span>Un plat, terrasse</span><code>assets/photos/plat-02.jpg</code>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HORAIRES ================= -->
+  <section class="section section--dark" id="horaires" aria-labelledby="horaires-title">
+    <div class="illu illu--assiette" style="--x:-3%; --y:1%;  --w:190px; --r:-8deg" data-hide="tablet"></div>
+    <div class="illu illu--swing"    style="--x:91%; --y:40%; --w:150px; --r:5deg"  data-hide="tablet"></div>
+    <div class="container">
+      <div class="split">
+        <div class="reveal">
+          <p class="eyebrow">Horaires</p>
+          <h2 class="title-lg" id="horaires-title">Quand nous trouver</h2>
+          <!-- TODO horaires : deux sources se contredisent.
+               Source A (annuaire)      : tous les jours 9h – 21h
+               Source B (office du tourisme) : « Fermeture : lundi » et « lundi à dimanche 9h – 23h »
+               À confirmer avec le restaurant, puis remplacer les cellules ci-dessous. -->
+          <p class="lead" style="margin-top:1.4rem">Les horaires sont en cours de validation. Avant de vous déplacer, un coup de fil suffit.</p>
+          <a class="btn" href="tel:+41218822419">Appeler le 021 882 24 19</a>
+          <p class="hours__note">Le lundi en particulier est à confirmer : selon les sources, le restaurant est fermé ou ouvert ce jour-là.</p>
+        </div>
+        <div class="reveal">
+          <table class="hours">
+            <tbody>
+              <tr><th scope="row">Lundi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Mardi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Mercredi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Jeudi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Vendredi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Samedi</th><td><span class="tbc">à confirmer</span></td></tr>
+              <tr><th scope="row">Dimanche</th><td><span class="tbc">à confirmer</span></td></tr>
+            </tbody>
+          </table>
+          <!-- Exemple de ligne remplie : <tr><th scope="row">Mardi</th><td>11h30 – 14h · 18h30 – 22h</td></tr>
+               Jour fermé : <tr><th scope="row">Lundi</th><td><span class="closed">Fermé</span></td></tr> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ET ACCÈS ================= -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="illu illu--chef"  style="--x:90%; --y:70%; --w:170px; --r:-3deg" data-hide="tablet"></div>
+    <div class="illu illu--clubs" style="--x:3%;  --y:4%;  --w:100px; --r:12deg" data-hide="mobile"></div>
+    <div class="container">
+      <div class="contact__grid">
+        <div class="reveal">
+          <p class="eyebrow">Contact et accès</p>
+          <h2 class="title-lg" id="contact-title">Chemin du Brésil 4,<br>Goumoens-le-Jux</h2>
+          <address class="addr" style="margin-top:1.6rem">
+            <strong>Le 9 · Restaurant du Golf du Brésil</strong>
+            Chemin du Brésil 4<br>
+            1376 Goumoens-le-Jux, Vaud
+          </address>
+          <div class="contact__links">
+            <a href="tel:+41218822419">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+              021 882 24 19
+            </a>
+            <a href="mailto:restaurantle9@golfbresil.ch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              restaurantle9@golfbresil.ch
+            </a>
+          </div>
+          <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&destination=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
+          <ul class="access">
+            <li class="access__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.2-6-10a6 6 0 0 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+              <span>Sur le domaine du Golf du Brésil, dans le Gros-de-Vaud, entre Lausanne et Yverdon-les-Bains.</span>
+            </li>
+            <!-- TODO à vérifier : parking -->
+            <li class="access__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l1.5-6h9L18 17M7 20v-3M17 20v-3"/><path d="M8 11l1-3h6l1 3"/></svg>
+              <span>Parking sur place, au golf. <span class="todo">à vérifier</span></span>
+            </li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <div class="map">
+            <iframe title="Carte : Chemin du Brésil 4, 1376 Goumoens-le-Jux" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen
+              src="https://www.google.com/maps?q=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux&z=14&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RÉSERVATION ================= -->
+  <section class="section section--dark reserve" aria-labelledby="reserve-title" style="--section-y: clamp(4rem, 8vw, 6.5rem)">
+    <div class="illu illu--bouteille" style="--x:8%;  --y:18%; --w:120px; --r:-6deg" data-hide="tablet"></div>
+    <div class="illu illu--assiette"  style="--x:80%; --y:30%; --w:190px; --r:6deg"  data-hide="tablet"></div>
+    <div class="container reveal">
+      <p class="eyebrow" style="justify-content:center">Réservation</p>
+      <h2 class="title-md" id="reserve-title">Une table se réserve par téléphone</h2>
+      <a class="reserve__phone" href="tel:+41218822419">021 882 24 19</a>
+      <p class="muted reserve__mail">Groupes, banquets, événements privés : écrivez-nous à <a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#top"><span class="brand__mark">Le&nbsp;<em>9</em></span><span class="brand__sub">Restaurant du Golf du Brésil</span></a>
+        <p class="footer__tag">Une table au calme, au bord du parcours, à Goumoens-le-Jux.</p>
+      </div>
+      <div>
+        <h4>Adresse</h4>
+        <ul>
+          <li>Chemin du Brésil 4</li>
+          <li>1376 Goumoens-le-Jux</li>
+          <li><a href="https://www.google.com/maps/dir/?api=1&destination=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux" target="_blank" rel="noopener">Itinéraire</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+41218822419">021 882 24 19</a></li>
+          <li><a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Le site</h4>
+        <ul>
+          <li><a href="#restaurant">Le restaurant</a></li>
+          <li><a href="#carte">La carte</a></li>
+          <li><a href="#terrasse">La terrasse</a></li>
+          <li><a href="#horaires">Horaires</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Le 9 · Restaurant du Golf du Brésil</span>
+      <!-- TODO : ajouter l'adresse du site de L'Étoile -->
+      <span>De la même maison : Restaurant L'Étoile, Lausanne</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
