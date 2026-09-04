@@ -25,10 +25,12 @@ css/pages.css                  la composition de chaque page
 js/main.js                     menu, visionneuse, apparition au défilement
 assets/illustrations/source/   les dessins d'origine
 assets/illustrations/dist/     les dessins servis par le site (une seule couleur)
-assets/photos/                 les photos (voir le README du dossier)
-assets/logo/                   le logo Le 9 (à déposer)
-tools/process_illustrations.py détourage, nettoyage et vectorisation
+assets/photos/source/          les photos d'origine
+assets/photos/                 les photos servies, produites par le script
+assets/logo/                   le sceau Le 9, en courbes et en source modifiable
+tools/process_illustrations.py détourage, nettoyage et vectorisation des dessins
 tools/illustrations.json       réglages par dessin
+tools/prepare_photos.py        recadrage, redimensionnement et compression des photos
 ```
 
 ## Tester en local
@@ -89,16 +91,24 @@ fichier manque, la page affiche un cadre qui indique le nom à déposer. Une foi
 toutes les photos en place, remplacer `data-slots="show"` par `data-slots="hide"`
 sur la balise `<body>` de chaque page : les cadres restants disparaîtront.
 
+## Le logo
+
+Le sceau du hero a été redessiné d'après le filigrane visible sur les photos de
+la maison, puis converti en courbes : il est net à toutes les tailles et prend
+la couleur du contexte. Voir `assets/logo/README.md`. Si le fichier vectoriel
+d'origine existe quelque part, il suffit de le mettre à la place de
+`assets/logo/le9.svg`.
+
 ## Ce qu'il reste à compléter
 
 Chercher `TODO` dans les fichiers HTML.
 
-- **Logo** : déposer `assets/logo/le9.svg`, puis remplacer le bloc `.mono` du hero dans `index.html`.
-- **Photos** : douze plats, trois vues de salle, quatre de terrasse, un portrait du chef.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Horaires** : les sources se contredisent sur le lundi, la grille est en « à confirmer ».
+- **Photos manquantes** : le chef, une vraie photo de salle en haute définition, quelques plats de plus. Voir `assets/photos/README.md`.
 - **À vérifier** : nom du chef, capacité de la salle, terrasse couverte, parking, source de la citation presse, adresse du site de L'Étoile.
 - **Numéro de téléphone** : la fiche de l'office du tourisme indique 021 732 26 46, le site utilise le 021 882 24 19 que vous m'avez donné.
+- **Droits des dessins** : ils viennent de banques d'images, vérifier que les licences couvrent l'usage sur le site.
 
 ## Mettre en ligne sur GitHub Pages
 

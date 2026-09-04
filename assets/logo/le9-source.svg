@@ -1,0 +1,43 @@
+<!--
+  Le 9 · Restaurant du Golf du Brésil — SOURCE MODIFIABLE
+  Le texte est ici du vrai texte : c'est le fichier à retoucher.
+  Le site sert le9.svg, qui est cette même image convertie en courbes pour ne
+  dépendre d'aucune police. Pour régénérer le9.svg après une modification :
+  voir assets/logo/README.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img"
+     aria-label="Le 9, Restaurant du Golf du Brésil, Domaine du Brésil">
+  <defs>
+    <path id="arc-haut" d="M 76 200 A 124 124 0 0 1 324 200"/>
+  </defs>
+
+  <circle cx="200" cy="200" r="151" fill="none" stroke="currentColor" stroke-width="2.6"/>
+  <circle cx="200" cy="200" r="143" fill="none" stroke="currentColor" stroke-width="1"/>
+
+  <g fill="currentColor" font-family="Cormorant Garamond, Georgia, serif">
+    <text font-size="19" letter-spacing="2.4" text-anchor="middle">
+      <textPath href="#arc-haut" startOffset="50%">RESTAURANT DU GOLF DU BRÉSIL</textPath>
+    </text>
+
+    <text x="200" y="186" text-anchor="middle" font-size="74" letter-spacing="5"
+          style="font-feature-settings:'lnum' 1;font-variant-numeric:lining-nums">LE 9</text>
+
+    <text x="200" y="296" text-anchor="middle" font-size="17.5" letter-spacing="2.8">DOMAINE DU BRÉSIL</text>
+    <text x="200" y="315" text-anchor="middle" font-size="11.5" letter-spacing="2.4">GOLF CLUB BRÉSIL</text>
+  </g>
+
+  <g fill="currentColor">
+    <circle cx="200" cy="222" r="12.5"/>
+    <path d="M194.5 232 L197.6 258 h4.8 L205.5 232 Z"/>
+    <rect x="184" y="258" width="32" height="4.2" rx="1.6"/>
+  </g>
+
+  <g fill="currentColor">
+    <rect x="148" y="325" width="104" height="1.5"/>
+    <rect x="199.2" y="330" width="1.6" height="14"/>
+    <path d="M199 335 c-5.5 -4.5 -12 -4.5 -16.5 -1.2 c4 4.6 11 5.4 16.5 1.2 Z"/>
+    <path d="M201 335 c5.5 -4.5 12 -4.5 16.5 -1.2 c-4 4.6 -11 5.4 -16.5 1.2 Z"/>
+    <path d="M199 344 c-4.6 -3.8 -10 -3.8 -13.8 -1 c3.3 3.9 9.2 4.5 13.8 1 Z"/>
+    <path d="M201 344 c4.6 -3.8 10 -3.8 13.8 -1 c-3.3 3.9 -9.2 4.5 -13.8 1 Z"/>
+  </g>
+</svg>

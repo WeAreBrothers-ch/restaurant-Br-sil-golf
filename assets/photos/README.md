@@ -1,58 +1,65 @@
 # Photos
 
-Déposer les fichiers ici, avec exactement ces noms. Tant qu'un fichier manque,
-la page affiche un cadre qui rappelle le nom attendu.
+Deux dossiers :
 
-## Les plats — page « Les plats », mosaïque
+- `source/` : les photos telles que vous les avez fournies. On n'y touche pas.
+- ce dossier : les fichiers que le site affiche, produits à partir de `source/`.
 
-| Fichier | Cadrage conseillé |
-|---|---|
-| `plat-01.jpg` | paysage, la plus large de la mosaïque |
-| `plat-02.jpg` | portrait |
-| `plat-03.jpg` | portrait |
-| `plat-04.jpg` | carré |
-| `plat-05.jpg` | portrait |
-| `plat-06.jpg` | paysage |
-| `plat-07.jpg` | paysage |
-| `plat-08.jpg` | portrait |
-| `plat-09.jpg` | paysage large |
-| `plat-10.jpg` | carré |
-| `plat-11.jpg` | carré |
-| `plat-12.jpg` | panoramique |
+## Regénérer les fichiers du site
 
-`plat-01`, `plat-02` et `plat-03` servent aussi sur l'accueil et la page du
-restaurant. `plat-09` réapparaît sur la page de la terrasse.
+```
+pip install Pillow
+python3 tools/prepare_photos.py
+```
 
-## La salle et le chef
+Le script recadre au bon format, redimensionne et compresse. Les deux photos de
+terrasse pesaient près de 6 Mo chacune en PNG ; le site sert au total moins de
+4 Mo pour treize images. Il retire aussi les bandes noires et les flèches de
+navigation qui traînaient sur les bords des captures d'origine.
 
-| Fichier | Où | Cadrage |
+Pour changer un cadrage, modifier la liste `DERIVES` en tête du script : chaque
+ligne indique le format voulu et le point de l'image à garder au centre.
+
+## Ce que le site utilise aujourd'hui
+
+| Fichier | Vient de | Où il apparaît |
 |---|---|---|
-| `salle-01.jpg` | accueil, première entrée | portrait 3:4 |
-| `salle-02.jpg` | le restaurant, bande pleine largeur | panoramique, au moins 2000 px de large |
-| `salle-03.jpg` | le restaurant, une table dressée | carré |
-| `chef.jpg` | le restaurant, portrait rond | carré, le visage bien centré |
+| `plat-01.jpg` | nourriture.jpg | galerie, page carte sur l'accueil |
+| `plat-02.jpg` | nourriture 2.jpg | galerie, accueil |
+| `plat-03.jpg` | caption.jpg | galerie, terrasse |
+| `plat-04.jpg` | viande.jpg | galerie, le restaurant |
+| `plat-05.jpg` | img-20190316… | galerie |
+| `plat-06.jpg` | 20180714… | galerie |
+| `lieu-pano.jpg` | le9_barolo_terrasse | bande large de la page « Le restaurant » |
+| `terrasse-pano.jpg` | le9_terrasse_coucher_soleil | photo de tête de la page « La terrasse » |
+| `terrasse-01.jpg` | le9_barolo_terrasse | accueil, bande de la terrasse |
+| `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, bande de la terrasse |
+| `terrasse-03.jpg` | le9_barolo_terrasse | bande de la terrasse |
+| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | bande de la terrasse |
+| `salle-01.jpg` | une-vue-imprenable-sur | page « Le restaurant », la vue depuis la salle |
 
-## La terrasse
+## Ce qui manque encore
 
-| Fichier | Où | Cadrage |
+Ces emplacements existent dans les pages mais restent invisibles tant que le
+fichier n'est pas là. Déposer les photos dans `source/`, ajouter la ligne
+correspondante dans `tools/prepare_photos.py`, relancer le script.
+
+| Fichier attendu | Où | Cadrage |
 |---|---|---|
-| `terrasse-pano.jpg` | terrasse, photo de tête plein écran | panoramique, au moins 2000 px de large |
-| `terrasse-01.jpg` | accueil, quatrième entrée | portrait 3:4 |
-| `terrasse-02.jpg` | terrasse, bande de photos | portrait |
-| `terrasse-03.jpg` | terrasse, bande de photos | paysage |
-| `terrasse-04.jpg` | terrasse, bande de photos | portrait, facultatif |
-| `parcours.jpg` | terrasse, bande de photos | paysage, facultatif |
+| `chef.jpg` | le restaurant, portrait rond | carré, visage centré |
+| `plat-07.jpg` à `plat-10.jpg` | galerie | portrait ou paysage |
+| `parcours.jpg` | bande de la terrasse | paysage |
 
-Les fichiers marqués facultatifs disparaissent d'eux-mêmes s'ils sont absents.
+Une vraie photo de la salle serait utile : la seule dont nous disposons fait
+900 px de large, ce qui est juste pour un grand format. Idéalement une vue de la
+salle vide, une table dressée à l'intérieur, et le chef en cuisine.
 
-## Conseils
+## Légender une photo de la galerie
 
-JPG de qualité 80, 1600 px de large suffisent pour la plupart, 2400 px pour les
-panoramiques. Viser moins de 400 Ko par image pour garder le site rapide.
-
-Pour légender une photo de la mosaïque, ajouter l'attribut `data-caption` sur sa
-balise `<figure>` dans `les-plats.html` :
+Ajouter `data-caption` sur la figure correspondante dans `les-plats.html` :
 
 ```html
-<figure class="ph ph--z" data-file="plat-04.jpg" data-caption="Foie gras mi-cuit, chutney de pomme">
+<figure class="ph ph--z" data-file="plat-02.jpg" data-caption="Foie gras mi-cuit, chutney de pomme">
 ```
+
+La légende s'affiche sur l'image et dans la visionneuse.

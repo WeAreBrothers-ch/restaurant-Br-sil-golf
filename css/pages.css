@@ -14,7 +14,8 @@
   padding: clamp(3rem, 8vh, 6rem) var(--pad);
 }
 .home-hero__mid { position: relative; z-index: 2; text-align: center; max-width: 40rem; }
-.mono { display: inline-grid; justify-items: center; gap: .8rem; color: var(--c-green); text-decoration: none; }
+.mono { display: inline-grid; justify-items: center; margin: 0; color: var(--c-green); }
+.mono .seal { --w: clamp(200px, 27vw, 310px); }
 .mono__n { font: 500 clamp(5.5rem, 16vw, 11rem)/.85 var(--serif); letter-spacing: -.04em; }
 .mono__n i { font-style: italic; }
 .mono__bar { width: 4rem; height: 1px; background: var(--c-brass); }
@@ -150,25 +151,25 @@
 .plates-head { padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
 .plates-head .lead { margin-inline: auto; }
 
-/* Mosaïque : 6 colonnes, chaque photo occupe une zone différente */
+/* Mosaïque : six colonnes, une composition asymétrique par ligne.
+   Les emplacements au-delà du sixième sont facultatifs : ils n'apparaissent
+   qu'une fois les fichiers déposés. */
 .mosaic { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(.6rem, 1.2vw, 1.1rem); grid-auto-flow: row dense; }
-.mosaic .ph { --ar: 1; }
-.mosaic figure:nth-child(1) { grid-column: span 4; --ar: 16/11; }
-.mosaic figure:nth-child(2) { grid-column: span 2; --ar: 3/4; align-self: end; }
-.mosaic figure:nth-child(3) { grid-column: span 2; --ar: 4/5; }
-.mosaic figure:nth-child(4) { grid-column: span 2; --ar: 1; margin-top: clamp(1rem, 3vw, 3rem); }
-.mosaic figure:nth-child(5) { grid-column: span 2; --ar: 3/4; }
-.mosaic figure:nth-child(6) { grid-column: span 3; --ar: 4/3; }
-.mosaic figure:nth-child(7) { grid-column: span 3; --ar: 4/3; margin-top: clamp(1rem, 3vw, 3rem); }
-.mosaic figure:nth-child(8) { grid-column: span 2; --ar: 4/5; }
-.mosaic figure:nth-child(9) { grid-column: span 4; --ar: 16/10; }
-.mosaic figure:nth-child(10){ grid-column: span 3; --ar: 1; }
-.mosaic figure:nth-child(11){ grid-column: span 3; --ar: 1; margin-top: clamp(1rem, 3vw, 2.5rem); }
-.mosaic figure:nth-child(12){ grid-column: span 6; --ar: 21/9; }
+.mosaic figure { --ar: 3/4; }
+.mosaic figure:nth-child(1) { grid-column: span 4; --ar: 4/3; }
+.mosaic figure:nth-child(2) { grid-column: span 2; --ar: 3/4; }
+.mosaic figure:nth-child(3) { grid-column: span 2; --ar: 3/4; }
+.mosaic figure:nth-child(4) { grid-column: span 4; --ar: 4/3; }
+.mosaic figure:nth-child(5) { grid-column: span 3; --ar: 1; }
+.mosaic figure:nth-child(6) { grid-column: span 3; --ar: 1; }
+.mosaic figure:nth-child(7) { grid-column: span 2; --ar: 3/4; }
+.mosaic figure:nth-child(8) { grid-column: span 4; --ar: 4/3; }
+.mosaic figure:nth-child(9) { grid-column: span 3; --ar: 4/3; }
+.mosaic figure:nth-child(10){ grid-column: span 3; --ar: 4/3; }
 @media (max-width: 1000px) {
   .mosaic { grid-template-columns: repeat(4, 1fr); }
-  .mosaic figure:nth-child(n) { grid-column: span 2; margin-top: 0; }
-  .mosaic figure:nth-child(1), .mosaic figure:nth-child(9), .mosaic figure:nth-child(12) { grid-column: span 4; }
+  .mosaic figure:nth-child(n) { grid-column: span 2; }
+  .mosaic figure:nth-child(1), .mosaic figure:nth-child(4) { grid-column: span 4; }
 }
 @media (max-width: 620px) {
   .mosaic { grid-template-columns: 1fr; }

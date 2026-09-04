@@ -167,6 +167,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .illu[data-hide~="sm"] { display: none; }
 }
 
+/* Le sceau Le 9. Affiché en masque : il prend la couleur du contexte, comme les
+   dessins, et reste net à toutes les tailles. */
+.seal {
+  width: var(--w, 200px); aspect-ratio: 1;
+  background-color: currentColor;
+  -webkit-mask: url("../assets/logo/le9.svg") center/contain no-repeat;
+          mask: url("../assets/logo/le9.svg") center/contain no-repeat;
+}
+
 /* Un dessin en vignette, dans le flux (titres de section) */
 .mark {
   width: var(--w, 62px); aspect-ratio: var(--ar, 1); margin-bottom: 1.4rem;
