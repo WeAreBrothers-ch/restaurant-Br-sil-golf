@@ -3,20 +3,22 @@
 - `source/` : les dessins d'origine, tels que fournis. Non utilisés par le site.
 - `dist/` : ce que le site sert. Une seule couleur, donnée par le CSS.
 
-Huit dessins : deux golfeurs, des clubs croisés, un sac de golf, une bouteille
-et un verre, une assiette dressée, un chef à la cloche, et une table de terrasse
-dont les chaises en fer forgé sont celles des photos du restaurant.
+Neuf dessins.
 
-| Classe CSS | Fichier |
-|---|---|
-| `i-swing` | golfeur-vintage |
-| `i-golfeur` | golfeur-silhouette |
-| `i-clubs` | clubs-croises |
-| `i-sac` | sac-golf |
-| `i-bouteille` | bouteille-verre |
-| `i-assiette` | assiette-couverts |
-| `i-chef` | chef-cloche |
-| `i-table` | table-terrasse |
+| Classe CSS | Fichier | Sujet |
+|---|---|---|
+| `i-swing` | golfeur-vintage | golfeur au swing, silhouette |
+| `i-golfeur` | golfeur-silhouette | golfeur, silhouette pleine |
+| `i-trait` | golfeur-trait | golfeur d'un seul trait |
+| `i-clubs` | clubs-croises | deux clubs croisés |
+| `i-sac` | sac-golf | sac et clubs |
+| `i-bouteille` | bouteille-verre | bouteille et verre |
+| `i-assiette` | assiette-couverts | couvert dressé |
+| `i-chef` | chef-cloche | chef courant, cloche à la main |
+| `i-table` | table-terrasse | table et chaises en fer forgé, comme sur les photos |
+
+> **Ne pas supprimer les fichiers de `dist/`** : ce sont ceux que le site
+> affiche. Les originaux sont dans `source/`.
 
 ## Régénérer dist/
 

@@ -1,5 +1,11 @@
 # Photos
 
+> **Ne pas supprimer les fichiers `.jpg` de ce dossier.** Ce sont ceux que le
+> site affiche : recadrés, redimensionnés et compressés à partir des originaux.
+> Les originaux, eux, vivent dans `source/` et ne sont jamais servis au visiteur.
+> Pour ajouter une photo, la déposer dans `source/`, ajouter sa ligne dans
+> `tools/prepare_photos.py`, puis relancer le script.
+
 Deux dossiers :
 
 - `source/` : les photos telles que vous les avez fournies. On n'y touche pas.

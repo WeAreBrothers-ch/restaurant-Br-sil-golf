@@ -40,5 +40,10 @@
     "thicken": 2,
     "min_area": 200,
     "_note": "Trait fin sur fond crème uni."
+  },
+  "golfeur-trait.jpg": {
+    "thicken": 2,
+    "min_area": 200,
+    "_note": "Golfeur d'un seul trait, à rapprocher du chef à la cloche : même facture."
   }
 }
