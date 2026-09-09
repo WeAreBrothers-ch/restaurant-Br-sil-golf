@@ -14,8 +14,20 @@
   --c-cream:      #f7f1e1;   /* fond principal, plus chaud */
   --c-cream-2:    #efe6cf;   /* fond alterné, cadres */
   --c-cream-3:    #d6c7a4;   /* filets sur crème */
-  --c-green:      #14563a;   /* vert principal, plus saturé */
-  --c-green-deep: #0b2c1f;   /* vert profond, pages et bandeaux sombres */
+  --c-green:      #14563a;   /* vert principal : titres, boutons */
+  /* TROIS PROFONDEURS, ET PAS DEUX.
+
+     Les bandeaux sombres du fil de la page et le pied portaient exactement le
+     même vert. Sur trois pages sur cinq, la dernière section était sombre : on
+     ne voyait plus où la page finissait et où le pied commençait, et le pied
+     avait l'air de faire huit cents pixels. Un filet d'un pixel ne suffit pas
+     à couper un aplat.
+
+     La page a donc trois sols : le crème, le panneau vert qui s'y pose, et le
+     socle — le plus profond, réservé à ce qui n'est plus la page : le pied, le
+     menu du téléphone, la barre d'appel. */
+  --c-green-dark: #123f2c;   /* panneaux sombres dans le fil de la page */
+  --c-green-deep: #071e14;   /* le socle : pied, menu, barre d'appel */
   --c-green-mid:  #2a7250;   /* vert intermédiaire */
   --c-sage:       #6f9c78;   /* vert doux, dessins sur crème */
   --c-ink:        #12241b;   /* texte courant sur crème */
@@ -30,6 +42,12 @@
 
      Sur crème, un or profond, cuivré ; sur vert, un or franc. Le premier passe
      le seuil de lisibilité (4,6 contre 1), le second largement (6,8). */
+  /* Le crème et le socle en composantes : tous les voiles translucides de la
+     page en découlent, au lieu de répéter des valeurs qui ne suivaient plus la
+     palette quand elle changeait. */
+  --cr: 247 241 225;
+  --vd: 7 30 20;
+
   --c-brass:      #8c5c17;   /* laiton sur crème : libellés, prix, filets */
   --c-brass-vif:  #d8a63f;   /* laiton sur vert profond */
 
@@ -102,13 +120,14 @@
   :root { --head-h: 60px; }
 }
 
-/* Zones sombres : seuls les rôles changent */
+/* Zones sombres : seuls les rôles changent. Elles se posent sur le vert de
+   section — le socle est réservé au pied, au menu et à la barre d'appel. */
 .dark {
-  --bg:        var(--c-green-deep);
+  --bg:        var(--c-green-dark);
   --bg-2:      rgba(255,255,255,.045);
   --fg:        var(--c-cream);
   --fg-strong: var(--c-cream);
-  --fg-soft:   rgba(244,239,227,.62);
+  --fg-soft:   rgb(var(--cr) / .62);
   --line:      rgba(247,241,225,.18);
   --btn-bg:    var(--c-cream);
   --btn-fg:    var(--c-green-deep);
@@ -326,13 +345,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-bottom: 1px solid transparent;
   transition: border-color .25s, background-color .25s ease;
 }
-.head[data-ton="sombre"] {
-  --head-bg:   color-mix(in srgb, var(--c-green-deep) 90%, transparent);
+/* Deux fonds sombres, donc deux en-têtes sombres : posé sur un panneau de
+   section avec la couleur du socle, il y traçait de nouveau une bande d'un
+   autre vert. Le script dit lequel des deux passe dessous. */
+.head[data-ton] {
   --head-fg:   var(--c-cream);
-  --head-fg-2: rgba(244,239,227,.62);
-  --head-line: rgba(247,241,225,.2);
+  --head-fg-2: rgb(var(--cr) / .62);
+  --head-line: rgb(var(--cr) / .2);
   --head-accent: var(--c-brass-vif);
 }
+.head[data-ton="section"] { --head-bg: color-mix(in srgb, var(--c-green-dark) 92%, transparent); }
+.head[data-ton="socle"]   { --head-bg: color-mix(in srgb, var(--c-green-deep) 92%, transparent); }
 .head.is-stuck { border-bottom-color: var(--head-line); }
 .head__in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: var(--head-h); }
 
@@ -386,7 +409,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   overflow: auto; overscroll-behavior: contain;
   background: var(--c-green-deep); color: var(--c-cream);
 }
-.mm::backdrop { background: rgb(8 22 16 / .96); }
+/* `::backdrop` n'hérite pas des variables du document dans tous les
+   navigateurs : la valeur est écrite en clair. C'est le socle à 96 %. */
+.mm::backdrop { background: rgb(7 30 20 / .96); }
 @media (min-width: 1081px) { .mm { display: none; } }
 
 .mm__in {
@@ -399,7 +424,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .mm__haut {
   display: flex; align-items: center; justify-content: space-between;
-  height: var(--head-h); border-bottom: 1px solid rgba(244,239,227,.16);
+  height: var(--head-h); border-bottom: 1px solid rgb(var(--cr) / .16);
 }
 .mm__marque { font: 500 1.7rem/1 var(--serif); letter-spacing: -.02em; }
 .mm__marque i { font-style: italic; }
@@ -413,7 +438,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .mm__lien {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
   padding-block: clamp(.9rem, 2.4vh, 1.3rem);
-  border-bottom: 1px solid rgba(244,239,227,.14);
+  border-bottom: 1px solid rgb(var(--cr) / .14);
   font: 500 clamp(1.9rem, 7.5vw, 2.6rem)/1.1 var(--serif);
   color: var(--c-cream); text-decoration: none;
 }
@@ -431,7 +456,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .mm__adresse {
   margin: 0; text-align: center; font-size: var(--fs-sm); line-height: 1.6;
-  color: rgba(244,239,227,.6);
+  color: rgb(var(--cr) / .6);
 }
 
 /* L'ouverture : le panneau monte, puis les liens arrivent l'un après l'autre.
@@ -489,7 +514,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding: 1.5rem; text-align: center; color: var(--c-green); background: var(--bg-2);
   outline: 1px dashed var(--c-cream-3); outline-offset: -10px;
 }
-.dark .ph__slot { color: var(--c-cream); outline-color: rgba(244,239,227,.25); }
+.dark .ph__slot { color: var(--c-cream); outline-color: rgb(var(--cr) / .25); }
 .ph__slot svg { width: 26px; height: 26px; opacity: .55; margin-bottom: .3rem; }
 .ph__slot b { font: 500 1.05rem/1.2 var(--serif); }
 .ph__slot span { font-size: var(--fs-mini); opacity: .7; }
@@ -497,7 +522,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ph.ready .ph__slot { display: none; }
 .ph--z:hover > img { transform: scale(1.04); }
 .ph figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1.2rem .9rem;
-  background: linear-gradient(transparent, rgba(16,41,31,.85)); color: var(--c-cream);
+  background: linear-gradient(transparent, rgb(var(--vd) / .85)); color: var(--c-cream);
   font: 500 1.05rem/1.3 var(--serif); }
 
 /* ---------------------------------------------------------------------------
@@ -512,7 +537,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Quand la dernière section de la page est elle aussi en vert profond, rien ne
    disait où la page finissait et où le pied commençait : c'était un seul aplat
    de huit cents pixels. Un filet suffit à les séparer. */
-main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.18); }
+main:has(> :last-child.dark) + .foot { border-top: 1px solid rgb(var(--cr) / .18); }
 
 .foot {
   background: var(--c-green-deep); color: var(--c-cream);
@@ -523,13 +548,13 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 .foot__haut {
   display: grid; gap: .9rem;
   padding-bottom: clamp(1.5rem, 3vw, 2rem);
-  border-bottom: 1px solid rgba(244,239,227,.16);
+  border-bottom: 1px solid rgb(var(--cr) / .16);
 }
 .foot__marque { display: grid; gap: .3rem; text-decoration: none; color: var(--c-cream); }
 .foot__nom  { font: 500 clamp(1.7rem, 5vw, 2.1rem)/1 var(--serif); letter-spacing: -.02em; }
 .foot__nom i { font-style: italic; }
 .foot__sous { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass-vif); }
-.foot__mot  { margin: 0; max-width: 34ch; color: rgba(244,239,227,.66); font-size: var(--fs-sm); line-height: 1.6; }
+.foot__mot  { margin: 0; max-width: 34ch; color: rgb(var(--cr) / .66); font-size: var(--fs-sm); line-height: 1.6; }
 
 /* Les coordonnées : deux colonnes, toujours. C'est le format le plus court, et
    personne ne cherche une adresse en la lisant sur trois lignes de large. */
@@ -542,7 +567,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
      plus sur une ligne et l'adresse s'étirait sur quatre. */
   gap: 1.4rem 1rem;
   padding-block: clamp(1.5rem, 3vw, 2rem);
-  border-bottom: 1px solid rgba(244,239,227,.16);
+  border-bottom: 1px solid rgb(var(--cr) / .16);
 }
 /* Sous 380 px, la colonne de droite tombe à une centaine de pixels et
    l'adresse de courriel se coupe au milieu d'un mot : « golfbr / esil.ch ».
@@ -556,7 +581,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 }
 .foot__col address, .foot__col p {
   margin: 0; font-style: normal; line-height: 1.7;
-  color: rgba(244,239,227,.82);
+  color: rgb(var(--cr) / .82);
   text-wrap: pretty;
   /* Un cran en dessous du texte courant au doigt : à 16 px, « 1376
      Goumoens-le-Jux » dépassait de trois pixels et l'adresse s'étirait sur
@@ -567,7 +592,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
   .foot__col address, .foot__col p { font-size: var(--fs-sm); line-height: 1.9; }
 }
 .foot__col a {
-  color: inherit; text-decoration: none; border-bottom: 1px solid rgba(244,239,227,.28);
+  color: inherit; text-decoration: none; border-bottom: 1px solid rgb(var(--cr) / .28);
   /* Une adresse de courriel n'a pas d'espace où se couper : sur une colonne
      étroite, elle sortirait du cadre plutôt que de passer à la ligne. */
   overflow-wrap: anywhere;
@@ -579,10 +604,10 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 .foot__nav {
   display: flex; flex-wrap: wrap; gap: .2rem 1.4rem;
   padding-block: clamp(1rem, 2.5vw, 1.4rem);
-  border-bottom: 1px solid rgba(244,239,227,.16);
+  border-bottom: 1px solid rgb(var(--cr) / .16);
 }
 .foot__nav a {
-  color: rgba(244,239,227,.82); text-decoration: none;
+  color: rgb(var(--cr) / .82); text-decoration: none;
   font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
 }
 .foot__nav a:hover { color: var(--c-brass-vif); }
@@ -590,7 +615,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 .foot__end {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: .35rem 2rem;
   margin: 0; padding-top: 1.1rem;
-  font-size: var(--fs-mini); color: rgba(244,239,227,.52);
+  font-size: var(--fs-mini); color: rgb(var(--cr) / .52);
 }
 
 /* Sur un écran large, la maison et sa devise se placent côte à côte, et les
@@ -710,7 +735,10 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
   display: grid; grid-template-columns: 1fr 1fr;
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--c-green-deep);
-  border-top: 1px solid rgba(244,239,227,.16);
+  /* La barre est du même vert que le pied, sur lequel elle finit par se poser :
+     c'est son filet, et lui seul, qui l'en détache. Il est donc plus franc que
+     les filets intérieurs du pied. */
+  border-top: 1px solid rgb(var(--cr) / .3);
   transform: translateY(100%);
   transition: transform .35s var(--expo);
   will-change: transform;
@@ -728,8 +756,8 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
   color: var(--c-cream);
   font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
 }
-.barre__a--2 { border-left: 1px solid rgba(244,239,227,.16); }
-.barre__a:active { background: rgba(244,239,227,.1); }
+.barre__a--2 { border-left: 1px solid rgb(var(--cr) / .16); }
+.barre__a:active { background: rgb(var(--cr) / .1); }
 .barre__a svg { color: var(--c-brass-vif); }
 
 /* Le pied de page ne doit pas finir sous la barre. */

@@ -43,12 +43,19 @@
   var head = document.querySelector('.head');
   var zones = [];
 
+  /* La page a deux fonds sombres : le vert de section, sur lequel se posent
+     les panneaux du fil de la page, et le socle, réservé au pied. L'en-tête
+     doit prendre l'un ou l'autre, sans quoi il retrace une bande d'un
+     troisième vert par-dessus. Chaque zone dit donc lequel elle porte. */
   function mesurerZones() {
     zones = Array.prototype.map.call(
       document.querySelectorAll('.dark, .foot, .menu-page, .terr-hero'),
       function (el) {
         var r = el.getBoundingClientRect();
-        return [r.top + window.scrollY, r.bottom + window.scrollY];
+        // Le bandeau de la terrasse finit sur le socle : son dégradé y descend.
+        var ton = el.classList.contains('foot') || el.classList.contains('terr-hero')
+          ? 'socle' : 'section';
+        return [r.top + window.scrollY, r.bottom + window.scrollY, ton];
       }
     );
   }
@@ -61,13 +68,13 @@
     // recouvre. Mesuré un pixel plus haut, il se voyait lui-même, et une page
     // sombre commençant exactement à sa hauteur n'était jamais reconnue.
     var y = window.scrollY + head.offsetHeight + 2;
-    var sombre = false;
+    var ton = null;
     for (var i = 0; i < zones.length; i++) {
-      if (y >= zones[i][0] && y < zones[i][1]) { sombre = true; break; }
+      if (y >= zones[i][0] && y < zones[i][1]) { ton = zones[i][2]; break; }
     }
-    if (sombre === tonPose) return;
-    tonPose = sombre;
-    if (sombre) head.setAttribute('data-ton', 'sombre');
+    if (ton === tonPose) return;
+    tonPose = ton;
+    if (ton) head.setAttribute('data-ton', ton);
     else head.removeAttribute('data-ton');
   }
 

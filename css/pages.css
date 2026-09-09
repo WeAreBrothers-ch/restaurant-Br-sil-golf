@@ -361,7 +361,7 @@
   padding: clamp(1.6rem, 3vw, 2.6rem);
   background: var(--bg);
   border-radius: var(--r);
-  box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgba(16,41,31,.4);
+  box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgb(var(--vd) / .4);
 }
 
 /* La légende d'une photographie : discrète, à sa place, jamais dessus. */
@@ -493,14 +493,14 @@
 .terr-hero .ph { position: absolute; inset: 0; --ar: auto; height: 100%; border-radius: 0; }
 .terr-hero .ph::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(16,41,31,.25) 0%, rgba(16,41,31,.1) 38%, rgba(16,41,31,.86) 100%);
+  background: linear-gradient(180deg, rgb(var(--vd) / .25) 0%, rgb(var(--vd) / .1) 38%, rgb(var(--vd) / .86) 100%);
 }
 @media (max-width: 699px) {
   /* Écran étroit : le titre occupe presque toute la hauteur du bandeau, il lui
      faut un fond plus franc pour rester lisible sur l'herbe claire. */
   .terr-hero { height: min(74svh, 620px); }
   .terr-hero .ph::after {
-    background: linear-gradient(180deg, rgba(16,41,31,.3) 0%, rgba(16,41,31,.2) 26%, rgba(16,41,31,.92) 82%, rgba(16,41,31,.96) 100%);
+    background: linear-gradient(180deg, rgb(var(--vd) / .3) 0%, rgb(var(--vd) / .2) 26%, rgb(var(--vd) / .92) 82%, rgb(var(--vd) / .96) 100%);
   }
 }
 .terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
