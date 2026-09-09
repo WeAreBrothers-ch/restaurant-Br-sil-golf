@@ -156,8 +156,14 @@ body {
 }
 img, svg, video { display: block; max-width: 100%; }
 a { color: inherit; text-underline-offset: .2em; }
-h1, h2, h3, h4 { margin: 0; font-family: var(--serif); font-weight: 500; line-height: 1.05; color: var(--fg-strong); }
-p { margin: 0 0 1.15em; }
+h1, h2, h3, h4 {
+  margin: 0; font-family: var(--serif); font-weight: 500; line-height: 1.05;
+  color: var(--fg-strong);
+  /* Le navigateur répartit les mots sur les lignes plutôt que de laisser un
+     orphelin en bas d'un titre. */
+  text-wrap: balance;
+}
+p { margin: 0 0 1.15em; text-wrap: pretty; }
 /* Les titres n'ont pas de marge propre : c'est ce qui suit qui prend ses
    distances. Sans cette règle, « La table » et sa première phrase se touchaient
    à toutes les tailles, et l'ensemble se lisait comme un seul bloc. */
@@ -169,6 +175,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 ::selection { background: var(--c-brass); color: var(--c-cream); }
+/* Ce que le navigateur dessine à notre place appartient aussi à la maison :
+   le curseur de saisie, la barre de défilement, les cases à cocher. Laissés
+   par défaut, ce sont eux qui trahissent une page assemblée. */
+:root { accent-color: var(--c-green); scrollbar-color: var(--c-cream-3) transparent; }
+input, textarea { caret-color: var(--c-green); }
+.dark input, .dark textarea { caret-color: var(--c-cream); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -196,14 +208,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .sect > * { position: relative; z-index: 1; }
 
 /* ---------- Typographie ---------- */
-.kicker {
-  display: inline-flex; align-items: center; gap: .8rem;
-  margin: 0 0 1.5rem;
-  font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .2em; text-transform: uppercase;
-  color: var(--accent);
-}
-.kicker::before { content: ""; width: 2.2rem; height: 1px; background: currentColor; }
-.kicker--plain::before { display: none; }
+/* Il y avait un sur-titre en capitales dorées au-dessus de chaque titre :
+   « Bienvenue au 9 » sur « Trois raisons de pousser la porte », « Horaires »
+   sur « Quand nous trouver », « La carte » sur « Ce que la cuisine propose ».
+   Aucun ne disait ce que son titre ne disait pas, et le petit filet doré
+   au-dessus d'un grand serif est la signature des gabarits. Ils sont retirés :
+   le titre porte sa propre annonce.
+
+   LES TITRES
+   ---------- */
 .t-hero { font-size: clamp(2.8rem, 7vw, 5.6rem); letter-spacing: -.015em; }
 .t-1    { font-size: clamp(2.3rem, 5vw, 4rem);   letter-spacing: -.012em; }
 .t-2    { font-size: clamp(1.75rem, 3vw, 2.6rem); letter-spacing: -.008em; }

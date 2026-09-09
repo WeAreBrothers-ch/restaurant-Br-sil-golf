@@ -231,14 +231,9 @@
 
 /* Bandeau d'infos : quatre colonnes séparées par des filets */
 .strip { border-block: 1px solid var(--line); }
-/* Deux par ligne au doigt : quatre lignes empilées faisaient quatre écrans de
-   défilement pour quatre informations qui tiennent dans un carré. */
 .strip__g { display: grid; grid-template-columns: 1fr 1fr; }
 .strip__i {
   display: grid; align-content: start; gap: .35rem;
-  /* `start` et non `center` : une case dont la valeur tient sur deux lignes
-     décalait sa voisine d'une demi-ligne, et les quatre libellés en capitales
-     ne s'alignaient plus. Ils partent maintenant tous de la même ligne. */
   min-height: 104px; padding: 1.15rem clamp(.9rem, 3vw, 1.8rem);
   text-decoration: none; transition: background .2s;
   border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
@@ -246,6 +241,29 @@
 .strip__i:nth-child(2n) { border-right: 0; }
 .strip__i:nth-last-child(-n+2) { border-bottom: 0; }
 .strip__i:hover { background: var(--bg-2); }
+
+/* AU DOIGT, CE N'EST PLUS UNE GRILLE.
+
+   Quatre cases bordées de filets sur leurs quatre côtés : c'est la grille de
+   caractéristiques que porte n'importe quel gabarit, et le premier bloc que
+   voit un visiteur en descendant du sceau. Les mêmes quatre informations
+   passent en quatre lignes, le libellé à gauche, la réponse à droite, avec un
+   seul filet entre elles — la forme que la page emploie déjà pour les horaires
+   et pour les plats. Le bandeau se lit alors comme la fiche de la maison, pas
+   comme un tableau de bord. */
+@media (max-width: 699px) {
+  .strip__g { grid-template-columns: 1fr; }
+  .strip__i {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline; gap: .35rem 1.5rem;
+    min-height: 0; padding: 1.05rem 0;
+    border-right: 0;
+  }
+  .strip__i:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .strip__i:last-child { border-bottom: 0; }
+  .strip__k { white-space: nowrap; }
+  .strip__v { text-align: right; font-size: 1.2rem; }
+}
 @media (min-width: 900px) {
   .strip__g { grid-template-columns: repeat(4, 1fr); }
   .strip__i { min-height: 0; align-content: center; padding: 1.5rem clamp(1rem, 2vw, 1.8rem); border-bottom: 0; border-right: 1px solid var(--line); }
@@ -273,21 +291,25 @@
 .doors__c:hover .doors__h span { transform: translateX(4px); }
 .doors__p { margin: .7rem 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
 @media (max-width: 900px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2) { margin-top: clamp(1.5rem,5vw,3rem); } }
-@media (max-width: 560px) {
-  .doors { grid-template-columns: 1fr; gap: 1.4rem; }
-  .doors__c { display: grid; grid-template-columns: 34% 1fr; gap: .25rem 1rem; align-content: start; }
+/* AU DOIGT, TROIS PANNEAUX ET NON TROIS LIGNES DE LISTE.
+
+   Les trois entrées étaient une vignette de cent trente pixels à gauche et du
+   texte à droite, répétée trois fois : la forme d'une liste d'articles, alors
+   que ce sont les trois plus belles photographies de la maison et les trois
+   seules portes de la page. Chacune prend maintenant toute la largeur de
+   l'écran, et son titre se pose dessous, dans la gouttière, à la taille d'un
+   titre. Le numéro reste absent : trois portes ne sont pas une séquence, elles
+   sont un choix. */
+@media (max-width: 699px) {
+  .doors { grid-template-columns: 1fr; gap: clamp(2.2rem, 8vw, 3.4rem); }
+  .doors__c { display: block; }
   .doors__c:nth-child(n) { margin-top: 0; }
-  /* La vignette tient la colonne de gauche sur toute la hauteur ; le titre, le
-     numéro et la phrase s'empilent à sa droite. Elle s'étire sur la hauteur du
-     texte plutôt que de flotter au milieu : les trois entrées formaient des
-     rangées de hauteurs différentes et la colonne d'images était en escalier. */
-  .doors .ph { grid-row: 1 / span 3; align-self: stretch; height: 100%; --ar: auto; min-height: 7.5rem; }
-  .doors__h { margin-top: 0; padding-bottom: .5rem; }
-  .doors__h b { font-size: 1.2rem; }
-  /* Le numéro rythmait trois grandes vignettes ; entre un titre et sa phrase,
-     sur deux lignes, il ne fait plus que séparer ce qui va ensemble. */
+  .doors .ph { --ar: 4/3; }
   .doors__n { display: none; }
-  .doors__p { margin-top: .35rem; font-size: var(--fs-mini); }
+  .doors__h { margin-top: 1.15rem; padding-bottom: .75rem; }
+  .doors__h b { font-size: clamp(1.5rem, 5.5vw, 1.9rem); }
+  .doors__h span { font-size: 1.25rem; }
+  .doors__p { margin-top: .8rem; font-size: var(--fs-sm); max-width: 34ch; }
 }
 
 /* Mot d'accueil : une ligne large, centrée, sur fond sombre */
@@ -383,16 +405,27 @@
      ne se lisait plus comme une composition mais comme une image mal posée.
      Elle est maintenant simplement rentrée par la droite, d'un cran, sans
      manger la grande. */
+  /* Elle sort par la droite et s'arrête avant la gouttière de gauche : c'est
+     l'écart entre les deux bords qui fait la composition. */
   .dip__b {
-    justify-self: end; width: 58%;
-    transform: none; margin-top: -.6rem;
+    justify-self: end; width: 72%;
+    transform: none; margin-top: .9rem;
     padding: 0;
   }
   .dip__b .ph { --ar: 4/3; }
   .cp__img .ph { --ar: 4/3; }
+  /* La photographie va d'un bord à l'autre ; le texte remonte dessus, dans sa
+     gouttière, sur l'aplat crème. C'est ce chevauchement qui distingue le bloc
+     d'une image suivie d'un paragraphe. */
   .cp__txt {
-    width: calc(100% - 1.6rem); justify-self: center;
-    transform: translateY(-1.6rem); margin-bottom: -1.6rem;
+    /* Une bande crème pleine largeur qui remonte sur le bas de la
+       photographie, et non une carte posée dessus : la carte à coins arrondis
+       flottant sur une image est le réflexe qu'on cherche justement à éviter. */
+    width: auto; justify-self: stretch;
+    margin-inline: calc(-1 * var(--pad));
+    transform: translateY(-2.6rem); margin-bottom: -2.6rem;
+    padding: 1.7rem var(--pad) 0;
+    background: var(--bg); border-radius: 0; box-shadow: none;
   }
 }
 
@@ -406,26 +439,31 @@
 .chef .ph__slot { outline-offset: -14px; border-radius: 50%; }
 @media (max-width: 680px) { .chef { grid-template-columns: 1fr; justify-items: start; } .chef .ph { width: 190px; } }
 
-/* Trois repères chiffrés, séparés par des filets verticaux */
+/* TROIS REPÈRES, SANS NUMÉROS.
+
+   Ils portaient un 01, un 02 et un 03 en gros chiffres dorés. Ce ne sont pas
+   trois étapes : on peut les lire dans n'importe quel ordre, et le numéro ne
+   disait donc rien qu'on avait besoin de savoir — il ne faisait que donner du
+   volume à trois phrases écrites trop petit. Les phrases prennent sa place,
+   dans le serif des titres : ce sont elles, le repère. */
 .marks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
-.marks__i { padding: 2rem clamp(1rem, 2vw, 2rem); border-right: 1px solid var(--line); }
+.marks__i { padding: 2.2rem clamp(1rem, 2vw, 2rem); border-right: 1px solid var(--line); }
 .marks__i:last-child { border-right: 0; }
-.marks__n { font: 500 2.4rem/1 var(--serif); color: var(--accent); }
-.marks__t { margin: .5rem 0 0; font-size: var(--fs-sm); color: var(--fg-soft); }
+.marks__n { display: none; }
+.marks__t {
+  margin: 0; max-width: 22ch;
+  font: 500 clamp(1.15rem, 1.9vw, 1.45rem)/1.35 var(--serif);
+  color: var(--fg-strong);
+}
 /* Au doigt, ce ne sont plus trois colonnes mais trois lignes : les phrases
    n'ont pas la même longueur, et deux d'entre elles se cassaient en trois
    lignes pendant que la troisième en tenait une. Le chiffre passe à gauche de
    sa phrase, comme un numéro d'ordre — c'est ce qu'il est. */
 @media (max-width: 720px) {
   .marks { grid-template-columns: 1fr; }
-  .marks__i {
-    display: grid; grid-template-columns: 2.6rem 1fr; align-items: baseline;
-    gap: .2rem 1rem;
-    padding: 1.05rem 0; border-right: 0; border-bottom: 1px solid var(--line);
-  }
+  .marks__i { padding: 1.2rem 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .marks__i:last-child { border-bottom: 0; }
-  .marks__n { font-size: 1.6rem; }
-  .marks__t { margin: 0; font-size: var(--fs-sm); }
+  .marks__t { max-width: none; font-size: 1.2rem; }
 }
 
 /* =========================================================================
@@ -505,7 +543,6 @@
 }
 .terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
 .terr-hero__t h1 { color: var(--c-cream); max-width: 16ch; }
-.terr-hero__t .kicker { color: var(--c-brass-vif); }
 
 /* Texte en deux colonnes, façon journal */
 .paper { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
@@ -558,9 +595,13 @@
 
 @media (max-width: 700px) {
   /* En colonne unique, le décalage n'a plus d'objet : il ne ferait qu'ajouter
-     du vide entre deux images déjà l'une sous l'autre. */
-  .salon { grid-template-columns: 1fr; gap: 1rem; }
-  .salon__col--2 { margin-top: 0; }
+     du vide entre deux images déjà l'une sous l'autre. Les photographies vont
+     désormais d'un bord à l'autre : entre deux d'entre elles, un filet de
+     crème de quelques pixels se lirait comme une couture ratée. L'écart est
+     donc franc. */
+  .salon { grid-template-columns: 1fr; gap: 2rem; }
+  .salon__col { gap: 2rem; }
+  .salon__col--2 { margin-top: 2rem; }
   .salon__mot { text-align: center; }
   .salon__mot p { margin-inline: auto; }
 }
@@ -690,3 +731,53 @@
 
 .form__envoi { justify-self: start; min-height: 52px; }
 @media (max-width: 560px) { .form__envoi { justify-self: stretch; } }
+
+/* ---------------------------------------------------------------------------
+   AU TÉLÉPHONE, L'IMAGE SORT DU CADRE
+
+   Tout le site tenait dans une seule colonne aux mêmes marges : les
+   photographies, les paragraphes, les listes, les vignettes. Cette régularité
+   est ce qui fait qu'une page se lit comme un gabarit — rien n'a de rang,
+   parce que rien n'échappe à la gouttière.
+
+   Le bandeau de la terrasse, lui, va d'un bord à l'autre, et c'est le seul
+   endroit du site qui a l'air d'avoir été composé. Ce geste devient la règle :
+   au doigt, la photographie prend toute la largeur de l'écran, le texte garde
+   sa marge. L'alternance des deux donne à la page le rythme qu'elle n'avait
+   pas.
+
+   La mécanique tient en une ligne : sous 700 px, `--wrap` est plus large que
+   l'écran, donc une colonne mesure exactement « la largeur moins deux
+   gouttières ». Une marge négative d'une gouttière de chaque côté rend donc
+   très exactement la largeur de l'écran — sans `100vw`, qui compte la barre de
+   défilement et ferait déborder la page.
+   --------------------------------------------------------------------------- */
+@media (max-width: 699px) {
+  .rest-band .ph,
+  .doors .ph,
+  .dip__a,
+  .cp__img,
+  .fam-photo,
+  .ct-map,
+  .salon__col .ph {
+    margin-inline: calc(-1 * var(--pad));
+  }
+  /* Le plan suit la même règle que les photographies : il ne garde que ses
+     filets du haut et du bas, ceux des côtés n'ayant plus rien à border. */
+  .ct-map { border-radius: 0; border-inline: 0; }
+  /* `.fam-photo` porte un `margin` raccourci qui remet la marge à `auto` : il
+     faut la réécrire en entier pour que la photographie sorte vraiment. */
+  .fam-photo {
+    max-width: none;
+    margin-block: clamp(2rem, 6vw, 3rem) clamp(2.5rem, 7vw, 3.5rem);
+  }
+  /* Le coin arrondi est une convention de vignette : une image qui touche les
+     deux bords n'en a plus l'usage. */
+  .rest-band .ph, .doors .ph, .dip__a .ph, .cp__img .ph, .fam-photo,
+  .salon__col .ph { border-radius: 0; }
+
+  /* La seconde photographie du diptyque ne sort que par la droite : c'est ce
+     décalage, et lui seul, qui fait la composition. */
+  .dip__b { margin-right: calc(-1 * var(--pad)); }
+  .dip__b .ph { border-radius: 0; }
+}
