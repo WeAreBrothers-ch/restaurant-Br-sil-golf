@@ -7,17 +7,31 @@
    ============================================================================= */
 
 :root {
-  /* --- Palette (issue du logo Le 9 : vert de golf et crème) --- */
-  --c-cream:      #f4efe3;   /* fond principal */
-  --c-cream-2:    #ebe4d3;   /* fond alterné, cadres */
-  --c-cream-3:    #d8cdb4;   /* filets sur crème */
-  --c-green:      #1e4a36;   /* vert principal */
-  --c-green-deep: #10291f;   /* vert profond, pages et bandeaux sombres */
-  --c-green-mid:  #2f6146;   /* vert intermédiaire */
-  --c-sage:       #7d9a80;   /* vert doux, dessins sur crème */
-  --c-brass:      #b38b47;   /* laiton, accents et prix */
-  --c-ink:        #16241d;   /* texte courant sur crème */
-  --c-ink-soft:   #55635b;   /* texte secondaire sur crème */
+  /* --- Palette (issue du logo Le 9 : vert de golf et crème) ---
+     Elle était juste, mais éteinte : un crème un peu gris, un vert rabattu et
+     un laiton sourd donnaient une page qui avait l'air délavée. Les mêmes
+     couleurs, tenues plus franchement. */
+  --c-cream:      #f7f1e1;   /* fond principal, plus chaud */
+  --c-cream-2:    #efe6cf;   /* fond alterné, cadres */
+  --c-cream-3:    #d6c7a4;   /* filets sur crème */
+  --c-green:      #14563a;   /* vert principal, plus saturé */
+  --c-green-deep: #0b2c1f;   /* vert profond, pages et bandeaux sombres */
+  --c-green-mid:  #2a7250;   /* vert intermédiaire */
+  --c-sage:       #6f9c78;   /* vert doux, dessins sur crème */
+  --c-ink:        #12241b;   /* texte courant sur crème */
+  --c-ink-soft:   #4c5c51;   /* texte secondaire sur crème */
+
+  /* LE LAITON A DEUX VALEURS, ET C'EST LA SURFACE QUI CHOISIT.
+
+     Un or unique ne peut pas être lisible sur les deux fonds : celui qui brille
+     sur le vert profond disparaît sur le crème, et l'inverse. L'ancien tenait
+     le milieu et ne tenait donc ni l'un ni l'autre — 2,7 contre 1 sur le crème,
+     c'est-à-dire illisible pour les libellés en capitales.
+
+     Sur crème, un or profond, cuivré ; sur vert, un or franc. Le premier passe
+     le seuil de lisibilité (4,6 contre 1), le second largement (6,8). */
+  --c-brass:      #8c5c17;   /* laiton sur crème : libellés, prix, filets */
+  --c-brass-vif:  #d8a63f;   /* laiton sur vert profond */
 
   /* --- Rôles --- */
   --bg:        var(--c-cream);
@@ -32,9 +46,10 @@
 
   /* --- Dessins en fond : une seule couleur, une seule opacité ---
      Assez présents pour se voir, assez discrets pour rester du décor.
-     Baisser --illu-opacity pour les estomper, la monter pour les affirmer. */
+     Baisser --illu-opacity pour les estomper, la monter pour les affirmer.
+     À .58 ils étaient à la limite du visible et la page paraissait vide. */
   --illu:         var(--c-green-deep);
-  --illu-opacity: .58;
+  --illu-opacity: .78;
 
   /* --- Typographie ---
      Le site est pensé pour le téléphone d'abord. Rien n'y descend sous 12 px,
@@ -94,11 +109,14 @@
   --fg:        var(--c-cream);
   --fg-strong: var(--c-cream);
   --fg-soft:   rgba(244,239,227,.62);
-  --line:      rgba(244,239,227,.16);
+  --line:      rgba(247,241,225,.18);
   --btn-bg:    var(--c-cream);
   --btn-fg:    var(--c-green-deep);
+  /* Sur le vert profond, c'est l'or franc qui prend le relais du laiton cuivré :
+     il y est lisible là où l'autre s'éteint. */
+  --accent:    var(--c-brass-vif);
   --illu:      var(--c-cream);
-  --illu-opacity: .34;
+  --illu-opacity: .48;
   background: var(--bg);
   color: var(--fg);
 }
@@ -302,6 +320,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   --head-fg:   var(--c-green);
   --head-fg-2: var(--c-ink-soft);
   --head-line: var(--c-cream-3);
+  --head-accent: var(--c-brass);
   background: var(--head-bg);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
@@ -311,7 +330,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   --head-bg:   color-mix(in srgb, var(--c-green-deep) 90%, transparent);
   --head-fg:   var(--c-cream);
   --head-fg-2: rgba(244,239,227,.62);
-  --head-line: rgba(244,239,227,.2);
+  --head-line: rgba(247,241,225,.2);
+  --head-accent: var(--c-brass-vif);
 }
 .head.is-stuck { border-bottom-color: var(--head-line); }
 .head__in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: var(--head-h); }
@@ -327,7 +347,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .11em; text-transform: uppercase;
   border-bottom: 1px solid transparent;
 }
-.nav a:hover { border-bottom-color: var(--c-brass); }
+.nav a:hover { border-bottom-color: var(--head-accent); }
 .nav a[aria-current="page"] { border-bottom-color: var(--head-fg); }
 .nav__tel {
   display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem;
@@ -387,7 +407,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: inline-flex; align-items: center; justify-content: center;
   width: 48px; height: 48px; margin-right: -.6rem; color: var(--c-cream);
 }
-.mm__fermer:focus-visible { outline: 2px solid var(--c-brass); outline-offset: -4px; }
+.mm__fermer:focus-visible { outline: 2px solid var(--c-brass-vif); outline-offset: -4px; }
 
 .mm__liens { display: grid; align-content: start; padding-block: clamp(1rem, 4vh, 2.5rem); }
 .mm__lien {
@@ -397,9 +417,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font: 500 clamp(1.9rem, 7.5vw, 2.6rem)/1.1 var(--serif);
   color: var(--c-cream); text-decoration: none;
 }
-.mm__lien svg { flex: none; color: var(--c-brass); transition: transform .25s var(--expo); }
+.mm__lien svg { flex: none; color: var(--c-brass-vif); transition: transform .25s var(--expo); }
 .mm__lien:active svg { transform: translateX(5px); }
-.mm__lien[aria-current="page"] { color: var(--c-brass); }
+.mm__lien[aria-current="page"] { color: var(--c-brass-vif); }
 
 .mm__bas { display: grid; gap: .9rem; padding-top: 1.5rem; }
 .mm__tel {
@@ -508,7 +528,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 .foot__marque { display: grid; gap: .3rem; text-decoration: none; color: var(--c-cream); }
 .foot__nom  { font: 500 clamp(1.7rem, 5vw, 2.1rem)/1 var(--serif); letter-spacing: -.02em; }
 .foot__nom i { font-style: italic; }
-.foot__sous { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass); }
+.foot__sous { font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--c-brass-vif); }
 .foot__mot  { margin: 0; max-width: 34ch; color: rgba(244,239,227,.66); font-size: var(--fs-sm); line-height: 1.6; }
 
 /* Les coordonnées : deux colonnes, toujours. C'est le format le plus court, et
@@ -532,7 +552,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 .foot__col h2 {
   margin: 0 0 .6rem;
   font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase;
-  color: var(--c-brass);
+  color: var(--c-brass-vif);
 }
 .foot__col address, .foot__col p {
   margin: 0; font-style: normal; line-height: 1.7;
@@ -552,7 +572,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
      étroite, elle sortirait du cadre plutôt que de passer à la ligne. */
   overflow-wrap: anywhere;
 }
-.foot__col a:hover { border-bottom-color: var(--c-brass); }
+.foot__col a:hover { border-bottom-color: var(--c-brass-vif); }
 
 /* Les pages, sur une seule ligne : elles sont déjà dans l'en-tête et dans le
    menu, ce n'est ici qu'un rappel. */
@@ -565,7 +585,7 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
   color: rgba(244,239,227,.82); text-decoration: none;
   font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
 }
-.foot__nav a:hover { color: var(--c-brass); }
+.foot__nav a:hover { color: var(--c-brass-vif); }
 
 .foot__end {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: .35rem 2rem;
@@ -710,6 +730,6 @@ main:has(> :last-child.dark) + .foot { border-top: 1px solid rgba(244,239,227,.1
 }
 .barre__a--2 { border-left: 1px solid rgba(244,239,227,.16); }
 .barre__a:active { background: rgba(244,239,227,.1); }
-.barre__a svg { color: var(--c-brass); }
+.barre__a svg { color: var(--c-brass-vif); }
 
 /* Le pied de page ne doit pas finir sous la barre. */

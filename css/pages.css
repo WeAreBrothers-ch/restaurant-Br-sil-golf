@@ -56,7 +56,10 @@
   margin: 0;
   display: grid;
   justify-items: center;
-  color: var(--c-green);
+  /* Le sceau était d'un vert plus clair que les dessins qui l'entourent : à
+     pleine encre, ceux-ci passaient devant lui alors qu'il est le sujet. Tout
+     le premier écran est écrit d'une seule encre. */
+  color: var(--c-green-deep);
   transform: translateY(calc(var(--p) * -2.5rem)) scale(calc(1 - var(--p) * .05));
   opacity: calc(1 - var(--p) * .9);
 }
@@ -94,13 +97,21 @@
   choisie. Deux dessins qui tomberaient à la même vitesse se liraient comme
   une grille qui glisse.
 */
+/* LES DESSINS DU PREMIER ÉCRAN NE SONT PAS DU DÉCOR.
+
+   Ailleurs dans le site, un dessin passe derrière un texte et doit s'effacer :
+   il porte donc l'opacité commune. Ici il n'y a pas de texte, il n'y a qu'eux
+   et le sceau — c'est la seule image de la page d'accueil. Ils étaient posés à
+   moins de six dixièmes et le premier écran avait l'air d'un fond d'écran
+   délavé. Ils sont maintenant à pleine encre, dans le vert profond de la
+   maison. */
 .piece {
   position: absolute;
   left: var(--x); top: var(--y);
   width: calc(var(--l) * var(--echelle));
   aspect-ratio: var(--ar, 1);
-  background-color: var(--illu);
-  opacity: var(--illu-opacity);
+  background-color: var(--c-green-deep);
+  opacity: 1;
   -webkit-mask: var(--src) center/contain no-repeat;
           mask: var(--src) center/contain no-repeat;
   transform: translate(-50%, -50%)
@@ -494,7 +505,7 @@
 }
 .terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
 .terr-hero__t h1 { color: var(--c-cream); max-width: 16ch; }
-.terr-hero__t .kicker { color: var(--c-brass); }
+.terr-hero__t .kicker { color: var(--c-brass-vif); }
 
 /* Texte en deux colonnes, façon journal */
 .paper { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
@@ -573,7 +584,10 @@
 .ct-links a:hover { border-bottom-color: var(--accent); }
 .ct-links svg { width: 17px; height: 17px; opacity: .65; }
 .ct-map { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3; background: var(--bg-2); border: 1px solid var(--line); }
-.ct-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.55) contrast(1.03); }
+/* Le plan était désaturé de moitié pour se fondre dans la page : il n'y avait
+   plus qu'une tache grise à côté d'une adresse. Il garde une retenue, mais on
+   y reconnaît de nouveau le vert des champs et le bleu du ruisseau. */
+.ct-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: saturate(.9) contrast(1.03); }
 .ct-way { display: grid; gap: .9rem; margin-top: 1.8rem; }
 .ct-way li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .8rem; font-size: var(--fs-sm); color: var(--fg-soft); }
 .ct-way svg { width: 17px; height: 17px; margin-top: .25rem; color: var(--accent); }
