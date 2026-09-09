@@ -34,6 +34,10 @@
   place-items: center;
   min-height: calc(100svh - var(--head-h));
   padding: clamp(1.5rem, 4vh, 3rem) var(--pad);
+  /* Le bandeau d'informations affleure sous le sceau. Sur un téléphone, le
+     premier écran ne portant aucun mot, rien ne disait qu'il y avait une
+     suite : on voyait un logo et un fond, et on repartait. Les deux premières
+     lignes du bandeau qui dépassent suffisent à donner l'envie de pousser. */
   /* Des dessins débordent volontairement : on les coupe ici, jamais avec une
      barre de défilement. */
   overflow: hidden;
@@ -68,6 +72,9 @@
   pointer-events: none; user-select: none;
   opacity: calc(1 - var(--p) * .72);
   --echelle: .5;
+}
+@media (max-width: 699px) {
+  .home-hero { min-height: calc(100svh - var(--head-h) - 4.5rem); }
 }
 @media (max-width: 379px) { .home-champ { --echelle: .42; } }
 @media (min-width: 700px)  { .home-champ { --echelle: .68; } }
@@ -156,10 +163,24 @@
   .piece--chef { display: none; }
 }
 
-/* Sur un écran couché et bas, il ne reste plus de bande du tout : seuls les
-   dessins de bord survivent, et le sceau se fait plus petit. */
-@media (max-height: 560px) and (min-width: 700px) {
+/* TÉLÉPHONE COUCHÉ.
+
+   Il ne reste plus de bande ni au-dessus ni en dessous du sceau : quatre
+   dessins seulement survivent, un par coin. Ils gardaient leur taille de
+   grand écran dans une hauteur de trois cents pixels — le golfeur sortait de
+   cinq pixels par la gauche et le chef lui passait à travers les jambes. Ils
+   sont donc rentrés dans les coins, à la moitié de leur taille, et écartés
+   verticalement pour ne plus se croiser.
+
+   La règle vaut dès 560 px de large : un iPhone couché en fait 667, il n'était
+   couvert par aucun des deux jeux de positions. */
+@media (max-height: 560px) and (min-width: 560px) {
+  .home-champ { --echelle: .5; }
   .piece--assiette, .piece--bouteille, .piece--sac, .piece--clubs { display: none; }
+  .piece--swing { --x: 12%; --y: 26%; }
+  .piece--trait { --x: 88%; --y: 26%; }
+  .piece--chef  { --x: 13%; --y: 76%; }
+  .piece--table { --x: 87%; --y: 76%; }
   .mono .seal { width: min(38vw, 13rem); }
 }
 
@@ -203,8 +224,11 @@
    défilement pour quatre informations qui tiennent dans un carré. */
 .strip__g { display: grid; grid-template-columns: 1fr 1fr; }
 .strip__i {
-  display: grid; align-content: center; gap: .3rem;
-  min-height: 92px; padding: 1rem clamp(.9rem, 3vw, 1.8rem);
+  display: grid; align-content: start; gap: .35rem;
+  /* `start` et non `center` : une case dont la valeur tient sur deux lignes
+     décalait sa voisine d'une demi-ligne, et les quatre libellés en capitales
+     ne s'alignaient plus. Ils partent maintenant tous de la même ligne. */
+  min-height: 104px; padding: 1.15rem clamp(.9rem, 3vw, 1.8rem);
   text-decoration: none; transition: background .2s;
   border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
@@ -213,7 +237,7 @@
 .strip__i:hover { background: var(--bg-2); }
 @media (min-width: 900px) {
   .strip__g { grid-template-columns: repeat(4, 1fr); }
-  .strip__i { min-height: 0; padding: 1.5rem clamp(1rem, 2vw, 1.8rem); border-bottom: 0; border-right: 1px solid var(--line); }
+  .strip__i { min-height: 0; align-content: center; padding: 1.5rem clamp(1rem, 2vw, 1.8rem); border-bottom: 0; border-right: 1px solid var(--line); }
   .strip__i:nth-child(2n) { border-right: 1px solid var(--line); }
   .strip__i:last-child { border-right: 0; }
 }
@@ -239,16 +263,14 @@
 .doors__p { margin: .7rem 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
 @media (max-width: 900px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2) { margin-top: clamp(1.5rem,5vw,3rem); } }
 @media (max-width: 560px) {
-  .doors { grid-template-columns: 1fr; gap: 1.1rem; }
-  .doors__c { display: grid; grid-template-columns: 38% 1fr; gap: .25rem 1.1rem; align-content: center; }
+  .doors { grid-template-columns: 1fr; gap: 1.4rem; }
+  .doors__c { display: grid; grid-template-columns: 34% 1fr; gap: .25rem 1rem; align-content: start; }
   .doors__c:nth-child(n) { margin-top: 0; }
   /* La vignette tient la colonne de gauche sur toute la hauteur ; le titre, le
-     numéro et la phrase s'empilent à sa droite. */
-  .doors .ph { grid-row: 1 / span 3; align-self: center; }
-  /* Une vignette carrée à gauche, le titre et la phrase à droite : trois
-     photos plein cadre l'une sous l'autre, c'était trois écrans de défilement
-     pour trois liens. */
-  .doors .ph { --ar: 1; }
+     numéro et la phrase s'empilent à sa droite. Elle s'étire sur la hauteur du
+     texte plutôt que de flotter au milieu : les trois entrées formaient des
+     rangées de hauteurs différentes et la colonne d'images était en escalier. */
+  .doors .ph { grid-row: 1 / span 3; align-self: stretch; height: 100%; --ar: auto; min-height: 7.5rem; }
   .doors__h { margin-top: 0; padding-bottom: .5rem; }
   .doors__h b { font-size: 1.2rem; }
   /* Le numéro rythmait trois grandes vignettes ; entre un titre et sa phrase,
@@ -345,16 +367,21 @@
   .dip__txt, .dip__a, .dip__b, .cp__img, .cp__txt { grid-column: 1 / -1; grid-row: auto; }
   .dip__txt { margin-bottom: .6rem; }
   .dip__a .ph { --ar: 4/3; }
+  /* La petite photographie remontait de 18 % sur la grande et laissait sous
+     elle un angle vide en bas à gauche : sur une colonne unique, le décalage
+     ne se lisait plus comme une composition mais comme une image mal posée.
+     Elle est maintenant simplement rentrée par la droite, d'un cran, sans
+     manger la grande. */
   .dip__b {
-    justify-self: end; width: 62%;
-    transform: translateY(-18%); margin-bottom: -12%;
-    padding: 6px;
+    justify-self: end; width: 58%;
+    transform: none; margin-top: -.6rem;
+    padding: 0;
   }
-  .dip__b .ph { --ar: 1; }
+  .dip__b .ph { --ar: 4/3; }
   .cp__img .ph { --ar: 4/3; }
   .cp__txt {
-    width: calc(100% - 2rem); justify-self: center;
-    transform: translateY(-2rem); margin-bottom: -2rem;
+    width: calc(100% - 1.6rem); justify-self: center;
+    transform: translateY(-1.6rem); margin-bottom: -1.6rem;
   }
 }
 
@@ -374,19 +401,29 @@
 .marks__i:last-child { border-right: 0; }
 .marks__n { font: 500 2.4rem/1 var(--serif); color: var(--accent); }
 .marks__t { margin: .5rem 0 0; font-size: var(--fs-sm); color: var(--fg-soft); }
+/* Au doigt, ce ne sont plus trois colonnes mais trois lignes : les phrases
+   n'ont pas la même longueur, et deux d'entre elles se cassaient en trois
+   lignes pendant que la troisième en tenait une. Le chiffre passe à gauche de
+   sa phrase, comme un numéro d'ordre — c'est ce qu'il est. */
 @media (max-width: 720px) {
-  .marks { grid-template-columns: 1fr 1fr; }
-  .marks__i { padding: 1.4rem 1rem; border-bottom: 1px solid var(--line); }
-  .marks__i:nth-child(2n) { border-right: 0; }
-  .marks__i:last-child { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
-  .marks__n { font-size: 1.9rem; }
-  .marks__t { font-size: var(--fs-mini); }
+  .marks { grid-template-columns: 1fr; }
+  .marks__i {
+    display: grid; grid-template-columns: 2.6rem 1fr; align-items: baseline;
+    gap: .2rem 1rem;
+    padding: 1.05rem 0; border-right: 0; border-bottom: 1px solid var(--line);
+  }
+  .marks__i:last-child { border-bottom: 0; }
+  .marks__n { font-size: 1.6rem; }
+  .marks__t { margin: 0; font-size: var(--fs-sm); }
 }
 
 /* =========================================================================
    3 · LA CARTE — sommaire collant à gauche, carte à droite, fond sombre
    ========================================================================= */
-.menu-page { min-height: 100vh; }
+/* `svh` et non `vh` : sur un téléphone, `100vh` est la hauteur de l'écran
+   barre d'adresse repliée, et la page dépassait donc toujours d'une soixantaine
+   de pixels au chargement. */
+.menu-page { min-height: 100svh; }
 .menu-head { padding-block: clamp(2.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3rem); }
 .menu-head__g { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
 @media (max-width: 860px) { .menu-head__g { grid-template-columns: 1fr; align-items: start; } }
@@ -400,12 +437,29 @@
 .toc a:hover, .toc a.on { color: var(--fg-strong); border-left-color: var(--accent); }
 @media (max-width: 900px) {
   .menu-body { grid-template-columns: 1fr; }
-  .toc { position: static; display: flex; flex-wrap: wrap; gap: .4rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
-  .toc a { border: 1px solid var(--line); border-radius: 999px; padding: .5rem .9rem; }
+  .toc { position: static; display: flex; flex-wrap: wrap; gap: .45rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--line); }
+  /* Neuf pastilles en capitales espacées faisaient six rangées, soit un tiers
+     d'écran de téléphone avant le premier plat. Elles gardent leur surface de
+     frappe mais perdent l'espacement des lettres et un peu de rembourrage :
+     trois rangées suffisent alors. */
+  .toc a {
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: .5rem .85rem; letter-spacing: .04em; font-size: var(--fs-mini);
+  }
 }
 
 .fam { padding-top: .5rem; margin-bottom: clamp(2rem, 5vw, 4rem); scroll-margin-top: calc(var(--head-h) + 1.5rem); }
 .fam__h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .3rem; }
+/* Le titre et son étiquette tiennent sur une ligne tant qu'il y a de la place.
+   Au doigt, « Menu « 3 notes » » et « Entrée, plat, dessert » se partageaient
+   la largeur : le guillemet fermant tombait seul à la ligne d'un côté et
+   l'étiquette se cassait en deux de l'autre. Ils s'empilent alors. */
+@media (max-width: 560px) {
+  .fam__h { display: grid; justify-items: start; gap: .35rem; }
+}
+/* Sans note d'introduction, le titre de la famille tombait directement sur le
+   premier plat : les deux se lisaient comme une seule ligne. */
+.fam__h + .fam__l { margin-top: .9rem; }
 .fam__h h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
 .fam__h em { font: 600 var(--fs-micro)/1 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
 .fam__n { margin: 0 0 1.2rem; font-size: var(--fs-sm); color: var(--fg-soft); }
@@ -445,7 +499,12 @@
 /* Texte en deux colonnes, façon journal */
 .paper { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
 .paper p:first-child::first-letter { float: left; font: 500 3.6rem/.8 var(--serif); color: var(--accent); padding: .1em .12em 0 0; }
-@media (max-width: 760px) { .paper { columns: 1; } }
+@media (max-width: 760px) {
+  .paper { columns: 1; }
+  /* Une lettrine de 3,6 rem sur une colonne de téléphone mangeait le quart des
+     trois premières lignes. */
+  .paper p:first-child::first-letter { font-size: 2.8rem; }
+}
 
 /* ---------------------------------------------------------------------------
    LE SALON
@@ -507,7 +566,7 @@
           padding-block: clamp(2.5rem, 7vw, 6rem) clamp(2rem, 5vw, 4rem); }
 @media (max-width: 900px) { .ct-top { grid-template-columns: 1fr; } }
 .ct-addr { font-style: normal; line-height: 1.75; }
-.ct-addr b { display: block; font: 500 1.3rem/1.3 var(--serif); color: var(--fg-strong); margin-bottom: .3rem; }
+.ct-addr b { display: block; font: 500 1.3rem/1.3 var(--serif); color: var(--fg-strong); margin-bottom: .7rem; }
 .ct-links { display: grid; gap: .2rem; margin: 1.7rem 0 2rem; }
 .ct-links a { display: inline-flex; align-items: center; gap: .7rem; width: max-content; text-decoration: none;
               font: 500 1.3rem/1.6 var(--serif); color: var(--fg-strong); border-bottom: 1px solid var(--line); }

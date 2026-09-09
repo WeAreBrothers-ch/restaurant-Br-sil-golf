@@ -34,10 +34,53 @@
     });
   }
 
-  /* ------------------------------------------------- filet de l'en-tête ---*/
+  /* ------------------------------------------------- filet de l'en-tête ---
+     ET SON TON. L'en-tête est crème ; sur les zones vertes il traçait une
+     bande pâle en travers de la page. On mesure une fois pour toutes où
+     commencent et finissent ces zones, puis on regarde, à chaque défilement,
+     laquelle passe sous l'en-tête. Aucune lecture de mise en page pendant le
+     défilement : c'est ce qui permet de le faire à chaque image de rendu. */
   var head = document.querySelector('.head');
-  var onScroll = function () { if (head) head.classList.toggle('is-stuck', window.scrollY > 6); };
-  window.addEventListener('scroll', onScroll, { passive: true });
+  var zones = [];
+
+  function mesurerZones() {
+    zones = Array.prototype.map.call(
+      document.querySelectorAll('.dark, .foot, .menu-page, .terr-hero'),
+      function (el) {
+        var r = el.getBoundingClientRect();
+        return [r.top + window.scrollY, r.bottom + window.scrollY];
+      }
+    );
+  }
+
+  var tonPose = null;
+  function onScroll() {
+    if (!head) return;
+    head.classList.toggle('is-stuck', window.scrollY > 6);
+    // Le point observé est juste SOUS le bas de l'en-tête : c'est ce qu'il
+    // recouvre. Mesuré un pixel plus haut, il se voyait lui-même, et une page
+    // sombre commençant exactement à sa hauteur n'était jamais reconnue.
+    var y = window.scrollY + head.offsetHeight + 2;
+    var sombre = false;
+    for (var i = 0; i < zones.length; i++) {
+      if (y >= zones[i][0] && y < zones[i][1]) { sombre = true; break; }
+    }
+    if (sombre === tonPose) return;
+    tonPose = sombre;
+    if (sombre) head.setAttribute('data-ton', 'sombre');
+    else head.removeAttribute('data-ton');
+  }
+
+  var enAttente = false;
+  window.addEventListener('scroll', function () {
+    if (enAttente) return;
+    enAttente = true;
+    requestAnimationFrame(function () { enAttente = false; onScroll(); });
+  }, { passive: true });
+  window.addEventListener('resize', function () { mesurerZones(); tonPose = null; onScroll(); });
+  // Les photographies changent la hauteur de la page en arrivant : on remesure.
+  window.addEventListener('load', function () { mesurerZones(); tonPose = null; onScroll(); });
+  mesurerZones();
   onScroll();
 
   /* ---------------------------------------------------------- les photos ---
