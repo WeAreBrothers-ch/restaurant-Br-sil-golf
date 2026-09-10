@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>La terrasse · Le 9, Golf du Brésil</title>
 <meta name="description" content="La terrasse du 9, ouverte sur le parcours du Golf du Domaine du Brésil et les collines du Gros-de-Vaud. Déjeuner au soleil, apéritif et dîner face au green.">
-<meta name="theme-color" content="#10291f">
+<meta name="theme-color" content="#071e14">
 <meta property="og:title" content="La terrasse · Le 9, Golf du Brésil">
 <meta property="og:description" content="La terrasse du 9, ouverte sur le parcours du Golf du Domaine du Brésil et les collines du Gros-de-Vaud. Déjeuner au soleil, apéritif et dîner face au green.">
 <meta property="og:type" content="website">
@@ -100,43 +100,64 @@
     </div>
   </section>
 
-  <section class="sect" style="padding-top:0" aria-labelledby="titre-images">
+  <!-- ==================================================================
+       LES HEURES DE LA TERRASSE
+
+       La page montrait trois photographies de terrasse à la suite. Or il n'y
+       a que deux prises de vue dans la maison — la table sous l'arbre et la
+       table ouverte sur le parcours — et le bandeau du haut est déjà l'une
+       des deux : on regardait donc trois fois la même bouteille.
+
+       Elle raconte maintenant une journée. Trois heures, une photographie
+       pour deux d'entre elles, et celle du milieu qui n'en a pas : c'est ce
+       manque qui donne le rythme, et chaque image n'est vue qu'une fois.
+       ================================================================== -->
+  <section class="sect" style="padding-top:0" aria-labelledby="titre-heures">
+    <div class="illu i-sac" data-side="r" style="--y:44%; --w:95px; --in:-10px; --r:7deg" data-hide="lg"></div>
     <div class="wrap">
       <div data-reveal style="max-width:34rem; margin-bottom:clamp(2rem,4vw,3.2rem)">
-        <h2 class="t-2" id="titre-images">Du déjeuner au coucher du soleil</h2>
+        <h2 class="t-2" id="titre-heures">Une journée sur la terrasse</h2>
       </div>
 
-      <!-- DEUX DUOS : chaque photographie a son texte à côté, les côtés
-           s'inversent. Plus de rangée d'images. -->
-      <div class="duos">
-        <div class="duo duo--portrait" data-reveal>
-          <div class="duo__img">
+      <div class="heures">
+        <article class="heure" data-reveal>
+          <p class="heure__h"><span>12</span> h</p>
+          <div class="heure__t">
+            <h3 class="t-3">Le déjeuner</h3>
+            <p>On y mange pour de bon : la carte entière est servie dehors. La carte des golfeurs, plus courte, permet de repartir sur le parcours sans y passer l&rsquo;après-midi.</p>
+            <p class="heure__lien"><a class="alink" href="la-carte.html#golfeurs">La carte des golfeurs</a></p>
+          </div>
+          <div class="heure__img">
+            <figure class="ph ph--z ph--derive" data-file="plat-03.jpg">
+              <img src="assets/photos/plat-03.jpg" alt="Une assiette servie sur la terrasse du 9" loading="lazy" decoding="async">
+              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette en terrasse</span><code>plat-03.jpg</code></span>
+            </figure>
+          </div>
+        </article>
+
+        <article class="heure heure--nue" data-reveal>
+          <p class="heure__h"><span>16</span> h</p>
+          <div class="heure__t">
+            <h3 class="t-3">L&rsquo;après-midi</h3>
+            <p>Un café, un verre, l&rsquo;ombre du grand arbre. Une partie de la terrasse est couverte et vitrée : on s&rsquo;y assied même quand le temps tourne, et la vue reste la même.</p>
+            <p class="soft" style="margin-bottom:0">Il n&rsquo;est pas nécessaire de jouer au golf pour s&rsquo;installer.</p>
+          </div>
+        </article>
+
+        <article class="heure" data-reveal>
+          <p class="heure__h"><span>19</span> h</p>
+          <div class="heure__t">
+            <h3 class="t-3">Le soir</h3>
+            <p>Le soleil descend derrière les fairways et le parcours se vide. C&rsquo;est l&rsquo;heure des repas qui durent, des tables de famille et des fins de journée qu&rsquo;on ne compte pas.</p>
+            <p class="heure__lien"><a class="alink" href="contact.html#horaires">Voir les horaires</a></p>
+          </div>
+          <div class="heure__img">
             <figure class="ph ph--z ph--derive" data-file="terrasse-01.jpg">
-              <img src="assets/photos/terrasse-01.jpg" alt="Une table dressée sur la terrasse du 9, face au parcours" loading="lazy" decoding="async">
-              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La table, en fin de journée</span><code>terrasse-01.jpg</code></span>
+              <img src="assets/photos/terrasse-01.jpg" alt="Une table dressée sous le grand arbre de la terrasse, au soleil couchant" loading="lazy" decoding="async">
+              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La table sous l'arbre</span><code>terrasse-01.jpg</code></span>
             </figure>
           </div>
-          <div class="duo__txt">
-            <h3 class="t-3">À midi, entre deux parcours</h3>
-            <p>On y vient pour un déjeuner rapide entre deux parcours, pour un repas de famille qui dure, ou simplement pour un verre en fin d&rsquo;après-midi, sans forcément jouer au golf.</p>
-            <p class="soft">La carte des golfeurs permet de repartir sur le parcours sans y passer l&rsquo;après-midi.</p>
-            <p class="duo__lien"><a class="alink" href="la-carte.html">Voir la carte</a></p>
-          </div>
-        </div>
-        <div class="duo duo--r" data-reveal>
-          <div class="duo__img">
-            <figure class="ph ph--z ph--derive" data-file="terrasse-04.jpg">
-              <img src="assets/photos/terrasse-04.jpg" alt="Le parcours du Golf du Brésil vu de la terrasse, au coucher du soleil" loading="lazy" decoding="async">
-              <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Le parcours au couchant</span><code>terrasse-04.jpg</code></span>
-            </figure>
-          </div>
-          <div class="duo__txt">
-            <h3 class="t-3">Le soir, face aux fairways</h3>
-            <p>Le déjeuner s&rsquo;y étire, l&rsquo;apéritif s&rsquo;y prolonge, et le soir le soleil se couche derrière les fairways.</p>
-            <p class="soft">Repas de famille, réunion d&rsquo;entreprise, événement privé : la maison prend les groupes.</p>
-            <p class="duo__lien"><a class="alink" href="contact.html#ecrire">Nous écrire</a></p>
-          </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>

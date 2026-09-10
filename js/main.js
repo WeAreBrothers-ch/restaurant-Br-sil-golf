@@ -49,11 +49,13 @@
      troisième vert par-dessus. Chaque zone dit donc lequel elle porte. */
   function mesurerZones() {
     zones = Array.prototype.map.call(
-      document.querySelectorAll('.dark, .foot, .menu-page, .terr-hero'),
+      document.querySelectorAll('.dark, .foot, .menu-page, .terr-hero, .home-hero'),
       function (el) {
         var r = el.getBoundingClientRect();
-        // Le bandeau de la terrasse finit sur le socle : son dégradé y descend.
+        // Le bandeau de la terrasse finit sur le socle, et le premier écran de
+        // l'accueil est posé dessus : les deux prennent le ton du socle.
         var ton = el.classList.contains('foot') || el.classList.contains('terr-hero')
+          || el.classList.contains('home-hero')
           ? 'socle' : 'section';
         return [r.top + window.scrollY, r.bottom + window.scrollY, ton];
       }

@@ -10,7 +10,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct, trois duos photographie-texte et quatre plats de la carte. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
-| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, deux duos photographie-texte |
+| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
@@ -20,10 +20,15 @@ en fond et le duo (une photographie, un texte) sont communs.
 
 C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
 
-- **Le premier écran ne porte que le sceau.** Pas de phrase, pas de bouton :
+- **Le premier écran est sombre et ne porte que le sceau.** Pas de phrase, pas
+  de bouton :
   ce qu'on veut savoir tout de suite est dans le bandeau juste dessous, et le
   nom de la maison est déjà dans le sceau. La phrase qui situe le restaurant
   reste dans le document pour les moteurs et les lecteurs d'écran.
+  Il est posé sur le socle, le vert le plus profond de la palette, et le sceau
+  comme les huit dessins y passent en crème. La page bascule au crème sous le
+  bandeau : cette coupure franche est la porte. C'est l'ouverture du site de
+  L'Étoile, l'autre restaurant de la maison, dont le premier écran est noir.
   Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
   Sur un téléphone il barre l'écran : il ne reste plus une couronne mais deux
   bandes, quatre dessins au-dessus et quatre en dessous, en quinconce, et aucun
@@ -73,13 +78,25 @@ part de la colonne où pend la petite photographie du diptyque : les deux blocs
 partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
 côté, ici il est dedans.
 
-**Le duo** (pages « Accueil » et « La terrasse »). Une photographie et un
-texte côte à côte, la photographie sur sept colonnes en paysage ou cinq en
-portrait, le texte de l'autre côté sur une mesure de paragraphe, et le vide
-entre les deux. Les côtés s'inversent d'un duo à l'autre. C'est le dispositif
-du site de L'Étoile, l'autre restaurant de la maison. Il remplace les trois
-entrées en escalier de l'accueil et le salon de la terrasse : une image n'est
-jamais suivie d'une autre sans un texte entre elles.
+**Le duo** (page « Accueil »). Une photographie et un texte côte à côte, la
+photographie sur sept colonnes en paysage ou cinq en portrait, le texte de
+l'autre côté sur une mesure de paragraphe, et le vide entre les deux. Les
+côtés s'inversent d'un duo à l'autre. C'est le dispositif du site de L'Étoile,
+l'autre restaurant de la maison. Il remplace les trois entrées en escalier :
+une image n'est jamais suivie d'une autre sans un texte entre elles.
+
+**Les heures** (page « La terrasse »). Une journée en trois temps, réglée
+comme une grille horaire : un filet, l'heure dans la marge en chiffres de
+titre, le texte à côté, la photographie au bout de la ligne. Celle du milieu
+n'a pas de photographie et son texte prend la place — ce manque est la
+respiration.
+
+Il n'y a que **deux prises de vue de la terrasse** dans toute la maison : la
+table sous le grand arbre, et la table ouverte sur le parcours. La page en
+montrait trois à la suite, dont le bandeau du haut : on regardait trois fois
+la même bouteille. Elle en montre maintenant deux, plus une assiette servie
+dehors, chacune une seule fois. Avant d'ajouter une image ici, vérifier
+qu'elle ne redit pas celle d'au-dessus.
 
 **Quelques plats** (page « Accueil »). Quatre lignes de la carte, dans la
 forme et sur le vert de la page de la carte : la carte d'abord, avant même
@@ -92,8 +109,9 @@ d'œil. Au doigt, chaque composition garde son geste, en plus court : la grande
 photographie du diptyque prend toute la largeur de l'écran, la petite sort par
 la droite et mord son angle, et le lien vers la carte se pose dans l'angle
 qu'elle laisse libre, calé sur son bord inférieur ; le titre de la salle
-remonte sur la photographie depuis le bord de l'écran. Sur tablette, où les
-chevauchements manquent de largeur, il ne reste que les décalages verticaux.
+remonte sur la photographie depuis le bord de l'écran ; l'heure de la terrasse
+passe au-dessus de son titre. Sur tablette, où les chevauchements manquent de
+largeur, il ne reste que les décalages verticaux.
 
 ## Le mouvement
 

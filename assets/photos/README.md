@@ -32,17 +32,26 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 |---|---|---|
 | `plat-01.jpg` | nourriture.jpg | carte, le restaurant |
 | `plat-02.jpg` | nourriture 2.jpg | carte |
-| `plat-03.jpg` | caption.jpg | en réserve, plus affichée |
+| `plat-03.jpg` | caption.jpg | terrasse, l'heure du déjeuner |
 | `plat-04.jpg` | viande.jpg | carte, le restaurant |
 | `plat-05.jpg` | img-20190316… | accueil, duo « la cuisine » |
 | `plat-06.jpg` | 20180714… | en réserve, plus affichée |
 | `lieu-pano.jpg` | le9_barolo_terrasse | bande large de la page « Le restaurant » |
 | `terrasse-pano.jpg` | le9_terrasse_coucher_soleil | photo de tête de la page « La terrasse » |
-| `terrasse-01.jpg` | le9_barolo_terrasse | terrasse, premier duo |
+| `terrasse-01.jpg` | le9_barolo_terrasse | terrasse, l'heure du soir |
 | `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, duo « la maison » |
 | `terrasse-03.jpg` | le9_barolo_terrasse | accueil, duo « la terrasse » |
-| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | terrasse, second duo |
+| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | en réserve, plus affichée |
 | `salle-01.jpg` | une-vue-imprenable-sur | page « Le restaurant », la vue depuis la salle |
+
+## Attention : il n'y a que deux prises de vue de la terrasse
+
+`terrasse-pano`, `terrasse-02` et `terrasse-04` sont **la même table** vue de
+trois façons ; `terrasse-01`, `terrasse-03` et `lieu-pano` sont **la même
+bouteille sous le même arbre**. Ce sont deux photographies, pas six. Avant de
+poser l'une d'elles dans une page, vérifier qu'aucune de ses jumelles ne s'y
+trouve déjà — c'est ce qui donnait à la page « La terrasse » l'air de répéter
+la même image trois fois.
 
 ## Ce qui manque encore
 
