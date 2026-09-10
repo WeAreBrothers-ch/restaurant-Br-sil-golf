@@ -121,17 +121,13 @@
        page son deuxième temps. Elles sont sombres toutes les deux — le
        passage du socle au crème se fait par elles, pas d'un coup.
        ================================================================== -->
-  <div class="ruban" data-reveal>
-    <figure class="ph ph--z ph--derive" data-file="plat-01.jpg">
-      <img src="assets/photos/plat-01.jpg" alt="Saint-Jacques et écume verte, au Le 9" loading="eager" fetchpriority="high" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une entrée</span><code>plat-01.jpg</code></span>
-    </figure>
-    <figure class="ph ph--z ph--derive" data-file="plat-03.jpg">
-      <img src="assets/photos/plat-03.jpg" alt="Une assiette servie sur la terrasse du 9" loading="lazy" decoding="async">
-      <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une assiette en terrasse</span><code>plat-03.jpg</code></span>
-    </figure>
-  </div>
+  <!-- ==================================================================
+       LE BANDEAU D'ACCÈS DIRECT
 
+       Les quatre choses qu'on vient chercher sur le site d'un restaurant.
+       Au doigt, quatre carrés en deux lignes : c'est ce qu'on lit d'un coup
+       d'œil sous le sceau, sans faire défiler.
+       ================================================================== -->
   <div class="strip">
     <div class="wrap strip__g">
       <a class="strip__i" href="la-carte.html">
@@ -153,144 +149,106 @@
     </div>
   </div>
 
-  <!-- LE DUO : une photographie et un texte côte à côte, les côtés qui
-       s'inversent d'un bloc à l'autre. Une image n'est jamais suivie d'une
-       autre sans un mot entre elles. -->
-  <section class="sect" id="entrer">
-    <div class="illu i-clubs" data-side="r" style="--y:10%; --w:115px; --in:8px; --r:11deg" data-hide="lg"></div>
-    <div class="wrap">
-      <div class="duo duo--portrait" data-reveal>
-        <div class="duo__img">
-          <figure class="ph ph--z ph--derive" data-file="plat-05.jpg">
-            <img src="assets/photos/plat-05.jpg" alt="Un plat de saison servi au 9 : champignons à la crème et pommes de terre" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Un plat de saison</span><code>plat-05.jpg</code></span>
-          </figure>
-        </div>
-        <div class="duo__txt">
-          <div class="mark i-assiette" style="--w:66px" aria-hidden="true"></div>
-          <h2 class="t-2">Une cuisine faite maison, au fil des saisons</h2>
-          <p class="lead">Entrées, viandes, poissons, pâtes et desserts : tout est travaillé sur place, avec le label Fait Maison. La carte reste courte et bouge avec les arrivages.</p>
-          <p class="soft">Une carte des golfeurs, plus rapide, permet de déjeuner entre deux parcours.</p>
-          <p class="duo__lien"><a class="btn btn--line" href="la-carte.html">Voir toute la carte</a></p>
-        </div>
-      </div>
+  <!-- ==================================================================
+       À PARTIR D'ICI, PLUS UNE SEULE PHOTOGRAPHIE
+
+       L'accueil en portait neuf : un ruban, un duo, trois cartes de plat,
+       une paire, un second duo. C'était beaucoup d'images pour une page qui
+       n'a qu'une chose à faire — dire ce qu'est la maison et mener aux
+       quatre autres pages, qui, elles, montrent.
+
+       Le sceau et les huit dessins du premier écran sont l'image de
+       l'accueil. En dessous, il n'y a plus que des mots : une phrase, six
+       lignes de carte, trois portes. Les photographies vivent dans les pages
+       où on est venu les voir.
+       ================================================================== -->
+  <section class="sect word">
+    <div class="illu i-clubs" data-side="r" style="--y:18%; --w:115px; --in:-14px; --r:11deg" data-hide="lg"></div>
+    <div class="wrap-sm" data-reveal>
+      <p class="word__q">Un golf, une cuisine soignée, et le calme de la campagne vaudoise à vingt minutes de Lausanne.</p>
+      <p class="word__s soft">Golfeur ou non, la maison accueille tout le monde : déjeuner de travail, repas de famille, verre en fin d&rsquo;après-midi ou dîner face au parcours.</p>
+      <p class="word__a">
+        <a class="btn" href="tel:+41218822419">Réserver une table</a>
+        <a class="alink" href="le-restaurant.html">Découvrir la maison</a>
+      </p>
     </div>
   </section>
 
-  <!-- ==================================================================
-       TROIS PLATS
+  <!-- QUELQUES PLATS : la carte d'abord. Six lignes dans la forme et sur le
+       vert de la page de la carte, pour savoir ce qu'on mange avant d'y aller.
 
-       La carte d'abord : un plat se montre, il ne se raconte pas. Photo,
-       nom, description, prix — la carte de plat de L'Étoile. Les prix
-       tombent tous sur la même ligne, en bas, pour se comparer d'un coup.
-
-       TODO à valider avec la cuisine : ces trois plats et leurs prix sont
-       repris de la-carte.html, elle-même relevée sur une fiche de 2024.
-       Quand la carte change, les mettre à jour aux deux endroits.
-       ================================================================== -->
+       TODO à valider avec la cuisine : ces six lignes sont recopiées de
+       la-carte.html, elle-même relevée sur une fiche de 2024. Quand la carte
+       change, les mettre à jour aux deux endroits. -->
   <section class="sect dark home-plats">
-    <div class="illu i-bouteille" data-side="l" style="--y:34%; --w:125px; --in:-12px; --r:-7deg" data-hide="lg"></div>
+    <div class="illu i-bouteille" data-side="l" style="--y:30%; --w:125px; --in:-14px; --r:-7deg" data-hide="lg"></div>
+    <div class="illu i-sac"       data-side="r" style="--y:62%; --w:95px;  --in:-20px; --r:8deg" data-hide="lg"></div>
     <div class="wrap">
       <div class="home-plats__h" data-reveal>
-        <div>
-          <div class="mark i-assiette" style="--w:60px" aria-hidden="true"></div>
-          <h2 class="t-2">Trois plats, trois envies</h2>
-        </div>
+        <h2 class="t-2">Quelques plats de la carte</h2>
         <a class="alink" href="la-carte.html">Toute la carte</a>
       </div>
-
-      <div class="plats">
-        <a class="plat" href="la-carte.html#entrees" data-reveal>
-          <figure class="ph ph--z" data-file="plat-02.jpg">
-            <img src="assets/photos/plat-02.jpg" alt="Foie gras mi-cuit, chutney de pomme et brioche maison" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Le foie gras</span><code>plat-02.jpg</code></span>
-          </figure>
-          <h3 class="plat__n">Foie gras mi-cuit au piment d&rsquo;Espelette</h3>
-          <p class="plat__d">Chutney de pomme Granny Smith, brioche maison.</p>
-          <p class="plat__p">25.–</p>
-        </a>
-        <a class="plat" href="la-carte.html#viandes" data-reveal style="--vu-retard:.08s">
-          <figure class="ph ph--z" data-file="plat-04.jpg">
-            <img src="assets/photos/plat-04.jpg" alt="Pièce de bœuf, gratin et sauce aux morilles" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La viande</span><code>plat-04.jpg</code></span>
-          </figure>
-          <h3 class="plat__n">Entrecôte de bœuf</h3>
-          <p class="plat__d">160 g, gratin et légumes du moment.</p>
-          <p class="plat__p">32.–</p>
-        </a>
-        <a class="plat" href="la-carte.html#golfeurs" data-reveal style="--vu-retard:.16s">
-          <figure class="ph ph--z" data-file="plat-06.jpg">
-            <img src="assets/photos/plat-06.jpg" alt="Le burger du chef, pain brioché au sésame" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Le burger</span><code>plat-06.jpg</code></span>
-          </figure>
-          <h3 class="plat__n">Burger du chef</h3>
-          <p class="plat__d">Pain brioché au sésame. Sur la carte des golfeurs.</p>
-          <p class="plat__p">25.–</p>
-        </a>
-      </div>
+      <ul class="fam__l" data-reveal style="--vu-retard:.08s">
+        <li class="dish">
+          <span class="dish__n">Foie gras mi-cuit au piment d&rsquo;Espelette</span>
+          <span class="dish__p">25.–</span>
+          <p class="dish__d">Chutney de pomme Granny Smith, brioche maison</p>
+        </li>
+        <li class="dish">
+          <span class="dish__n">Filets de perche meunière</span>
+          <span class="dish__p">29.–</span>
+          <p class="dish__d">Sauce tartare, 120 g</p>
+        </li>
+        <li class="dish">
+          <span class="dish__n">Entrecôte de bœuf</span>
+          <span class="dish__p">32.–</span>
+          <p class="dish__d">160 g</p>
+        </li>
+        <li class="dish">
+          <span class="dish__n">Raviolis farcis au citron</span>
+          <span class="dish__p">26.–</span>
+          <p class="dish__d">Beurre de sauge</p>
+        </li>
+        <li class="dish">
+          <span class="dish__n">Abricots du Valais rôtis au miel</span>
+          <span class="dish__p">15.–</span>
+          <p class="dish__d">Crème mascarpone, crumble, sorbet fraise-mélisse</p>
+        </li>
+        <li class="dish">
+          <span class="dish__n">Menu « 3 notes », petite faim</span>
+          <span class="dish__p">63.–</span>
+          <p class="dish__d">Entrée, plat, dessert, composés au gré du marché</p>
+        </li>
+      </ul>
       <p class="home-plats__n xs soft todo-note" data-reveal>Prix en francs suisses, service compris. Carte relevée en 2024, à valider avec la cuisine. <span class="todo">à valider</span></p>
     </div>
   </section>
 
-  <!-- ==================================================================
-       LA PAIRE
-
-       Deux photographies seules, sans un mot, la seconde décalée vers le
-       bas, et le dessin posé sous la plus courte des deux. C'est le second
-       dispositif de L'Étoile : il donne à la page une respiration que ni le
-       duo ni les cartes de plat ne peuvent donner, parce qu'elle ne dit rien.
-       ================================================================== -->
-  <section class="sect paire-sect">
+  <!-- LES TROIS PORTES : un index, pas une galerie. Chaque page dit en une
+       ligne ce qu'on y trouve, et c'est elle qui porte les photographies. -->
+  <section class="sect">
+    <div class="illu i-chef" data-side="l" style="--y:20%; --w:165px; --in:-12px; --r:-3deg" data-hide="lg"></div>
     <div class="wrap">
-      <div class="paire" data-reveal>
-        <div class="paire__c">
-          <figure class="ph ph--z ph--derive" data-file="salle-01.jpg">
-            <img src="assets/photos/salle-01.jpg" alt="La vue sur le parcours depuis une table de la salle du 9" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La vue depuis la salle</span><code>salle-01.jpg</code></span>
-          </figure>
-          <div class="mark i-table paire__mark" style="--w:74px" aria-hidden="true"></div>
-        </div>
-        <div class="paire__c paire__c--bas">
-          <figure class="ph ph--z ph--derive" data-file="terrasse-03.jpg">
-            <img src="assets/photos/terrasse-03.jpg" alt="La terrasse du 9 sous le grand arbre, le parcours en contrebas" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La terrasse sous l'arbre</span><code>terrasse-03.jpg</code></span>
-          </figure>
-        </div>
+      <div data-reveal style="max-width:34rem; margin-bottom:clamp(1.6rem,3.5vw,2.6rem)">
+        <h2 class="t-2">Trois raisons de pousser la porte</h2>
       </div>
-    </div>
-  </section>
-
-  <section class="sect" style="padding-top:0">
-    <div class="illu i-golfeur" data-side="r" style="--y:58%; --w:135px; --in:-16px; --r:5deg" data-hide="lg"></div>
-    <div class="wrap">
-      <div class="duo duo--r" data-reveal>
-        <div class="duo__img">
-          <figure class="ph ph--z ph--derive" data-file="terrasse-02.jpg">
-            <img src="assets/photos/terrasse-02.jpg" alt="Une table dressée sur la terrasse du 9, face au parcours" loading="lazy" decoding="async">
-            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La table face au parcours</span><code>terrasse-02.jpg</code></span>
-          </figure>
-        </div>
-        <div class="duo__txt">
-          <div class="mark i-chef" style="--w:54px" aria-hidden="true"></div>
-          <h2 class="t-2">Une salle au calme, une terrasse sur le parcours</h2>
-          <p class="lead">Des tables espacées, de grandes baies tournées vers le green. Aux beaux jours, le service passe dehors et le soir le soleil se couche derrière les fairways.</p>
-          <p class="soft">Repas de famille, réunion d&rsquo;entreprise, événement privé : la maison prend les groupes.</p>
-          <p class="duo__lien duo__lien--duo">
-            <a class="btn btn--line" href="le-restaurant.html">Le restaurant</a>
-            <a class="alink" href="la-terrasse.html">La terrasse</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sect dark word">
-    <div class="illu i-chef"    data-side="l" style="--y:20%; --w:165px; --in:6px; --r:-3deg" data-hide="lg"></div>
-    <div class="illu i-golfeur" data-side="r" style="--y:26%; --w:135px; --in:8px; --r:5deg" data-hide="lg"></div>
-    <div class="wrap-sm" data-reveal>
-      <p class="word__q">Un golf, une cuisine soignée, et le calme de la campagne vaudoise à vingt minutes de Lausanne.</p>
-      <p class="word__s soft">Golfeur ou non, la maison accueille tout le monde : déjeuner de travail, repas de famille, verre en fin d&rsquo;après-midi ou dîner face au parcours.</p>
-      <p class="word__a"><a class="btn" href="tel:+41218822419">Réserver une table</a><a class="alink" href="le-restaurant.html">Découvrir la maison</a></p>
+      <nav class="portes" data-reveal style="--vu-retard:.08s" aria-label="Les pages du site">
+        <a class="porte" href="le-restaurant.html">
+          <b>Le restaurant</b>
+          <span>Le lieu, la cuisine du chef, l&rsquo;esprit de la maison.</span>
+          <i aria-hidden="true">&rarr;</i>
+        </a>
+        <a class="porte" href="la-carte.html">
+          <b>La carte</b>
+          <span>Entrées, viandes, poissons, desserts et carte des golfeurs.</span>
+          <i aria-hidden="true">&rarr;</i>
+        </a>
+        <a class="porte" href="la-terrasse.html">
+          <b>La terrasse</b>
+          <span>La vue sur le green, du déjeuner au coucher du soleil.</span>
+          <i aria-hidden="true">&rarr;</i>
+        </a>
+      </nav>
     </div>
   </section>
 </main>

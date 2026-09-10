@@ -7,7 +7,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis un ruban de deux photographies, le bandeau d'accès direct, un duo, trois plats en cartes, une paire et un second duo. |
+| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct, et plus une seule photographie : une phrase, six lignes de carte, trois portes. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, une journée en trois heures |
@@ -29,7 +29,11 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   nom de la maison est déjà dans le sceau. La phrase qui situe le restaurant
   reste dans le document pour les moteurs et les lecteurs d'écran.
   Il est posé sur le socle, le vert le plus profond de la palette, et le sceau
-  comme les huit dessins y passent en crème. La page bascule au crème sous le
+  comme les huit dessins y passent en crème. Aucun dessin ne touche le sceau :
+  la plus petite distance entre un trait et le cercle est de trente-deux
+  pixels, mesurée sur douze formats. Le sceau est borné par la hauteur de
+  l'écran autant que par sa largeur — c'est cette borne qui garantit les deux
+  bandes libres où les dessins se rangent. La page bascule au crème sous le
   bandeau : cette coupure franche est la porte. C'est l'ouverture du site de
   L'Étoile, l'autre restaurant de la maison, dont le premier écran est noir.
   Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
@@ -42,10 +46,10 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   fléchés et les entrées de sommaire sont élargis là où le pointeur est
   grossier, sans rien changer là où l'on a une souris.
 - **Les blocs se recomposent plutôt que de rétrécir.** Le bandeau d'accès
-  direct devient quatre lignes au lieu de quatre cases. Les duos passent en
-  colonne unique, la photographie d'un bord à l'autre et le texte dessous. Les
-  repères chiffrés passent côte à côte. Le récit passe en colonne unique,
-  titre avant photo.
+  direct devient quatre carrés sur deux lignes au lieu de quatre colonnes : on
+  les voit d'un seul coup d'œil sous le sceau, au lieu de parcourir une liste.
+  Les repères chiffrés passent côte à côte. Le récit passe en colonne unique,
+  titre avant photo. L'heure de la terrasse passe au-dessus de son titre.
 - **Une barre d'appel reste au bas de l'écran** avec le numéro et l'itinéraire,
   les deux seules choses qu'on veut faire depuis un téléphone devant un site de
   restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
@@ -81,33 +85,19 @@ part de la colonne où pend la petite photographie du diptyque : les deux blocs
 partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
 côté, ici il est dedans.
 
-L'accueil suit l'ordre de L'Étoile, l'autre restaurant de la maison : premier
-écran, ruban, accès direct, duo, plats, paire, duo, le mot. Trois de ces
-dispositifs viennent de chez eux.
+**L'accueil ne porte aucune photographie.** Il en a porté neuf : un ruban,
+un duo, trois cartes de plat, une paire, un second duo. C'était beaucoup
+d'images pour une page qui n'a que deux choses à faire — dire ce qu'est la
+maison, et mener aux quatre autres pages, qui, elles, montrent. Le sceau et
+les huit dessins du premier écran sont son image. En dessous il n'y a plus
+que des mots : une phrase, six lignes de carte, trois portes. Les
+photographies vivent dans les pages où l'on est venu les voir.
 
-**Le ruban** (page « Accueil »). Deux photographies d'un bord à l'autre, sans
-un mot, juste sous le premier écran. Elles ne mènent nulle part et ne portent
-aucun texte : elles ne font que donner à voir. Posées sur le socle comme le
-premier écran, elles font durer la nuit d'un temps de plus — le crème ne
-revient qu'au bandeau.
-
-**Les cartes de plat** (page « Accueil »). Photographie, nom, description,
-prix. Le prix est poussé en bas de sa carte : les trois tombent alors sur la
-même ligne et se comparent d'un coup d'œil, quelle que soit la longueur des
-noms. Au doigt, deux cartes côte à côte et la troisième en largeur, vignette à
-gauche — trois colonnes y feraient trois timbres.
-
-**La paire** (page « Accueil »). Deux photographies seules, la seconde
-décalée vers le bas, et le dessin posé sous la plus courte des deux, dans sa
-colonne : il ne flotte pas au milieu de la page, il achève le bloc. Elle ne dit
-rien, et c'est ce qu'on lui demande — ni le duo ni les cartes de plat ne
-peuvent donner cette respiration, parce que tous deux parlent.
-
-**Le duo** (page « Accueil »). Une photographie et un texte côte à côte, la
-photographie sur sept colonnes en paysage ou cinq en portrait, le texte de
-l'autre côté sur une mesure de paragraphe, et le vide entre les deux. Les
-côtés s'inversent d'un duo à l'autre. Il remplace les trois entrées en
-escalier de l'accueil.
+**Les trois portes** (page « Accueil »). Un index, pas une galerie. Trois
+lignes réglées : le nom de la page dans le serif des titres, ce qu'on y
+trouve en dessous, la flèche au bout. C'étaient trois photographies plein
+cadre, puis trois cartes en escalier, puis des duos ; l'accueil n'a pas à
+montrer ce que la page de la terrasse montre déjà, il a à y mener.
 
 **Les heures** (page « La terrasse »). Une journée en trois temps, réglée
 comme une grille horaire : un filet, l'heure dans la marge en chiffres de
