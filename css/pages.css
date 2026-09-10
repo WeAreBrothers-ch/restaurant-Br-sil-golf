@@ -365,7 +365,18 @@
   .duo__txt { max-width: 56ch; }
   .duo__img .ph, .duo--r .duo__img .ph { --ar: 4/3; }
 }
-@media (max-width: 699px) { .duo__lien { margin-top: 1.4rem; } }
+@media (max-width: 699px) {
+  .duo__lien { margin-top: 1.4rem; }
+  /* LA PHOTOGRAPHIE TOUCHE LE BANDEAU.
+
+     Au doigt, la première photographie va d'un bord à l'autre de l'écran, et
+     le bandeau d'accès direct aussi. Entre les deux restait la marge haute de
+     la section : cinquante-deux pixels de crème sur toute la largeur, coincés
+     entre le filet du bandeau et le haut de l'image. Ce n'est pas une
+     respiration, c'est une couture. Le filet du bandeau devient donc le bord
+     haut de la photographie. */
+  .strip + .sect { padding-top: 0; }
+}
 
 /* LE MOT DE LA FIN.
 

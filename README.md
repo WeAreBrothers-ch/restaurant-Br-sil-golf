@@ -125,6 +125,14 @@ c'est-à-dire la bouteille tranchée par le milieu et la garniture de
 l'assiette. On ne voyait plus une photographie mais une photographie coupée.
 Le cadre est maintenant exactement celui de l'image, et rien n'en est retiré.
 
+**Au doigt, une photographie pleine largeur ne se sépare pas d'un bloc
+pleine largeur par une bande de crème.** Elle en touche le bord. Sur
+l'accueil, la première photographie commence au filet du bandeau d'accès
+direct ; sur la terrasse, la dernière touche le panneau vert. Entre deux
+aplats qui vont d'un bord à l'autre, les cinquante pixels de marge d'une
+section ne se lisent pas comme une respiration mais comme une couture, et
+l'on croit à un défaut d'affichage.
+
 **Au doigt, la dernière photographie touche le vert.** Elle va d'un bord à
 l'autre de l'écran et le panneau qui la suit aussi ; entre les deux restait
 la marge basse de la section — cinquante pixels de crème sur toute la largeur
