@@ -52,11 +52,20 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   on les voit d'un seul coup d'œil sous le sceau, au lieu de parcourir une
   liste. Elles ne sont pas carrées — elles l'ont été, et le carré creusait
   entre le libellé et sa réponse un trou de cent pixels que rien ne
-  remplissait. Hauteur fixe et courte, contenu centré dedans, une flèche au
-  bout du libellé : c'est le bandeau de L'Étoile, dans sa mécanique exacte.
-  Les filets ne doublent jamais celui de la bande ni celui du bord, et les
-  quatre réponses tiennent chacune sur une ligne — dès que l'une passe à la
-  ligne, sa cellule décale son libellé et la rangée boite.
+  remplissait. Hauteur fixe, contenu centré dedans, une flèche au bout du
+  libellé : c'est le bandeau de L'Étoile, dans sa mécanique exacte. Les filets
+  ne doublent jamais celui de la bande ni celui du bord, et les quatre
+  réponses tiennent chacune sur une ligne — dès que l'une passe à la ligne, sa
+  cellule décale son libellé et la rangée boite.
+
+  **Le libellé annonce, la réponse parle.** C'était l'inverse : un libellé en
+  laiton, en capitales largement espacées, au-dessus d'une réponse écrite plus
+  petite que le texte courant. Le mot « ADRESSE » pesait plus lourd que
+  l'adresse elle-même, et les quatre cellules se lisaient comme quatre
+  étiquettes vides. Le libellé reste en laiton — c'est la marque de la maison,
+  on la retrouve au pied de page, sur la carte et dans les horaires — mais il
+  se resserre et s'efface d'un cran ; la réponse passe au corps d'un titre,
+  dans le serif vert.
   Les repères chiffrés passent côte à côte. Le récit passe en colonne unique,
   titre avant photo. L'heure de la terrasse passe au-dessus de son titre.
 - **Une barre d'appel reste au bas de l'écran** avec le numéro et l'itinéraire,
