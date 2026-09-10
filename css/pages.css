@@ -367,21 +367,6 @@
 }
 @media (max-width: 699px) { .duo__lien { margin-top: 1.4rem; } }
 
-/* QUELQUES PLATS : la carte d'abord, sur le vert de la page de la carte.
-
-   Il y avait ici trois cartes de plat, photographie comprise, et sous elles
-   une paire de photographies muettes. Une carte se lit : elle n'a pas besoin
-   qu'on lui montre l'assiette, et trois assiettes côte à côte font un bloc
-   d'images de plus sur une page qui en avait déjà trop. Six lignes dans la
-   forme exacte de la page de la carte — un nom, un prix, une description.
-   On sait ce qu'on mange avant d'y aller. */
-.home-plats__h {
-  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: 1rem 2rem; margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
-}
-.home-plats__h h2 { max-width: 22ch; }
-.home-plats__n { margin: 1.8rem 0 0; }
-
 /* LE MOT D'ACCUEIL : une ligne large, centrée.
 
    Il était posé sur un panneau vert. Mais le premier écran est passé sur le
@@ -667,15 +652,28 @@
 .terr-hero__t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: clamp(2rem, 5vw, 4rem); color: var(--c-cream); }
 .terr-hero__t h1 { color: var(--c-cream); max-width: 16ch; }
 
-/* Texte en deux colonnes, façon journal */
-.paper { columns: 2; column-gap: clamp(2rem, 5vw, 4.5rem); }
-.paper p:first-child::first-letter { float: left; font: 500 3.6rem/.8 var(--serif); color: var(--accent); padding: .1em .12em 0 0; }
-@media (max-width: 760px) {
-  .paper { columns: 1; }
-  /* Une lettrine de 3,6 rem sur une colonne de téléphone mangeait le quart des
-     trois premières lignes. */
-  .paper p:first-child::first-letter { font-size: 2.8rem; }
+/* ---------------------------------------------------------------------------
+   LE CHAPÔ ET LES COLONNES DE JOURNAL
+
+   Le texte tenait dans une colonne étroite et centrée, avec une lettrine.
+   Sur un grand écran il flottait au milieu de la page — deux cents pixels de
+   blanc de chaque côté — sans rapport avec la grille des heures juste en
+   dessous, qui, elle, prend toute la largeur.
+
+   Il prend maintenant la même largeur qu'elle : une phrase d'ouverture dans
+   le corps des titres, puis le texte en trois colonnes. La lettrine est
+   retirée — le chapô ouvre déjà le texte, et deux ouvertures l'une sur
+   l'autre n'en font aucune.
+   --------------------------------------------------------------------------- */
+.terr-mot__q {
+  margin: 0 0 clamp(1.6rem, 3.5vw, 2.6rem); max-width: 26ch;
+  font: 500 clamp(1.8rem, 3.6vw, 3rem)/1.15 var(--serif);
+  letter-spacing: -.01em; color: var(--fg-strong); text-wrap: balance;
 }
+.paper { columns: 2; column-gap: clamp(2rem, 4vw, 3.5rem); }
+.paper p:last-child { margin-bottom: 0; }
+@media (min-width: 1100px) { .paper { columns: 3; } }
+@media (max-width: 760px)  { .paper { columns: 1; } }
 
 /* ---------------------------------------------------------------------------
    LES HEURES DE LA TERRASSE
@@ -699,26 +697,46 @@
   padding-top: clamp(1.4rem, 3vw, 2.2rem);
   border-top: 1px solid var(--line);
 }
-/* L'heure est posée dans la marge, en chiffres de titre : c'est le seul
-   endroit du site où un nombre est écrit grand, et il dit quelque chose. */
-.heure__h { grid-column: 1 / span 2; margin: 0; color: var(--accent); line-height: 1; }
-.heure__h span { font: 500 clamp(2.1rem, 3.4vw, 3rem)/1 var(--serif); letter-spacing: -.02em; }
+/* L'HEURE TIENT LA MARGE.
+
+   Elle y était écrite au corps d'un sous-titre : deux cents pixels de colonne
+   pour trois signes, et la rangée s'ouvrait sur un grand vide à gauche. Elle
+   est maintenant un chiffre de chapitre — le seul nombre écrit grand de tout
+   le site — et c'est elle qui tient la marge. */
+.heure__h {
+  grid-column: 1 / span 2; margin: 0; color: var(--accent);
+  display: flex; align-items: baseline; gap: .16em; line-height: 1;
+}
+.heure__h span { font: 500 clamp(2.4rem, 4.6vw, 4rem)/.85 var(--serif); letter-spacing: -.03em; }
+.heure__h i {
+  font: 600 var(--fs-mini)/1 var(--sans); font-style: normal;
+  letter-spacing: .1em; text-transform: uppercase;
+}
 .heure__t   { grid-column: 3 / span 5; }
 .heure__t > :last-child { margin-bottom: 0; }
 .heure__t h3 { margin-bottom: .7rem; }
 .heure__lien { margin-top: 1.5rem; }
 .heure__img { grid-column: 8 / -1; }
 .heure__img .ph { --ar: 4/5; }
-/* Sans photographie, le texte prend la ligne entière : c'est la respiration. */
-.heure--nue .heure__t { grid-column: 3 / span 7; }
+/* L'heure du milieu n'a pas de photographie. La moitié droite de sa rangée
+   restait vide et le manque se lisait comme une image qui n'aurait pas
+   chargé ; une phrase y prend place, à l'endroit exact où les deux autres
+   rangées ont la leur. La respiration est alors voulue, et elle se voit. */
+.heure__note {
+  grid-column: 8 / -1; grid-row: 1; align-self: center;
+  margin: 0; max-width: 24ch;
+  font: italic 400 clamp(1.15rem, 1.9vw, 1.55rem)/1.45 var(--serif);
+  color: var(--fg-soft);
+}
 
 @media (max-width: 899px) {
   /* En colonne unique, l'heure ne peut plus vivre dans une marge qui n'existe
      plus : elle passe au-dessus du titre, sur sa propre ligne. */
   .heure { grid-template-columns: 1fr; row-gap: 1.5rem; padding-top: 1.3rem; }
-  .heure__h, .heure__t, .heure__img, .heure--nue .heure__t { grid-column: 1 / -1; }
-  .heure__h { margin-bottom: -.6rem; }
-  .heure__h span { font-size: 2rem; }
+  .heure__h, .heure__t, .heure__img, .heure__note { grid-column: 1 / -1; grid-row: auto; }
+  .heure__note { max-width: 34ch; align-self: start; }
+  .heure__h { margin-bottom: -.7rem; }
+  .heure__h span { font-size: clamp(2.2rem, 9vw, 2.9rem); }
   .heure__t { max-width: 56ch; }
   /* Les deux photographies sont en hauteur : un cadre 4/3 leur coupait les
      deux bouts, et l'assiette y perdait sa garniture. Un cran plus carré. */

@@ -83,13 +83,24 @@
   </section>
 
   <section class="sect">
-    <div class="illu i-trait"     data-side="r" style="--y:12%; --w:150px; --in:8px; --r:4deg" data-hide="lg"></div>
+    <div class="illu i-trait"     data-side="r" style="--y:12%; --w:150px; --in:-22px; --r:4deg" data-hide="lg"></div>
     <div class="illu i-bouteille" data-side="l" style="--y:58%; --w:125px; --in:8px; --r:-7deg" data-hide="lg"></div>
-    <div class="wrap-sm">
-      <div class="paper" data-reveal>
-        <p>Aux beaux jours, la terrasse s&rsquo;ouvre sur le green et les collines du Gros-de-Vaud. Elle est faite pour les repas qui durent, les apéritifs qui se prolongent et les fins de journée face au parcours.</p>
-        <!-- TODO à vérifier : partie couverte et vitrée, déduite des photos ; nombre de couverts -->
-        <p>Une partie de la terrasse est couverte et vitrée : la vue reste, quel que soit le temps. Les tables sont espacées, les parasols nombreux, et le service suit le rythme du lieu plutôt que celui de la ville.</p>
+    <div class="wrap">
+      <!-- LE CHAPÔ ET LES COLONNES.
+
+           Le texte tenait dans une colonne étroite, centrée, avec une lettrine :
+           sur un grand écran il flottait au milieu de la page, deux cents pixels
+           de blanc de chaque côté, sans rapport avec la grille des heures juste
+           en dessous. Il prend maintenant toute la largeur : une phrase d'ouverture
+           dans le corps des titres, puis le texte en trois colonnes de journal. -->
+      <div class="terr-mot" data-reveal>
+        <p class="terr-mot__q">Aux beaux jours, la terrasse s&rsquo;ouvre sur le green et les collines du Gros-de-Vaud.</p>
+        <div class="paper">
+          <p>Elle est faite pour les repas qui durent, les apéritifs qui se prolongent et les fins de journée face au parcours.</p>
+          <!-- TODO à vérifier : partie couverte et vitrée, déduite des photos ; nombre de couverts -->
+          <p>Une partie de la terrasse est couverte et vitrée : la vue reste, quel que soit le temps.</p>
+          <p>Les tables sont espacées, les parasols nombreux, et le service suit le rythme du lieu plutôt que celui de la ville.</p>
+        </div>
       </div>
 
       <div class="press" data-reveal style="margin-top:clamp(2.5rem,5vw,4rem)">
@@ -121,7 +132,7 @@
 
       <div class="heures">
         <article class="heure" data-reveal>
-          <p class="heure__h"><span>12</span> h</p>
+          <p class="heure__h"><span>12</span><i>h</i></p>
           <div class="heure__t">
             <h3 class="t-3">Le déjeuner</h3>
             <p>On y mange pour de bon : la carte entière est servie dehors. La carte des golfeurs, plus courte, permet de repartir sur le parcours sans y passer l&rsquo;après-midi.</p>
@@ -136,16 +147,18 @@
         </article>
 
         <article class="heure heure--nue" data-reveal>
-          <p class="heure__h"><span>16</span> h</p>
+          <p class="heure__h"><span>16</span><i>h</i></p>
           <div class="heure__t">
             <h3 class="t-3">L&rsquo;après-midi</h3>
-            <p>Un café, un verre, l&rsquo;ombre du grand arbre. Une partie de la terrasse est couverte et vitrée : on s&rsquo;y assied même quand le temps tourne, et la vue reste la même.</p>
-            <p class="soft" style="margin-bottom:0">Il n&rsquo;est pas nécessaire de jouer au golf pour s&rsquo;installer.</p>
+            <p style="margin-bottom:0">Un café, un verre, l&rsquo;ombre du grand arbre. Une partie de la terrasse est couverte et vitrée : on s&rsquo;y assied même quand le temps tourne, et la vue reste la même.</p>
           </div>
+          <!-- L'heure du milieu n'a pas de photographie : une phrase prend sa
+               place, à l'endroit exact où les deux autres en ont une. -->
+          <p class="heure__note">Il n&rsquo;est pas nécessaire de jouer au golf pour s&rsquo;installer.</p>
         </article>
 
         <article class="heure" data-reveal>
-          <p class="heure__h"><span>19</span> h</p>
+          <p class="heure__h"><span>19</span><i>h</i></p>
           <div class="heure__t">
             <h3 class="t-3">Le soir</h3>
             <p>Le soleil descend derrière les fairways et le parcours se vide. C&rsquo;est l&rsquo;heure des repas qui durent, des tables de famille et des fins de journée qu&rsquo;on ne compte pas.</p>

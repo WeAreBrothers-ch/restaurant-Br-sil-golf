@@ -7,10 +7,10 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct en quatre carrés, une phrase, un duo, six lignes de carte, un second duo. |
+| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct en quatre carrés, une phrase, et deux duos photographie-texte. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
-| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, une journée en trois heures |
+| `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
@@ -94,8 +94,8 @@ vide : c'est ce vide, et non un filet, qui les sépare. Les côtés s'inversent
 d'un duo à l'autre.
 
 C'est la disposition de L'Étoile, pas son nombre. Chez eux la page d'accueil
-compte une quinzaine de photographies ; ici il y en a **deux**, une de chaque
-côté du panneau vert. L'accueil en a porté neuf — un ruban, un duo, trois
+compte une quinzaine de photographies ; ici il y en a **deux**. L'accueil en
+a porté neuf — un ruban, un duo, trois
 cartes de plat, une paire, un second duo — et c'était une galerie. Jamais
 deux images à la suite, jamais une grille : une image, un texte, et l'on
 passe à autre chose.
@@ -106,10 +106,23 @@ le socle du sceau. La terrasse porte le vert des chaises et la lumière du
 soir. Les deux vivent dans la palette de la maison.
 
 **Les heures** (page « La terrasse »). Une journée en trois temps, réglée
-comme une grille horaire : un filet, l'heure dans la marge en chiffres de
-titre, le texte à côté, la photographie au bout de la ligne. Celle du milieu
-n'a pas de photographie et son texte prend la place — ce manque est la
-respiration.
+comme une grille horaire : un filet, l'heure dans la marge, le texte à côté,
+la photographie au bout de la ligne. L'heure est un **chiffre de chapitre**,
+le seul nombre écrit grand de tout le site : au corps d'un sous-titre, elle
+laissait deux cents pixels de vide à gauche de chaque rangée.
+
+Celle du milieu n'a pas de photographie — mais une phrase prend sa place, à
+l'endroit exact où les deux autres ont la leur. Vide, la moitié droite de la
+rangée se lisait comme une image qui n'aurait pas chargé ; ainsi, la
+respiration est voulue et elle se voit.
+
+**Le chapô et les colonnes** (page « La terrasse »). Le texte d'ouverture
+tenait dans une colonne étroite et centrée, avec une lettrine : sur un grand
+écran il flottait au milieu de la page, sans rapport avec la grille des
+heures juste en dessous. Il prend la même largeur qu'elle — une phrase
+d'ouverture dans le corps des titres, puis trois colonnes de journal. La
+lettrine est retirée : le chapô ouvre déjà le texte, et deux ouvertures l'une
+sur l'autre n'en font aucune.
 
 Il n'y a que **deux prises de vue de la terrasse** dans toute la maison : la
 table sous le grand arbre, et la table ouverte sur le parcours. La page en
