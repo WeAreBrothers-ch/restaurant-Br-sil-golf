@@ -723,7 +723,7 @@
 .heure__t h3 { margin-bottom: .7rem; }
 .heure__lien { margin-top: 1.5rem; }
 .heure__img { grid-column: 8 / -1; }
-.heure__img .ph { --ar: 4/5; }
+.heure__img .ph { --ar: 3/4; }
 /* L'heure du milieu n'a pas de photographie. La moitié droite de sa rangée
    restait vide et le manque se lisait comme une image qui n'aurait pas
    chargé ; une phrase y prend place, à l'endroit exact où les deux autres
@@ -744,9 +744,18 @@
   .heure__h { margin-bottom: -.7rem; }
   .heure__h span { font-size: clamp(2.2rem, 9vw, 2.9rem); }
   .heure__t { max-width: 56ch; }
-  /* Les deux photographies sont en hauteur : un cadre 4/3 leur coupait les
-     deux bouts, et l'assiette y perdait sa garniture. Un cran plus carré. */
-  .heure__img .ph { --ar: 5/4; }
+  /* LE CADRE EST CELUI DE LA PHOTOGRAPHIE.
+
+     Les deux originaux sont en trois quarts — 1400 sur 1867 et 1000 sur
+     1333. Le cadre était en cinq quarts : il en retirait deux cent huit
+     pixels, cent quatre en haut et cent quatre en bas, c'est-à-dire la
+     bouteille tranchée par le milieu et la garniture de l'assiette. On ne
+     voyait plus une photographie mais une photographie coupée.
+
+     Au doigt, où elle va d'un bord à l'autre, le cadre est donc exactement
+     celui de l'image : rien n'est retiré. Sur tablette, où elle garde ses
+     marges, un cran de moins suffit. */
+  .heure__img .ph { --ar: 4/5; }
 }
 
 /* AU DOIGT, LA DERNIÈRE PHOTOGRAPHIE TOUCHE LE VERT.
@@ -761,6 +770,7 @@
    bord : la marge y est à sa place et reste. */
 @media (max-width: 699px) {
   .heures-sect { padding-bottom: 0; }
+  .heure__img .ph { --ar: 3/4; }
 }
 
 /* Encadré : la citation presse.

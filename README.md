@@ -118,6 +118,13 @@ se retrouvait seul, à deux cent quarante pixels de son paragraphe. Centrés,
 le vide se partage au-dessus et au-dessous, et le filet du haut suffit à dire
 où la rangée commence.
 
+**Le cadre est celui de la photographie.** Les deux originaux sont en trois
+quarts — 1400 sur 1867 et 1000 sur 1333. Le cadre était en cinq quarts : il
+en retirait deux cent huit pixels, cent quatre en haut et cent quatre en bas,
+c'est-à-dire la bouteille tranchée par le milieu et la garniture de
+l'assiette. On ne voyait plus une photographie mais une photographie coupée.
+Le cadre est maintenant exactement celui de l'image, et rien n'en est retiré.
+
 **Au doigt, la dernière photographie touche le vert.** Elle va d'un bord à
 l'autre de l'écran et le panneau qui la suit aussi ; entre les deux restait
 la marge basse de la section — cinquante pixels de crème sur toute la largeur

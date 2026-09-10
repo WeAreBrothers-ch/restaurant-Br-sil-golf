@@ -53,6 +53,14 @@ orange sur fond noir, `terrasse-04` porte le vert des chaises et la lumière
 du soir. Avant d'en ajouter une troisième, se demander si la page en a besoin
 ou si c'est la page de destination qui doit la porter.
 
+## Le cadre d'affichage doit suivre le cadrage de la photo
+
+Toutes les photos servies sont en **trois quarts** (portrait) ou en paysage
+selon leur ligne du tableau ci-dessus. Un cadre CSS plus large que la photo
+la recadre par le centre et lui retire le haut et le bas : sur la page de la
+terrasse, un cadre en cinq quarts tranchait la bouteille par le milieu. Avant
+de changer un `--ar`, comparer avec le format du fichier.
+
 ## Attention : il n'y a que deux prises de vue de la terrasse
 
 `terrasse-pano`, `terrasse-02` et `terrasse-04` sont **la même table** vue de
