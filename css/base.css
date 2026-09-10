@@ -276,8 +276,30 @@ input, textarea { caret-color: var(--c-green); }
   -webkit-mask: var(--src) center/contain no-repeat;
           mask: var(--src) center/contain no-repeat;
 }
-.illu[data-side="l"] { left: calc(max(var(--pad), 50% - var(--wrap) / 2) - var(--w) + var(--in, 32px)); }
-.illu[data-side="r"] { left: auto; right: calc(max(var(--pad), 50% - var(--wrap) / 2) - var(--w) + var(--in, 32px)); }
+/* UN DESSIN ACCROCHÉ AU BORD NE SORT JAMAIS DE L'ÉCRAN.
+
+   Il était posé à « la marge moins sa largeur » : dès que la marge était plus
+   étroite que lui, il passait derrière le bord de la fenêtre. Sur une page de
+   1240 px de contenu, la marge fait vingt pixels à 1280 et cent à 1440 —
+   autrement dit, entre 1280 et 1600 px, TOUS les dessins du site étaient
+   rognés, de trente à cent quatre-vingts pixels chacun.
+
+   Ils sont maintenant collés au bord de la fenêtre, et c'est leur LARGEUR qui
+   cède : elle ne dépasse jamais la marge disponible. Sous 1440 px cette marge
+   ne laisserait plus qu'un timbre — ils ne s'affichent pas, et ce sont les
+   dessins posés dans le flux, au-dessus des titres, qui tiennent la page. */
+.illu[data-side] {
+  --marge: max(var(--pad), calc(50vw - var(--wrap) / 2));
+  /* Un dessin est penché : sa boîte est plus large que lui d'un cinquième de
+     sa largeur de chaque côté — jusqu'à dix-huit pour cent pour le sac de
+     golf, qui est le plus haut et le plus incliné. L'écart au bord et la
+     largeur sont calculés ensemble pour que le tout tienne dans la marge. */
+  --l: min(var(--w, 140px), calc((var(--marge) - 10px) / 1.42));
+  width: var(--l);
+}
+.illu[data-side="l"] { left: calc(var(--l) * .2 + 4px); }
+.illu[data-side="r"] { left: auto; right: calc(var(--l) * .2 + 4px); }
+@media (max-width: 1439px) { .illu[data-side] { display: none; } }
 
 .i-assiette { --src: url("../assets/illustrations/dist/assiette-couverts.svg");  --ar: 485/349; }
 .i-bouteille{ --src: url("../assets/illustrations/dist/bouteille-verre.svg");    --ar: 429/593; }
@@ -293,10 +315,6 @@ input, textarea { caret-color: var(--c-green); }
 @media (max-width: 860px)  { .illu[data-hide~="md"] { display: none; } }
 @media (max-width: 620px) {
   .illu { width: calc(var(--w, 140px) * .55); left: var(--mx, var(--x, 0)); top: var(--my, var(--y, 0)); }
-  /* Sur mobile il n'y a plus de marge : les dessins ancrés se collent au bord
-     et restent entiers, plutôt que d'être rognés aux deux tiers. */
-  .illu[data-side="l"] { left: 0; }
-  .illu[data-side="r"] { left: auto; right: 0; }
   .illu[data-hide~="sm"] { display: none; }
 }
 
@@ -309,7 +327,12 @@ input, textarea { caret-color: var(--c-green); }
           mask: url("../assets/logo/le9.svg") center/contain no-repeat;
 }
 
-/* Un dessin en vignette, dans le flux (titres de section) */
+/* UN DESSIN EN VIGNETTE, DANS LE FLUX, au-dessus d'un titre de section.
+
+   C'est le seul des deux dispositifs qui tienne à toutes les tailles : posé
+   dans le flux, il ne peut ni sortir de l'écran ni passer sur un mot. En
+   dessous de 1440 px, où les dessins de marge ne s'affichent plus, c'est lui
+   qui porte les dessins de la maison — deux par page, pas plus. */
 .mark {
   width: var(--w, 62px); aspect-ratio: var(--ar, 1); margin-bottom: 1.4rem;
   background-color: var(--accent); opacity: .85;

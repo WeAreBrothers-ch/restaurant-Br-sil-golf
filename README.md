@@ -304,8 +304,39 @@ page sur les écrans étroits et le laisse entier dans la marge sur les larges :
 | `--mx` `--my` | position sur mobile, si elle doit différer |
 | `--in` | de combien le dessin mord sur la colonne de texte, avec `data-side` |
 
-`data-side="l"` ou `"r"` accroche le dessin au bord gauche ou droit du contenu.
+`data-side="l"` ou `"r"` accroche le dessin au bord de la fenêtre, dans la
+marge, **et l'y borne** : sa largeur ne dépasse jamais la marge disponible, et
+l'écart au bord tient compte de sa pente — un dessin penché occupe jusqu'à un
+cinquième de sa largeur de plus de chaque côté. En dessous de 1440 px, la
+marge ne laisserait plus qu'un timbre : les dessins de marge ne s'affichent
+pas, et ce sont les vignettes du flux qui portent la page.
+
+Ils étaient posés à « la marge moins leur largeur » : dès que la marge était
+plus étroite qu'eux, ils passaient derrière le bord de la fenêtre. Sur une
+page de 1240 px de contenu, la marge fait vingt pixels à 1280 et cent à 1440
+— autrement dit, entre 1280 et 1600 px, **tous** les dessins du site étaient
+rognés, de trente à cent quatre-vingts pixels chacun.
+
 `data-hide="lg"` le retire sous 1180 px, `"md"` sous 860 px, `"sm"` sous 620 px.
+
+### La vignette dans le flux
+
+C'est le second dispositif, et le seul qui tienne à toutes les tailles : posé
+dans le flux au-dessus d'un titre de section, un dessin ne peut ni sortir de
+l'écran ni passer sur un mot.
+
+```html
+<div class="mark i-assiette" style="--w:62px" aria-hidden="true"></div>
+```
+
+**Deux par page, pas plus.** Chacune des cinq pages en porte deux ; en dessous
+de 1440 px, ce sont les seuls dessins visibles hors du premier écran.
+
+### Vérifier que rien n'est coupé
+
+Deux contrôles, à refaire après tout déplacement : qu'aucun dessin ne passe
+sous un texte, et qu'aucun ne sorte de l'écran. Le second se mesure de 1180 à
+1920 px, là où les dessins de marge s'affichent.
 
 ### Les rendre plus ou moins présents
 
