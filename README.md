@@ -7,14 +7,14 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct et trois entrées en escalier. |
+| `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct, trois duos photographie-texte et quatre plats de la carte. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
-| `la-carte.html` | La carte | Fond sombre, sommaire collant à gauche, familles de plats sur deux colonnes, trois photographies en respiration |
-| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, trois photos en salon |
+| `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
+| `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, deux duos photographie-texte |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 
-Chaque page a sa propre grille. Seuls l'en-tête, le pied de page et les dessins
-en fond sont communs.
+Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
+en fond et le duo (une photographie, un texte) sont communs.
 
 ## Pensé pour le téléphone
 
@@ -34,11 +34,10 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   fléchés et les entrées de sommaire sont élargis là où le pointeur est
   grossier, sans rien changer là où l'on a une souris.
 - **Les blocs se recomposent plutôt que de rétrécir.** Le bandeau d'accès
-  direct devient quatre carrés en deux lignes au lieu de quatre bandes
-  empilées. Les trois entrées de l'accueil prennent une vignette carrée à
-  gauche et le texte à droite, au lieu de trois photos plein cadre. Les repères
-  chiffrés passent côte à côte. Le sommaire de la carte devient une rangée de
-  pastilles. Le récit passe en colonne unique, titre avant photo.
+  direct devient quatre lignes au lieu de quatre cases. Les duos passent en
+  colonne unique, la photographie d'un bord à l'autre et le texte dessous. Les
+  repères chiffrés passent côte à côte. Le récit passe en colonne unique,
+  titre avant photo.
 - **Une barre d'appel reste au bas de l'écran** avec le numéro et l'itinéraire,
   les deux seules choses qu'on veut faire depuis un téléphone devant un site de
   restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
@@ -74,10 +73,18 @@ part de la colonne où pend la petite photographie du diptyque : les deux blocs
 partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
 côté, ici il est dedans.
 
-**Le salon** (page « La terrasse »). Deux colonnes dont la seconde démarre plus
-bas : c'est ce seul décalage qui fait la composition. Aucune image n'en recouvre
-une autre, aucune ne recouvre un mot. Un mot posé entre deux images, à la place
-d'une troisième, empêche l'ensemble de se lire comme une planche-contact.
+**Le duo** (pages « Accueil » et « La terrasse »). Une photographie et un
+texte côte à côte, la photographie sur sept colonnes en paysage ou cinq en
+portrait, le texte de l'autre côté sur une mesure de paragraphe, et le vide
+entre les deux. Les côtés s'inversent d'un duo à l'autre. C'est le dispositif
+du site de L'Étoile, l'autre restaurant de la maison. Il remplace les trois
+entrées en escalier de l'accueil et le salon de la terrasse : une image n'est
+jamais suivie d'une autre sans un texte entre elles.
+
+**Quelques plats** (page « Accueil »). Quatre lignes de la carte, dans la
+forme et sur le vert de la page de la carte : la carte d'abord, avant même
+d'y aller. Ces quatre plats sont recopiés de `la-carte.html` ; quand la carte
+change, les mettre à jour aux deux endroits.
 
 **Rien ne défile sur le côté.** On ne demande pas à quelqu'un de faire glisser
 une bande pour voir ce qu'on avait à lui montrer : tout est là du premier coup
@@ -125,7 +132,7 @@ immobile.
 css/base.css                   variables, typographie, en-tête, pied, dessins
 css/pages.css                  la composition de chaque page
 js/amorce.js                   pose data-js avant le premier affichage
-js/main.js                     menu, apparitions, sommaire actif
+js/main.js                     menu, apparitions, filet de l'en-tête
 js/hero.js                     le mouvement du premier écran
 js/barre.js                    la barre d'appel du téléphone
 js/formulaire.js               validation et envoi du formulaire de contact
@@ -240,7 +247,11 @@ d'origine existe quelque part, il suffit de le mettre à la place de
 
 ## Ce qu'il reste à compléter
 
-Chercher `TODO` dans les fichiers HTML.
+Chercher `TODO` dans les fichiers HTML. Les étiquettes « à confirmer »,
+« à valider » et les notes qui les accompagnent sont visibles sur le site :
+elles montrent au client ce qui reste à vérifier. Pour les retirer toutes d'un
+coup avant une mise en ligne, poser `data-todo="hide"` sur la balise `<body>`
+de chaque page.
 
 - **Formulaire de contact** : il poste vers un service de réception qui
   transmet le message par courriel. Remplacer l'adresse de l'attribut `action`

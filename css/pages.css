@@ -275,47 +275,74 @@
 @media (min-width: 900px) { .strip__v { font-size: 1.22rem; } }
 
 
-/* Quatre portes d'entrée, en escalier */
-.doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2.4rem); align-items: start; }
-.doors__c { position: relative; display: block; text-decoration: none; color: inherit; }
-/* Les trois entrées sont posées en escalier : la lecture descend en diagonale
-   au lieu de buter sur une rangée bien alignée. */
-.doors__c:nth-child(2) { margin-top: clamp(1.5rem, 4vw, 3.5rem); }
-.doors__c:nth-child(3) { margin-top: clamp(3rem, 8vw, 7rem); }
-.doors .ph { --ar: 3/4; }
-.doors__n { display: block; margin-top: .9rem; font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .18em; color: var(--accent); }
-.doors__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--line); transition: border-color .25s; }
-.doors__c:hover .doors__h { border-bottom-color: var(--accent); }
-.doors__h b { font: 500 1.3rem/1.15 var(--serif); color: var(--fg-strong); }
-.doors__h span { font-size: 1rem; color: var(--accent); transition: transform .25s; }
-.doors__c:hover .doors__h span { transform: translateX(4px); }
-.doors__p { margin: .7rem 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
-@media (max-width: 900px) { .doors { grid-template-columns: 1fr 1fr; } .doors__c:nth-child(n) { margin-top: 0; } .doors__c:nth-child(2) { margin-top: clamp(1.5rem,5vw,3rem); } }
-/* AU DOIGT, TROIS PANNEAUX ET NON TROIS LIGNES DE LISTE.
+/* ---------------------------------------------------------------------------
+   LE DUO — une photographie et un texte, côte à côte
 
-   Les trois entrées étaient une vignette de cent trente pixels à gauche et du
-   texte à droite, répétée trois fois : la forme d'une liste d'articles, alors
-   que ce sont les trois plus belles photographies de la maison et les trois
-   seules portes de la page. Chacune prend maintenant toute la largeur de
-   l'écran, et son titre se pose dessous, dans la gouttière, à la taille d'un
-   titre. Le numéro reste absent : trois portes ne sont pas une séquence, elles
-   sont un choix. */
-@media (max-width: 699px) {
-  .doors { grid-template-columns: 1fr; gap: clamp(2.2rem, 8vw, 3.4rem); }
-  .doors__c { display: block; }
-  .doors__c:nth-child(n) { margin-top: 0; }
-  .doors .ph { --ar: 4/3; }
-  .doors__n { display: none; }
-  .doors__h { margin-top: 1.15rem; padding-bottom: .75rem; }
-  .doors__h b { font-size: clamp(1.5rem, 5.5vw, 1.9rem); }
-  .doors__h span { font-size: 1.25rem; }
-  .doors__p { margin-top: .8rem; font-size: var(--fs-sm); max-width: 34ch; }
+   Le dispositif que L'Étoile emploie sur toute sa page d'accueil, repris ici.
+   La photographie prend sept colonnes en paysage, cinq en portrait ; le texte
+   se tient de l'autre côté, sur une mesure de paragraphe, et le vide reste
+   entre les deux. Les côtés s'inversent d'un duo à l'autre : c'est ce qui
+   empêche deux blocs successifs de se ressembler.
+
+   C'est la seule composition partagée entre deux pages, l'accueil et la
+   terrasse. Elle remplace les trois portes en escalier de l'accueil et le
+   salon de la terrasse : trois photographies à la suite, avec un titre ou un
+   mot pour seule respiration, se lisaient comme une galerie. Ici une image
+   n'est jamais suivie d'une autre sans un texte entre elles.
+   --------------------------------------------------------------------------- */
+.duos { display: grid; gap: clamp(3.5rem, 8vw, 7rem); }
+.duo {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1.25rem, 2.5vw, 2.5rem); align-items: center;
 }
+.duo__img { grid-column: 1 / span 7; grid-row: 1; }
+.duo__img .ph { --ar: 3/2; }
+.duo__txt { grid-column: 9 / -1; grid-row: 1; max-width: 30rem; }
+.duo__txt > :last-child { margin-bottom: 0; }
+.duo__lien { margin-top: 1.8rem; }
+.duo .mark { margin-bottom: 1.1rem; }
+/* En portrait, la photographie est moins large et le texte gagne une colonne. */
+.duo--portrait .duo__img { grid-column: 1 / span 5; }
+.duo--portrait .duo__img .ph { --ar: 4/5; }
+.duo--portrait .duo__txt { grid-column: 7 / -1; }
+/* Photographie à droite : le texte part du bord gauche de la page. */
+.duo--r .duo__img { grid-column: 6 / -1; }
+.duo--r .duo__txt { grid-column: 1 / span 4; }
+.duo--r.duo--portrait .duo__img { grid-column: 8 / -1; }
+.duo--r.duo--portrait .duo__txt { grid-column: 1 / span 6; }
+
+/* Sous 900 px, la photographie passe au-dessus du texte : côte à côte, le
+   texte n'aurait plus que trois mots par ligne. Le portrait se couche en 4/3,
+   pour ne pas faire un écran entier d'image. */
+@media (max-width: 899px) {
+  .duo { grid-template-columns: 1fr; row-gap: 1.6rem; }
+  /* Les variantes ci-dessus placent la photographie par colonnes : il faut
+     les nommer ici, sans quoi elles gardent leur colonne dans une grille qui
+     n'en a plus qu'une, et la photographie se retrouve dans une colonne
+     implicite de quelques pixels. */
+  .duo .duo__img, .duo .duo__txt,
+  .duo--r.duo--portrait .duo__img, .duo--r.duo--portrait .duo__txt { grid-column: 1 / -1; grid-row: auto; }
+  .duo__txt { max-width: 56ch; }
+  .duo--portrait .duo__img .ph { --ar: 4/3; }
+}
+@media (max-width: 699px) {
+  .duo__img .ph { --ar: 4/3; }
+  .duo__lien { margin-top: 1.4rem; }
+}
+
+/* QUELQUES PLATS : la carte d'abord, sur le vert de la page de la carte. */
+.home-plats__h {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 1rem 2rem; margin-bottom: clamp(1.2rem, 3vw, 2.2rem);
+}
+.home-plats__h h2 { max-width: 22ch; }
+.home-plats__n { margin: 1.6rem 0 0; }
 
 /* Mot d'accueil : une ligne large, centrée, sur fond sombre */
 .word { text-align: center; }
 .word__q { max-width: 22ch; margin-inline: auto; font: 500 clamp(1.8rem, 4vw, 3.1rem)/1.15 var(--serif); }
 .word__s { max-width: 44ch; margin: 1.6rem auto 0; }
+.word__a { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.8rem; margin: 2.2rem 0 0; }
 
 /* =========================================================================
    2 · LE RESTAURANT — récit en colonne étroite, images en débord alterné
@@ -437,8 +464,7 @@
 }
 
 /* SUR TABLETTE, le texte passe au-dessus, à la mesure d'un paragraphe, et les
-   deux photographies se posent côte à côte comme le salon de la terrasse : la
-   grande en paysage, la petite en portrait qui démarre plus bas et pend sous
+   deux photographies se posent côte à côte, la grande en paysage, la petite en portrait qui démarre plus bas et pend sous
    la première. Aucune ne recouvre l'autre — les chevauchements demandent de
    la largeur. Le contrepoint garde son entaille, la photographie s'élargit. */
 @media (max-width: 999px) {
@@ -529,7 +555,7 @@
 }
 
 /* =========================================================================
-   3 · LA CARTE — sommaire collant à gauche, carte à droite, fond sombre
+   3 · LA CARTE — familles de plats sur deux colonnes, fond sombre
    ========================================================================= */
 /* `svh` et non `vh` : sur un téléphone, `100vh` est la hauteur de l'écran
    barre d'adresse repliée, et la page dépassait donc toujours d'une soixantaine
@@ -539,25 +565,11 @@
 .menu-head__g { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
 @media (max-width: 860px) { .menu-head__g { grid-template-columns: 1fr; align-items: start; } }
 
-.menu-body { display: grid; grid-template-columns: 210px 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start;
-             padding-bottom: clamp(4rem, 8vw, 7rem); }
-.toc { position: sticky; top: calc(var(--head-h) + 2rem); display: grid; gap: .1rem; }
-.toc a { display: block; padding: .5rem 0; text-decoration: none; color: var(--fg-soft);
-         font: 600 var(--fs-mini)/1.3 var(--sans); letter-spacing: .11em; text-transform: uppercase;
-         border-left: 1px solid var(--line); padding-left: 1rem; transition: color .2s, border-color .2s; }
-.toc a:hover, .toc a.on { color: var(--fg-strong); border-left-color: var(--accent); }
-@media (max-width: 900px) {
-  .menu-body { grid-template-columns: 1fr; }
-  .toc { position: static; display: flex; flex-wrap: wrap; gap: .45rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--line); }
-  /* Neuf pastilles en capitales espacées faisaient six rangées, soit un tiers
-     d'écran de téléphone avant le premier plat. Elles gardent leur surface de
-     frappe mais perdent l'espacement des lettres et un peu de rembourrage :
-     trois rangées suffisent alors. */
-  .toc a {
-    border: 1px solid var(--line); border-radius: 999px;
-    padding: .5rem .85rem; letter-spacing: .04em; font-size: var(--fs-mini);
-  }
-}
+/* Il y avait un sommaire : collant à gauche sur grand écran, une rangée de
+   pastilles au téléphone. Neuf familles tiennent sur deux écrans, on les
+   parcourt plus vite qu'on ne les choisit ; les pastilles, elles, étaient le
+   premier bloc de la page et la seule chose qu'on y voyait avant un plat. */
+.menu-body { padding-bottom: clamp(4rem, 8vw, 7rem); }
 
 .fam { padding-top: .5rem; margin-bottom: clamp(2rem, 5vw, 4rem); scroll-margin-top: calc(var(--head-h) + 1.5rem); }
 .fam__h { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .3rem; }
@@ -587,7 +599,7 @@
              padding-top: 2rem; border-top: 1px solid var(--line); }
 
 /* =========================================================================
-   4 · LA TERRASSE — panoramique en tête, texte en colonnes de journal
+   4 · LA TERRASSE — panoramique en tête, texte en colonnes de journal, deux duos
    ========================================================================= */
 .terr-hero { position: relative; height: min(78svh, 720px); background: var(--c-green-deep); overflow: hidden; }
 .terr-hero .ph { position: absolute; inset: 0; --ar: auto; height: 100%; border-radius: 0; }
@@ -616,59 +628,7 @@
   .paper p:first-child::first-letter { font-size: 2.8rem; }
 }
 
-/* ---------------------------------------------------------------------------
-   LE SALON
-
-   Quatre photographies posées en escalier plutôt qu'alignées. Aucune ne fait
-   la même hauteur que sa voisine, aucune ne commence à la même ligne : c'est
-   ce décalage qui fait qu'on les regarde une par une au lieu de balayer une
-   rangée.
-
-   Rien ne défile sur le côté : on ne demande pas à quelqu'un de faire glisser
-   une bande pour voir ce qu'on avait à lui montrer. Tout est là, du premier
-   coup d'œil.
-   --------------------------------------------------------------------------- */
-.salon {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(1rem, 2vw, 1.8rem) clamp(1.5rem, 3vw, 3rem);
-  align-items: start;
-}
-/* Deux colonnes, dont la seconde démarre plus bas : c'est ce seul décalage qui
-   fait la composition. Aucune image n'en recouvre une autre, aucune ne recouvre
-   un mot — un chevauchement qui mange du texte n'est pas une audace, c'est un
-   défaut. */
-.salon__col { display: grid; gap: clamp(1rem, 2vw, 1.8rem); }
-.salon__col--2 { margin-top: clamp(2.5rem, 8vw, 7rem); }
-
-.salon__a .ph { --ar: 4/5; }
-.salon__b .ph { --ar: 4/3; }
-/* Carrée : en portrait, la colonne de droite dépassait la gauche de trois
-   cents pixels et le décalage se lisait comme un défaut d'alignement. */
-.salon__c .ph { --ar: 1; }
-
-/* Un mot posé entre deux images, à la place d'une cinquième : c'est ce qui
-   empêche la composition de se lire comme une planche-contact. */
-.salon__mot { padding: clamp(.5rem, 2vw, 1.5rem) 0; }
-.salon__mot p {
-  margin: 0; max-width: 26ch;
-  font: italic 400 clamp(1.1rem, 1.6vw, 1.35rem)/1.5 var(--serif);
-  color: var(--fg-soft);
-}
-
-@media (max-width: 700px) {
-  /* En colonne unique, le décalage n'a plus d'objet : il ne ferait qu'ajouter
-     du vide entre deux images déjà l'une sous l'autre. Les photographies vont
-     désormais d'un bord à l'autre : entre deux d'entre elles, un filet de
-     crème de quelques pixels se lirait comme une couture ratée. L'écart est
-     donc franc. */
-  .salon { grid-template-columns: 1fr; gap: 2rem; }
-  .salon__col { gap: 2rem; }
-  .salon__col--2 { margin-top: 2rem; }
-  .salon__mot { text-align: center; }
-  .salon__mot p { margin-inline: auto; }
-}
-
-/* Encadré : la citation presse *//* Encadré : la citation presse */
+/* Encadré : la citation presse */
 .press { display: grid; gap: .8rem; padding: clamp(1.8rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: var(--r); text-align: center; }
 .press__q { margin: 0; font: italic 400 clamp(1.25rem, 2.4vw, 1.7rem)/1.35 var(--serif); color: var(--fg-strong); }
 .press cite { font: 600 var(--fs-micro)/1.4 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
@@ -816,12 +776,11 @@
    --------------------------------------------------------------------------- */
 @media (max-width: 699px) {
   .rest-band .ph,
-  .doors .ph,
+  .duo__img,
   .dip__a,
   .cp__img,
   .fam-photo,
-  .ct-map,
-  .salon__col .ph {
+  .ct-map {
     margin-inline: calc(-1 * var(--pad));
   }
   /* Le plan suit la même règle que les photographies : il ne garde que ses
@@ -835,8 +794,7 @@
   }
   /* Le coin arrondi est une convention de vignette : une image qui touche les
      deux bords n'en a plus l'usage. */
-  .rest-band .ph, .doors .ph, .dip__a .ph, .cp__img .ph, .fam-photo,
-  .salon__col .ph { border-radius: 0; }
+  .rest-band .ph, .duo__img .ph, .dip__a .ph, .cp__img .ph, .fam-photo { border-radius: 0; }
 
   /* La seconde photographie du diptyque ne sort que par la droite, liseré
      compris : sa marge est réglée avec la composition, plus haut. */

@@ -107,7 +107,7 @@
     else { img.addEventListener('load', ok); img.addEventListener('error', ko); }
   });
 
-  /* ----------------------------------- apparitions et sommaire actif ---*/
+  /* ------------------------------------------------------ apparitions ---*/
   if (document.documentElement.hasAttribute('data-js')) {
     var vu = new IntersectionObserver(function (entrees) {
       entrees.forEach(function (e) {
@@ -119,23 +119,6 @@
       });
     }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
     Array.prototype.forEach.call(document.querySelectorAll('[data-reveal]'), function (el) { vu.observe(el); });
-  }
-
-  if ('IntersectionObserver' in window) {
-    var toc = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
-    if (toc.length) {
-      var seen = {};
-      var spy = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { seen[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
-        var best = null, top = 0;
-        Object.keys(seen).forEach(function (id) { if (seen[id] > top) { top = seen[id]; best = id; } });
-        if (best) toc.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + best); });
-      }, { rootMargin: '-15% 0px -55% 0px', threshold: [0, .25, .5, 1] });
-      toc.forEach(function (a) {
-        var sct = document.querySelector(a.getAttribute('href'));
-        if (sct) spy.observe(sct);
-      });
-    }
   }
 
   /* ------------------------------------------------------------- année ---*/

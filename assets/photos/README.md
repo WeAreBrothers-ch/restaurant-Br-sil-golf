@@ -30,18 +30,18 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 
 | Fichier | Vient de | Où il apparaît |
 |---|---|---|
-| `plat-01.jpg` | nourriture.jpg | galerie, page carte sur l'accueil |
-| `plat-02.jpg` | nourriture 2.jpg | galerie, accueil |
-| `plat-03.jpg` | caption.jpg | galerie, terrasse |
-| `plat-04.jpg` | viande.jpg | galerie, le restaurant |
-| `plat-05.jpg` | img-20190316… | galerie |
-| `plat-06.jpg` | 20180714… | galerie |
+| `plat-01.jpg` | nourriture.jpg | carte, le restaurant |
+| `plat-02.jpg` | nourriture 2.jpg | carte |
+| `plat-03.jpg` | caption.jpg | en réserve, plus affichée |
+| `plat-04.jpg` | viande.jpg | carte, le restaurant |
+| `plat-05.jpg` | img-20190316… | accueil, duo « la cuisine » |
+| `plat-06.jpg` | 20180714… | en réserve, plus affichée |
 | `lieu-pano.jpg` | le9_barolo_terrasse | bande large de la page « Le restaurant » |
 | `terrasse-pano.jpg` | le9_terrasse_coucher_soleil | photo de tête de la page « La terrasse » |
-| `terrasse-01.jpg` | le9_barolo_terrasse | accueil, bande de la terrasse |
-| `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, bande de la terrasse |
-| `terrasse-03.jpg` | le9_barolo_terrasse | bande de la terrasse |
-| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | bande de la terrasse |
+| `terrasse-01.jpg` | le9_barolo_terrasse | terrasse, premier duo |
+| `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, duo « la maison » |
+| `terrasse-03.jpg` | le9_barolo_terrasse | accueil, duo « la terrasse » |
+| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | terrasse, second duo |
 | `salle-01.jpg` | une-vue-imprenable-sur | page « Le restaurant », la vue depuis la salle |
 
 ## Ce qui manque encore
