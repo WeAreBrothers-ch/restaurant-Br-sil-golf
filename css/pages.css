@@ -303,8 +303,8 @@
 .strip { border-block: 1px solid var(--line); }
 .strip__g { display: grid; grid-template-columns: 1fr 1fr; }
 .strip__i {
-  display: flex; flex-direction: column; justify-content: center; gap: .5rem;
-  min-height: 122px; padding: 1.2rem clamp(.9rem, 4vw, 1.8rem);
+  display: flex; flex-direction: column; justify-content: center; gap: .7rem;
+  min-height: 142px; padding: 1.35rem clamp(1rem, 4vw, 2rem);
   text-decoration: none;
   border-left: 1px solid var(--line); border-top: 1px solid var(--line);
   transition: background .2s;
@@ -318,16 +318,30 @@
    rangée du dessous, donc plus de filet du haut. */
 @media (min-width: 900px) {
   .strip__g { grid-template-columns: repeat(4, 1fr); }
-  .strip__i { border-top: 0; border-left: 1px solid var(--line); padding-inline: clamp(1.2rem, 2.2vw, 2rem); }
+  .strip__i { min-height: 158px; border-top: 0; border-left: 1px solid var(--line); padding-inline: clamp(1.2rem, 2.2vw, 2rem); }
   .strip__i:first-child { border-left: 0; }
 }
 
+/* LE LIBELLÉ ANNONCE, LA RÉPONSE PARLE.
+
+   C'était l'inverse : un libellé en laiton, en capitales largement espacées,
+   au-dessus d'une réponse écrite plus petite que le texte courant. Le mot
+   « ADRESSE » pesait plus lourd que l'adresse elle-même, et les quatre
+   cellules se lisaient comme quatre étiquettes vides.
+
+   Le libellé reste en laiton — c'est la marque de la maison, on la retrouve
+   au pied de page et sur la carte — mais il se resserre et s'efface d'un
+   cran. La réponse passe au corps d'un titre, dans le serif vert. C'est elle
+   qu'on est venu lire. */
 .strip__k {
   display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-  font: 600 var(--fs-micro)/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase;
+  font: 600 var(--fs-micro)/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase;
   color: var(--accent); transition: color .2s;
 }
-.strip__k i { font-style: normal; letter-spacing: 0; transition: transform .25s; }
+/* La flèche était écrite au corps du libellé, douze pixels : à cette taille
+   elle se lisait comme un signe de ponctuation égaré. Elle a sa propre
+   taille, celle d'un mot du texte courant. */
+.strip__k i { font-style: normal; font-size: 1.05rem; line-height: 1; letter-spacing: 0; transition: transform .25s; }
 .strip__i:hover .strip__k i { transform: translateX(4px); }
 /* Les quatre réponses tiennent chacune sur UNE ligne, et c'est ce qui aligne
    les quatre libellés entre eux : dès que l'une d'elles passe à la ligne, sa
@@ -335,7 +349,8 @@
    C'est pourquoi « Des entrées aux desserts » est devenu « Cuisine de
    saison ». Avant d'écrire une réponse plus longue, la mesurer. */
 .strip__v {
-  font: 500 clamp(1.05rem, 4.4vw, 1.3rem)/1.3 var(--serif);
+  font: 500 clamp(1.3rem, 5vw, 1.75rem)/1.25 var(--serif);
+  letter-spacing: -.005em;
   color: var(--fg-strong); font-variant-numeric: tabular-nums;
   text-wrap: nowrap;
 }
