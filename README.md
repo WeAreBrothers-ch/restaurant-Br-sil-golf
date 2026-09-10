@@ -60,14 +60,19 @@ Une photographie posée à côté d'un paragraphe, répétée trois fois, c'est 
 fait n'importe quel gabarit. Chaque page en a donc une qui lui est propre.
 
 **Le diptyque** (page « Le restaurant », premier bloc). Une grande
-photographie en paysage, et une seconde en portrait qui vient la mordre par en
-dessous. Elle commence après la colonne de texte : elle mord la photographie,
-jamais un mot. Le liseré crème autour de la petite la décolle de la grande ;
-sans lui les deux images se touchent et l'œil ne sait plus laquelle il regarde.
+photographie en paysage à droite du texte, et une seconde en portrait qui vient
+mordre son angle inférieur gauche — un quart de sa largeur, pas plus — et pend
+en dessous d'un quart de sa hauteur. Elle commence une gouttière après la
+colonne de texte : elle mord la photographie, jamais un mot. Le liseré crème
+autour de la petite la décolle de la grande ; sans lui les deux images se
+touchent et l'œil ne sait plus laquelle il regarde.
 
-**Le contrepoint** (page « Le restaurant », second bloc). Le texte est posé
-par-dessus le bas de la photographie, sur un aplat crème. C'est l'inverse exact
-du premier bloc : là le texte était à côté, ici il est dedans.
+**Le contrepoint** (page « Le restaurant », second bloc). Le titre est posé
+dans le bas de la photographie, sur un aplat crème à sa taille : une entaille
+dans l'image, pas une carte qui flotte dessus. Le texte suit en dessous, et
+part de la colonne où pend la petite photographie du diptyque : les deux blocs
+partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
+côté, ici il est dedans.
 
 **Le salon** (page « La terrasse »). Deux colonnes dont la seconde démarre plus
 bas : c'est ce seul décalage qui fait la composition. Aucune image n'en recouvre
@@ -76,8 +81,12 @@ d'une troisième, empêche l'ensemble de se lire comme une planche-contact.
 
 **Rien ne défile sur le côté.** On ne demande pas à quelqu'un de faire glisser
 une bande pour voir ce qu'on avait à lui montrer : tout est là du premier coup
-d'œil. Au doigt, les chevauchements disparaissent — ils demandent de la largeur
-— et il ne reste que les décalages verticaux.
+d'œil. Au doigt, chaque composition garde son geste, en plus court : la grande
+photographie du diptyque prend toute la largeur de l'écran, la petite sort par
+la droite et mord son angle, et le lien vers la carte se pose dans l'angle
+qu'elle laisse libre, calé sur son bord inférieur ; le titre de la salle
+remonte sur la photographie depuis le bord de l'écran. Sur tablette, où les
+chevauchements manquent de largeur, il ne reste que les décalages verticaux.
 
 ## Le mouvement
 
