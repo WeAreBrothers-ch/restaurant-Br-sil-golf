@@ -693,7 +693,13 @@
 .heure {
   display: grid; grid-template-columns: repeat(12, 1fr);
   column-gap: clamp(1.25rem, 2.5vw, 2.5rem);
-  align-items: start;
+  /* L'heure et le texte se centrent sur la photographie, qui est deux fois
+     plus haute qu'eux. Calés en haut, ils laissaient sous eux quatre cents
+     pixels de vide jusqu'au filet suivant ; poussé au bas de la colonne, le
+     lien se retrouvait seul, à deux cent quarante pixels de son paragraphe.
+     Centrés, le vide se partage au-dessus et au-dessous, et le filet du haut
+     suffit à dire où la rangée commence. */
+  align-items: center;
   padding-top: clamp(1.4rem, 3vw, 2.2rem);
   border-top: 1px solid var(--line);
 }
@@ -723,7 +729,7 @@
    chargé ; une phrase y prend place, à l'endroit exact où les deux autres
    rangées ont la leur. La respiration est alors voulue, et elle se voit. */
 .heure__note {
-  grid-column: 8 / -1; grid-row: 1; align-self: center;
+  grid-column: 8 / -1; grid-row: 1;
   margin: 0; max-width: 24ch;
   font: italic 400 clamp(1.15rem, 1.9vw, 1.55rem)/1.45 var(--serif);
   color: var(--fg-soft);
@@ -741,6 +747,20 @@
   /* Les deux photographies sont en hauteur : un cadre 4/3 leur coupait les
      deux bouts, et l'assiette y perdait sa garniture. Un cran plus carré. */
   .heure__img .ph { --ar: 5/4; }
+}
+
+/* AU DOIGT, LA DERNIÈRE PHOTOGRAPHIE TOUCHE LE VERT.
+
+   Elle va d'un bord à l'autre de l'écran, et le panneau vert qui la suit
+   aussi. Entre les deux restait la marge basse de la section : cinquante
+   pixels de crème sur toute la largeur, entre deux aplats pleine page. Ce
+   n'est pas une respiration, c'est une couture — on croit à un défaut
+   d'affichage. La photographie touche donc le vert.
+
+   Sur grand écran, la photographie tient dans ses colonnes et ne touche aucun
+   bord : la marge y est à sa place et reste. */
+@media (max-width: 699px) {
+  .heures-sect { padding-bottom: 0; }
 }
 
 /* Encadré : la citation presse.

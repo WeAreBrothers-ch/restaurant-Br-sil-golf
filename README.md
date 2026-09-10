@@ -111,6 +111,20 @@ la photographie au bout de la ligne. L'heure est un **chiffre de chapitre**,
 le seul nombre écrit grand de tout le site : au corps d'un sous-titre, elle
 laissait deux cents pixels de vide à gauche de chaque rangée.
 
+L'heure et le texte se **centrent sur la photographie**, deux fois plus haute
+qu'eux. Calés en haut, ils laissaient sous eux quatre cents pixels de vide
+jusqu'au filet suivant ; poussé au bas de la colonne pour la tenir, le lien
+se retrouvait seul, à deux cent quarante pixels de son paragraphe. Centrés,
+le vide se partage au-dessus et au-dessous, et le filet du haut suffit à dire
+où la rangée commence.
+
+**Au doigt, la dernière photographie touche le vert.** Elle va d'un bord à
+l'autre de l'écran et le panneau qui la suit aussi ; entre les deux restait
+la marge basse de la section — cinquante pixels de crème sur toute la largeur
+entre deux aplats pleine page. Ce n'est pas une respiration, c'est une
+couture : on croit à un défaut d'affichage. Sur grand écran la photographie
+tient dans ses colonnes et ne touche aucun bord, la marge y reste.
+
 Celle du milieu n'a pas de photographie — mais une phrase prend sa place, à
 l'endroit exact où les deux autres ont la leur. Vide, la moitié droite de la
 rangée se lisait comme une image qui n'aurait pas chargé ; ainsi, la
