@@ -7,7 +7,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct en quatre carrés, une phrase, et deux duos photographie-texte. |
+| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct en quatre carrés, un duo, la phrase de la maison, un second duo. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |

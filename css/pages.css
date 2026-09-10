@@ -369,10 +369,12 @@
 
 /* LE MOT D'ACCUEIL : une ligne large, centrée.
 
-   Il était posé sur un panneau vert. Mais le premier écran est passé sur le
-   socle et le vert sert maintenant aux plats, juste en dessous : trois fonds
-   sombres en quatre écrans, la page n'aurait plus respiré. Il reste sur le
-   crème, entre le bandeau et les plats. */
+   Il se tenait juste sous le bandeau, avant la première photographie : on
+   descendait du sceau pour tomber aussitôt sur une seconde déclaration, et
+   le bouton de réservation arrivait avant d'avoir rien vu de la maison. Il
+   est maintenant posé ENTRE LES DEUX DUOS — une pause au milieu de la page,
+   là où l'on a vu la cuisine et pas encore la salle, et où l'envie de
+   réserver a de quoi s'appuyer. */
 .word { text-align: center; }
 .word__q { max-width: 22ch; margin-inline: auto; font: 500 clamp(1.8rem, 4vw, 3.1rem)/1.15 var(--serif); }
 .word__s { max-width: 44ch; margin: 1.6rem auto 0; }
