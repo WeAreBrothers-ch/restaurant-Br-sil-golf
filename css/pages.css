@@ -367,15 +367,22 @@
 }
 @media (max-width: 699px) { .duo__lien { margin-top: 1.4rem; } }
 
-/* LE MOT D'ACCUEIL : une ligne large, centrée.
+/* LE MOT DE LA FIN.
 
-   Il se tenait juste sous le bandeau, avant la première photographie : on
-   descendait du sceau pour tomber aussitôt sur une seconde déclaration, et
-   le bouton de réservation arrivait avant d'avoir rien vu de la maison. Il
-   est maintenant posé ENTRE LES DEUX DUOS — une pause au milieu de la page,
-   là où l'on a vu la cuisine et pas encore la salle, et où l'envie de
-   réserver a de quoi s'appuyer. */
-.word { text-align: center; }
+   Il s'est tenu sous le bandeau, avant la première photographie : on
+   descendait du sceau pour tomber aussitôt sur une seconde déclaration, et le
+   bouton de réservation arrivait avant qu'on ait rien vu de la maison. Il est
+   passé entre les deux duos, où il se lisait comme un morceau resté en
+   travers de deux photographies.
+
+   Sa place est à la fin. C'est là qu'une page dit ce qu'elle a à dire une
+   dernière fois et donne le seul geste qu'elle attend : appeler. Un filet le
+   sépare du dernier duo, et le vert du pied de page le ferme juste dessous.
+   Il tient la largeur d'une phrase, au milieu, et rien ne le suit. */
+.word { text-align: center; border-top: 1px solid var(--line); }
+/* Un peu plus d'air que les autres sections : c'est la dernière, et ce qui
+   est en dessous n'appartient plus à la page. */
+.word { padding-block: clamp(3.5rem, 9vw, 7rem) clamp(4rem, 10vw, 8rem); }
 .word__q { max-width: 22ch; margin-inline: auto; font: 500 clamp(1.8rem, 4vw, 3.1rem)/1.15 var(--serif); }
 .word__s { max-width: 44ch; margin: 1.6rem auto 0; }
 .word__a { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.8rem; margin: 2.2rem 0 0; }
