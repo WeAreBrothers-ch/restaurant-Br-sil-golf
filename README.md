@@ -48,8 +48,15 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   fléchés et les entrées de sommaire sont élargis là où le pointeur est
   grossier, sans rien changer là où l'on a une souris.
 - **Les blocs se recomposent plutôt que de rétrécir.** Le bandeau d'accès
-  direct devient quatre carrés sur deux lignes au lieu de quatre colonnes : on
-  les voit d'un seul coup d'œil sous le sceau, au lieu de parcourir une liste.
+  direct devient quatre cellules sur deux lignes au lieu de quatre colonnes :
+  on les voit d'un seul coup d'œil sous le sceau, au lieu de parcourir une
+  liste. Elles ne sont pas carrées — elles l'ont été, et le carré creusait
+  entre le libellé et sa réponse un trou de cent pixels que rien ne
+  remplissait. Hauteur fixe et courte, contenu centré dedans, une flèche au
+  bout du libellé : c'est le bandeau de L'Étoile, dans sa mécanique exacte.
+  Les filets ne doublent jamais celui de la bande ni celui du bord, et les
+  quatre réponses tiennent chacune sur une ligne — dès que l'une passe à la
+  ligne, sa cellule décale son libellé et la rangée boite.
   Les repères chiffrés passent côte à côte. Le récit passe en colonne unique,
   titre avant photo. L'heure de la terrasse passe au-dessus de son titre.
 - **Une barre d'appel reste au bas de l'écran** avec le numéro et l'itinéraire,
