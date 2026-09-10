@@ -46,10 +46,6 @@
   min-height: calc(100svh - var(--head-h));
   padding: clamp(1.5rem, 4vh, 3rem) var(--pad);
   background: var(--c-green-deep);
-  /* Le bandeau d'informations affleure sous le sceau. Sur un téléphone, le
-     premier écran ne portant aucun mot, rien ne disait qu'il y avait une
-     suite : on voyait un logo et un fond, et on repartait. Les deux premières
-     lignes du bandeau qui dépassent suffisent à donner l'envie de pousser. */
   /* Des dessins débordent volontairement : on les coupe ici, jamais avec une
      barre de défilement. */
   overflow: hidden;
@@ -94,9 +90,13 @@
   opacity: calc(1 - var(--p) * .72);
   --echelle: .5;
 }
-@media (max-width: 699px) {
-  .home-hero { min-height: calc(100svh - var(--head-h) - 4.5rem); }
-}
+/* LE PREMIER ÉCRAN NE SE COUPE PAS.
+
+   Il s'arrêtait quatre rem et demie plus haut au doigt, pour laisser dépasser
+   les deux premières lignes du bandeau : c'était une invitation à descendre.
+   Mais un premier écran qui laisse voir la case d'en dessous n'est plus un
+   premier écran, c'est une page qui commence mal. Il prend toute la hauteur,
+   à toutes les tailles, et rien d'autre n'y paraît. */
 @media (max-width: 379px) { .home-champ { --echelle: .42; } }
 @media (min-width: 700px)  { .home-champ { --echelle: .68; } }
 @media (min-width: 1100px) { .home-champ { --echelle: 1; } }
@@ -129,9 +129,10 @@
   width: calc(var(--l) * var(--echelle));
   aspect-ratio: var(--ar, 1);
   background-color: var(--c-cream);
-  /* Un trait crème sur le vert profond est plus présent qu'un trait vert sur
-     le crème : à pleine encre, les huit dessins passaient devant le sceau. */
-  opacity: .55;
+  /* Ils sont la seule image du premier écran : à un demi-ton ils avaient
+     l'air d'un filigrane. Le sceau garde le dessus par sa taille et par son
+     plein, pas en éteignant ce qui l'entoure. */
+  opacity: .82;
   -webkit-mask: var(--src) center/contain no-repeat;
           mask: var(--src) center/contain no-repeat;
   transform: translate(-50%, -50%)
@@ -249,6 +250,25 @@
 }
 
 
+/* ---------------------------------------------------------------------------
+   LE RUBAN
+
+   Deux photographies d'un bord à l'autre, sans un mot, juste sous le premier
+   écran. Elles ne portent aucun texte et ne mènent nulle part : elles ne font
+   que donner à voir, et c'est le deuxième temps de la page.
+
+   Elles sont posées sur le socle, comme le premier écran : le filet de vert
+   qui les sépare est la fin de la nuit, et le crème ne revient qu'au bandeau.
+   --------------------------------------------------------------------------- */
+.ruban {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  background: var(--c-green-deep);
+}
+.ruban .ph { --ar: 16/10; border-radius: 0; }
+/* Au doigt, deux photographies côte à côte ne font plus que la moitié d'un
+   écran étroit : elles se resserrent en carré pour ne pas devenir des timbres. */
+@media (max-width: 699px) { .ruban .ph { --ar: 1; } }
+
 /* Bandeau d'infos : quatre colonnes séparées par des filets */
 .strip { border-block: 1px solid var(--line); }
 .strip__g { display: grid; grid-template-columns: 1fr 1fr; }
@@ -320,6 +340,7 @@
 .duo__txt { grid-column: 9 / -1; grid-row: 1; max-width: 30rem; }
 .duo__txt > :last-child { margin-bottom: 0; }
 .duo__lien { margin-top: 1.8rem; }
+.duo__lien--duo { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; }
 .duo .mark { margin-bottom: 1.1rem; }
 /* En portrait, la photographie est moins large et le texte gagne une colonne. */
 .duo--portrait .duo__img { grid-column: 1 / span 5; }
@@ -350,13 +371,67 @@
   .duo__lien { margin-top: 1.4rem; }
 }
 
-/* QUELQUES PLATS : la carte d'abord, sur le vert de la page de la carte. */
+/* TROIS PLATS : la carte d'abord, sur le vert de la page de la carte.
+
+   Un plat se montre, il ne se raconte pas. Photographie, nom, description,
+   prix — c'est la carte de plat de L'Étoile. Le prix est poussé en bas de sa
+   carte : les trois prix tombent alors sur la même ligne et se comparent d'un
+   coup d'œil, quelle que soit la longueur des noms. */
 .home-plats__h {
-  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: 1rem 2rem; margin-bottom: clamp(1.2rem, 3vw, 2.2rem);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 1rem 2rem; margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
 }
 .home-plats__h h2 { max-width: 22ch; }
-.home-plats__n { margin: 1.6rem 0 0; }
+.home-plats__n { margin: 1.8rem 0 0; }
+
+.plats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2.2rem); }
+.plat { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+.plat .ph { --ar: 4/5; margin-bottom: 1.1rem; }
+.plat__n { margin: 0; font: 500 clamp(1.15rem, 1.6vw, 1.35rem)/1.25 var(--serif); color: var(--fg-strong); transition: color .2s; }
+.plat:hover .plat__n { color: var(--accent); }
+.plat__d { margin: .55rem 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
+.plat__p {
+  margin: auto 0 0; padding-top: 1rem;
+  font: 600 var(--fs-sm)/1 var(--sans); font-variant-numeric: tabular-nums;
+  letter-spacing: .04em; color: var(--accent);
+}
+/* Au doigt, trois cartes en trois colonnes font trois timbres. Elles passent
+   en deux, et la troisième prend la largeur : c'est une composition, pas une
+   colonne qui manque. */
+@media (max-width: 780px) {
+  .plats { grid-template-columns: 1fr 1fr; gap: 1.8rem 1rem; }
+  .plat .ph { --ar: 3/4; margin-bottom: .9rem; }
+  .plat:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: 40% 1fr; gap: 0 1.2rem; align-items: start; }
+  .plat:last-child .ph { --ar: 1; grid-row: 1 / span 3; margin-bottom: 0; }
+  .plat:last-child .plat__p { margin-top: .7rem; padding-top: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   LA PAIRE
+
+   Deux photographies seules, sans un mot, la seconde décalée vers le bas, et
+   le dessin posé SOUS LA PLUS COURTE des deux, dans sa colonne. Il ne flotte
+   pas au milieu de la page : il achève le bloc.
+
+   C'est le second dispositif de L'Étoile, et il ne dit rien — c'est
+   exactement ce qu'on lui demande. Ni le duo ni les cartes de plat ne peuvent
+   donner cette respiration, parce que tous deux parlent.
+   --------------------------------------------------------------------------- */
+.paire-sect { padding-bottom: clamp(2rem, 5vw, 4rem); }
+.paire { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.5vw, 2.4rem); align-items: start; }
+.paire__c--bas { margin-top: clamp(2.5rem, 7vw, 6rem); }
+.paire__c:first-child .ph { --ar: 4/3; }
+.paire__c--bas .ph { --ar: 3/4; }
+.paire__mark { margin: clamp(1.2rem, 3vw, 2.2rem) 0 0 auto; }
+@media (max-width: 699px) {
+  /* Le décalage n'a plus d'objet en colonne unique : il ne ferait qu'ajouter
+     du vide entre deux images déjà l'une sous l'autre. Elles restent côte à
+     côte, en carré, et gardent leur décalage — c'est lui, la composition. */
+  .paire { gap: .8rem; }
+  .paire__c--bas { margin-top: 2.2rem; }
+  .paire__c:first-child .ph, .paire__c--bas .ph { --ar: 3/4; }
+  .paire__mark { --w: 54px !important; }
+}
 
 /* Mot d'accueil : une ligne large, centrée, sur fond sombre */
 .word { text-align: center; }
@@ -851,6 +926,7 @@
   .rest-band .ph,
   .duo__img,
   .heure__img,
+  .paire,
   .dip__a,
   .cp__img,
   .fam-photo,

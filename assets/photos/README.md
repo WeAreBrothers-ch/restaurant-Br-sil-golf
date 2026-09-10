@@ -30,19 +30,19 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 
 | Fichier | Vient de | Où il apparaît |
 |---|---|---|
-| `plat-01.jpg` | nourriture.jpg | carte, le restaurant |
-| `plat-02.jpg` | nourriture 2.jpg | carte |
-| `plat-03.jpg` | caption.jpg | terrasse, l'heure du déjeuner |
-| `plat-04.jpg` | viande.jpg | carte, le restaurant |
+| `plat-01.jpg` | nourriture.jpg | accueil (ruban), carte, le restaurant |
+| `plat-02.jpg` | nourriture 2.jpg | accueil (carte de plat), carte |
+| `plat-03.jpg` | caption.jpg | accueil (ruban), terrasse |
+| `plat-04.jpg` | viande.jpg | accueil (carte de plat), carte, le restaurant |
 | `plat-05.jpg` | img-20190316… | accueil, duo « la cuisine » |
-| `plat-06.jpg` | 20180714… | en réserve, plus affichée |
+| `plat-06.jpg` | 20180714… | accueil, carte de plat « burger du chef » |
 | `lieu-pano.jpg` | le9_barolo_terrasse | bande large de la page « Le restaurant » |
 | `terrasse-pano.jpg` | le9_terrasse_coucher_soleil | photo de tête de la page « La terrasse » |
 | `terrasse-01.jpg` | le9_barolo_terrasse | terrasse, l'heure du soir |
-| `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, duo « la maison » |
-| `terrasse-03.jpg` | le9_barolo_terrasse | accueil, duo « la terrasse » |
+| `terrasse-02.jpg` | le9_terrasse_coucher_soleil | accueil, second duo |
+| `terrasse-03.jpg` | le9_barolo_terrasse | accueil (paire) |
 | `terrasse-04.jpg` | le9_terrasse_coucher_soleil | en réserve, plus affichée |
-| `salle-01.jpg` | une-vue-imprenable-sur | page « Le restaurant », la vue depuis la salle |
+| `salle-01.jpg` | une-vue-imprenable-sur | accueil (paire), le restaurant |
 
 ## Attention : il n'y a que deux prises de vue de la terrasse
 

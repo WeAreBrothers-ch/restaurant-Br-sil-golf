@@ -7,7 +7,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Le premier écran ne porte que le sceau et huit dessins, rien d'autre. Puis un bandeau d'accès direct, trois duos photographie-texte et quatre plats de la carte. |
+| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis un ruban de deux photographies, le bandeau d'accès direct, un duo, trois plats en cartes, une paire et un second duo. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, une journée en trois heures |
@@ -20,8 +20,11 @@ en fond et le duo (une photographie, un texte) sont communs.
 
 C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
 
-- **Le premier écran est sombre et ne porte que le sceau.** Pas de phrase, pas
-  de bouton :
+- **Le premier écran est sombre, plein, et ne porte que le sceau.** Il occupe
+  exactement la hauteur de l'écran : rien du bandeau d'en dessous n'y paraît.
+  Il s'arrêtait quatre rem et demie plus haut au doigt pour laisser deviner la
+  suite, mais un premier écran qui montre la case suivante n'en est plus un.
+  Pas de phrase, pas de bouton :
   ce qu'on veut savoir tout de suite est dans le bandeau juste dessous, et le
   nom de la maison est déjà dans le sceau. La phrase qui situe le restaurant
   reste dans le document pour les moteurs et les lecteurs d'écran.
@@ -78,12 +81,33 @@ part de la colonne où pend la petite photographie du diptyque : les deux blocs
 partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
 côté, ici il est dedans.
 
+L'accueil suit l'ordre de L'Étoile, l'autre restaurant de la maison : premier
+écran, ruban, accès direct, duo, plats, paire, duo, le mot. Trois de ces
+dispositifs viennent de chez eux.
+
+**Le ruban** (page « Accueil »). Deux photographies d'un bord à l'autre, sans
+un mot, juste sous le premier écran. Elles ne mènent nulle part et ne portent
+aucun texte : elles ne font que donner à voir. Posées sur le socle comme le
+premier écran, elles font durer la nuit d'un temps de plus — le crème ne
+revient qu'au bandeau.
+
+**Les cartes de plat** (page « Accueil »). Photographie, nom, description,
+prix. Le prix est poussé en bas de sa carte : les trois tombent alors sur la
+même ligne et se comparent d'un coup d'œil, quelle que soit la longueur des
+noms. Au doigt, deux cartes côte à côte et la troisième en largeur, vignette à
+gauche — trois colonnes y feraient trois timbres.
+
+**La paire** (page « Accueil »). Deux photographies seules, la seconde
+décalée vers le bas, et le dessin posé sous la plus courte des deux, dans sa
+colonne : il ne flotte pas au milieu de la page, il achève le bloc. Elle ne dit
+rien, et c'est ce qu'on lui demande — ni le duo ni les cartes de plat ne
+peuvent donner cette respiration, parce que tous deux parlent.
+
 **Le duo** (page « Accueil »). Une photographie et un texte côte à côte, la
 photographie sur sept colonnes en paysage ou cinq en portrait, le texte de
 l'autre côté sur une mesure de paragraphe, et le vide entre les deux. Les
-côtés s'inversent d'un duo à l'autre. C'est le dispositif du site de L'Étoile,
-l'autre restaurant de la maison. Il remplace les trois entrées en escalier :
-une image n'est jamais suivie d'une autre sans un texte entre elles.
+côtés s'inversent d'un duo à l'autre. Il remplace les trois entrées en
+escalier de l'accueil.
 
 **Les heures** (page « La terrasse »). Une journée en trois temps, réglée
 comme une grille horaire : un filet, l'heure dans la marge en chiffres de
@@ -97,11 +121,6 @@ montrait trois à la suite, dont le bandeau du haut : on regardait trois fois
 la même bouteille. Elle en montre maintenant deux, plus une assiette servie
 dehors, chacune une seule fois. Avant d'ajouter une image ici, vérifier
 qu'elle ne redit pas celle d'au-dessus.
-
-**Quelques plats** (page « Accueil »). Quatre lignes de la carte, dans la
-forme et sur le vert de la page de la carte : la carte d'abord, avant même
-d'y aller. Ces quatre plats sont recopiés de `la-carte.html` ; quand la carte
-change, les mettre à jour aux deux endroits.
 
 **Rien ne défile sur le côté.** On ne demande pas à quelqu'un de faire glisser
 une bande pour voir ce qu'on avait à lui montrer : tout est là du premier coup
