@@ -63,12 +63,13 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   les deux seules choses qu'on veut faire depuis un téléphone devant un site de
   restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
   saisie d'un champ, pour ne pas se poser sur le clavier.
-- **Le pied de page tient en deux lignes** : l'enseigne et les coordonnées sur
-  la première, la mention légale sur la seconde. Il portait en plus une devise
-  et la liste des cinq pages — une troisième fois après l'en-tête et après le
-  menu, alors que personne ne descend au bas d'une page pour y chercher la
-  navigation restée collée en haut. De 1148 px de défilement à 653, puis à
-  321 aujourd'hui.
+- **Le pied de page tient en trois temps**, comme celui de L'Étoile :
+  l'enseigne et la phrase qui situe la maison, les coordonnées en colonnes à
+  libellés, la mention légale. Deux filets séparent les trois. Il n'y a **pas
+  de liste des pages** : elles sont dans l'en-tête, collé en haut de l'écran,
+  et dans le menu du téléphone — personne ne descend au bas d'une page pour y
+  chercher une navigation qui n'a jamais quitté l'écran. Il fait 646 px au
+  doigt, contre 1148 à l'origine.
 - **Le menu est un vrai `<dialog>`** ouvert en modal : le piégeage du focus, la
   touche Échap et le rôle de dialogue sont assurés par le navigateur. Il occupe
   tout l'écran, en vert profond, et les liens y sont composés dans le serif des
