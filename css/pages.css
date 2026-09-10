@@ -999,3 +999,26 @@
   /* La seconde photographie du diptyque ne sort que par la droite, liseré
      compris : sa marge est réglée avec la composition, plus haut. */
 }
+
+
+/* =========================================================================
+   6 · LA PAGE INTROUVABLE
+
+   Elle porte l'en-tête, le pied et la barre d'appel du site : on n'est pas
+   sorti de la maison, on s'est trompé de porte. Le sceau du premier écran y
+   revient en petit, et les deux liens remplacent le message d'erreur — la
+   seule chose utile ici est de repartir quelque part.
+   ========================================================================= */
+.err { text-align: center; padding-block: clamp(3.5rem, 10vw, 8rem); }
+/* `block` : le sceau est un <span>, et resté en ligne il ignorait sa largeur
+   et son rapport de forme — il ne s'affichait pas du tout. Sur le premier
+   écran il est enfant d'une grille, ce qui le blocifiait sans qu'on y pense. */
+.err__seal { display: block; width: clamp(6rem, 22vw, 9rem); margin: 0 auto clamp(1.8rem, 4vw, 2.6rem); color: var(--c-green); }
+.err h1 { max-width: 16ch; margin-inline: auto; }
+.err .lead { max-width: 40ch; margin: 1.4rem auto 0; }
+.err__nav {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 1rem 1.8rem; margin-top: clamp(2rem, 4vw, 2.8rem);
+}
+.err__tel { margin: clamp(1.8rem, 4vw, 2.6rem) 0 0; font-size: var(--fs-sm); color: var(--fg-soft); }
+.err__tel a { color: var(--fg-strong); font-variant-numeric: tabular-nums; }

@@ -513,6 +513,7 @@ input, textarea { caret-color: var(--c-green); }
   a, button, summary { touch-action: manipulation; }
 
   .foot__col a,
+  .err__tel a,
   .ct-links a,
   .alink,
   .nav a,
@@ -520,7 +521,7 @@ input, textarea { caret-color: var(--c-green); }
   .strip__i {
     min-height: var(--cible);
   }
-  .foot__col a, .ct-links a, .alink {
+  .foot__col a, .ct-links a, .alink, .err__tel a {
     display: inline-flex; align-items: center;
   }
   /* Le sceau du pied et l'enseigne de l'en-tête sont des liens à part entière :

@@ -63,6 +63,21 @@ DERIVES = [
 QUALITY = 82
 MAX_KB = 420  # au-delà, on baisse la qualité par paliers
 
+# --- LA VARIANTE LÉGÈRE ------------------------------------------------------
+# Chaque photo servie a une jumelle de 800 px, nommée « <nom>-800.jpg ». Les
+# pages déclarent les deux dans `srcset` et le navigateur choisit selon la
+# largeur d'affichage : la grande sur un écran d'ordinateur, la petite au doigt.
+#
+# Pourquoi : la page de la terrasse pesait 1,34 Mo sur un téléphone, dont
+# 1,1 Mo de photographies servies à deux mille pixels de large pour un écran
+# qui en fait quatre cents. Avec les jumelles, elle en pèse trois fois moins.
+#
+# 800 px sur un écran de 390 px, c'est encore deux fois la définition
+# nécessaire : personne ne voit la différence, et le fichier pèse le tiers.
+VARIANTE_W = 800
+VARIANTE_MIN = 900   # en dessous, la photo est déjà légère : pas de jumelle
+VARIANTE_KB = 130    # la jumelle doit tenir sous ce poids, quitte à baisser la qualité
+
 
 def trim_black_bars(im: Image.Image, tol: int = 22) -> Image.Image:
     """Retire les bandes noires d'une image en boîte aux lettres."""
@@ -113,6 +128,32 @@ def save_jpeg(im: Image.Image, path: Path) -> int:
         if kb <= MAX_KB:
             return kb
     return path.stat().st_size // 1024
+
+
+def variantes(dossier: Path, montrer=False) -> list:
+    """Écrit la jumelle de 800 px de chaque photo assez large pour en valoir une."""
+    faits = []
+    for src in sorted(dossier.glob("*.jpg")):
+        if src.stem.endswith(f"-{VARIANTE_W}"):
+            continue
+        with Image.open(src) as im:
+            if im.width < VARIANTE_MIN:
+                continue
+            cible = src.with_name(f"{src.stem}-{VARIANTE_W}.jpg")
+            if montrer:
+                faits.append(f"{cible.name}  {VARIANTE_W} px")
+                continue
+            petite = im.convert("RGB").resize(
+                (VARIANTE_W, round(im.height * VARIANTE_W / im.width)), Image.LANCZOS)
+            # Certaines photos d'origine sont bruitées : à qualité fixe, leur
+            # jumelle pesait encore près de trois cents kilo-octets. On descend
+            # par paliers jusqu'à ce qu'elle tienne dans le budget.
+            for q in (80, 74, 68, 62):
+                petite.save(cible, "JPEG", quality=q, optimize=True, progressive=True, subsampling=1)
+                if cible.stat().st_size // 1024 <= VARIANTE_KB:
+                    break
+            faits.append(f"{cible.name}  {VARIANTE_W} px  {cible.stat().st_size // 1024} Ko")
+    return faits
 
 
 def main(argv=None):

@@ -1,0 +1,8 @@
+# Le 9 · Restaurant du Golf du Brésil
+# Tout le site est public et peut être indexé.
+User-agent: *
+Allow: /
+
+# TODO mise en ligne : ajouter la ligne ci-dessous une fois le domaine connu,
+# et déposer le fichier sitemap.xml correspondant à la racine.
+# Sitemap: https://votre-domaine.ch/sitemap.xml

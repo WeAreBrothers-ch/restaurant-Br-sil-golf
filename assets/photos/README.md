@@ -26,6 +26,14 @@ navigation qui traînaient sur les bords des captures d'origine.
 Pour changer un cadrage, modifier la liste `DERIVES` en tête du script : chaque
 ligne indique le format voulu et le point de l'image à garder au centre.
 
+## Chaque photo existe en deux tailles
+
+À côté de chaque fichier vit sa jumelle de 800 px, `<nom>-800.jpg`. Les pages
+déclarent les deux et le navigateur choisit : la grande sur un écran
+d'ordinateur, la petite au doigt. Les jumelles sont produites par
+`tools/prepare_photos.py` — ne pas les modifier à la main, et **ne pas les
+lister dans le tableau ci-dessous** : elles suivent leur aînée.
+
 ## Ce que le site utilise aujourd'hui
 
 | Fichier | Vient de | Où il apparaît |

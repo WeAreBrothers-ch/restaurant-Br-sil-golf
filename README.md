@@ -12,6 +12,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
+| `404.html` | Page introuvable | Le sceau, une phrase, deux liens et le numéro. GitHub Pages la sert pour toute adresse qui n'existe pas. |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
 en fond et le duo (une photographie, un texte) sont communs.
@@ -221,6 +222,7 @@ immobile.
 ## Arborescence## Arborescence
 
 ```
+robots.txt                     ce que les moteurs ont le droit d'indexer
 css/base.css                   variables, typographie, en-tête, pied, dessins
 css/pages.css                  la composition de chaque page
 js/amorce.js                   pose data-js avant le premier affichage
@@ -355,6 +357,35 @@ refaire cette vérification à plusieurs largeurs.
 
 ## Les photos
 
+**Chaque photo est servie en deux tailles.** Le fichier pleine définition, et
+sa jumelle de 800 px nommée `<nom>-800.jpg`. Les pages déclarent les deux dans
+`srcset` et le navigateur choisit selon la largeur d'affichage : la grande sur
+un écran d'ordinateur, la petite au doigt.
+
+La page de la terrasse pesait 1,34 Mo sur un téléphone, dont 1,1 Mo de
+photographies servies à deux mille pixels de large pour un écran qui en fait
+quatre cents. Elle en pèse 675 Ko. Aucune page ne dépasse plus 700 Ko.
+
+| Page | Avant | Après |
+|---|---|---|
+| Accueil | 820 Ko | 577 Ko |
+| Le restaurant | 1150 Ko | 629 Ko |
+| La carte | 1136 Ko | 635 Ko |
+| La terrasse | 1339 Ko | 675 Ko |
+| Contact | 268 Ko | 268 Ko |
+
+Huit cents pixels sur un écran de 390, c'est encore deux fois la définition
+nécessaire : personne ne voit la différence. Contrôlé de 390 à 1920 px et
+jusqu'à trois fois la densité — aucune photo n'est servie en dessous de sa
+taille d'affichage, à une exception connue : la vue depuis la salle n'existe
+qu'en 675 px et s'affiche sur 708.
+
+Pour regénérer les jumelles après avoir ajouté une photo :
+
+```
+python3 tools/prepare_photos.py
+```
+
 Voir `assets/photos/README.md` pour la liste des noms attendus. Tant qu'un
 fichier manque, la page affiche un cadre qui indique le nom à déposer. Une fois
 toutes les photos en place, remplacer `data-slots="show"` par `data-slots="hide"`
@@ -367,6 +398,23 @@ la maison, puis converti en courbes : il est net à toutes les tailles et prend
 la couleur du contexte. Voir `assets/logo/README.md`. Si le fichier vectoriel
 d'origine existe quelque part, il suffit de le mettre à la place de
 `assets/logo/le9.svg`.
+
+## Avant la mise en ligne
+
+Deux réglages attendent le nom de domaine définitif, et sont marqués `TODO`
+dans les fichiers :
+
+- **L'image de partage.** Chaque page déclare `og:image` avec un chemin
+  relatif. C'est l'image qui s'affiche quand on colle le lien du site dans un
+  message ou sur un réseau. Certains réseaux ne résolvent pas les chemins
+  relatifs : remplacer par l'adresse complète une fois le domaine connu.
+- **Le plan du site.** `robots.txt` autorise l'indexation de tout le site. La
+  ligne `Sitemap:` et le fichier `sitemap.xml` demandent eux aussi l'adresse
+  complète ; ils sont à ajouter le jour venu.
+
+Il manque par ailleurs une **icône d'écran d'accueil** pour iOS
+(`apple-touch-icon`), qui doit être une image PNG de 180 px : le sceau du site
+n'existe qu'en vectoriel, et iOS ne lit pas les icônes vectorielles.
 
 ## Ce qu'il reste à compléter
 
