@@ -314,11 +314,15 @@ d'origine existe quelque part, il suffit de le mettre à la place de
 
 ## Ce qu'il reste à compléter
 
-Chercher `TODO` dans les fichiers HTML. Les étiquettes « à confirmer »,
-« à valider » et les notes qui les accompagnent sont visibles sur le site :
-elles montrent au client ce qui reste à vérifier. Pour les retirer toutes d'un
-coup avant une mise en ligne, poser `data-todo="hide"` sur la balise `<body>`
-de chaque page.
+Chercher `TODO` dans les fichiers HTML. **Rien n'est plus marqué à l'écran.**
+Les étiquettes « à confirmer », « à valider », « à vérifier » et les notes qui
+les accompagnaient sont retirées : le site se lit comme un site fini.
+
+Ce qu'elles signalaient n'est pas résolu pour autant — le nom du chef, la
+capacité de la salle, le parking, les prix de la carte et la source de la
+citation de presse restent à valider. La liste est ci-dessous, et chaque
+endroit porte un commentaire `TODO` dans le HTML, à l'aplomb de la ligne
+concernée.
 
 - **Formulaire de contact** : il poste vers un service de réception qui
   transmet le message par courriel. Remplacer l'adresse de l'attribut `action`
@@ -326,6 +330,14 @@ de chaque page.
   sur votre hébergement). Tant que ce n'est pas fait, l'envoi échoue et le
   visiteur est renvoyé vers le téléphone.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
+- **Carte en PDF** : le lien est retiré de `la-carte.html` tant que le fichier
+  n'existe pas — il menait à une page d'erreur. Déposer le PDF dans
+  `assets/carte.pdf` et remettre la ligne indiquée dans le commentaire.
+- **Citation de presse** : la page de la terrasse affirme que la maison est
+  citée parmi les « 100 terrasses de rêve ». La source venait d'une fiche de
+  l'office du tourisme et n'est pas confirmée. La mention « source à préciser »
+  qui l'accompagnait est retirée : la phrase est donc affirmée sans réserve.
+  À vérifier avant la mise en ligne, ou à supprimer.
 - **Horaires** : les sources se contredisent sur le lundi, la grille est en « à confirmer ».
 - **Photos manquantes** : le chef, une vraie photo de salle en haute définition, quelques plats de plus. Voir `assets/photos/README.md`.
 - **À vérifier** : nom du chef, capacité de la salle, terrasse couverte, parking, source de la citation presse, adresse du site de L'Étoile.

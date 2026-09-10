@@ -232,16 +232,6 @@ input, textarea { caret-color: var(--c-green); }
    sur un téléphone : on la laisse au texte de se placer. */
 @media (max-width: 699px) { .br-lg { display: none; } }
 
-/* Marqueur des contenus à compléter. Avant d'envoyer le site, poser
-   `data-todo="hide"` sur <body> les retire tous d'un coup, avec les notes
-   qui les accompagnent (`.todo-note`), sans toucher au reste du texte. */
-body[data-todo="hide"] .todo, body[data-todo="hide"] .todo-note { display: none !important; }
-.todo {
-  display: inline-block; padding: .12em .5em; border-radius: 2px; vertical-align: middle;
-  font: 600 var(--fs-micro)/1.5 var(--sans); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--accent); border: 1px dashed currentColor;
-}
-
 /* ---------- Boutons et liens ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
