@@ -150,27 +150,48 @@
   </div>
 
   <!-- ==================================================================
-       À PARTIR D'ICI, PLUS UNE SEULE PHOTOGRAPHIE
+       DEUX PHOTOGRAPHIES, ET DEUX SEULEMENT
 
-       L'accueil en portait neuf : un ruban, un duo, trois cartes de plat,
-       une paire, un second duo. C'était beaucoup d'images pour une page qui
-       n'a qu'une chose à faire — dire ce qu'est la maison et mener aux
-       quatre autres pages, qui, elles, montrent.
+       L'accueil en a porté neuf : un ruban, un duo, trois cartes de plat,
+       une paire, un second duo. C'était une galerie, et une galerie n'est
+       pas une page d'accueil. Il n'en reste que deux, une de chaque côté du
+       panneau vert, chacune à côté de son texte : jamais deux images à la
+       suite, jamais une grille.
 
-       Le sceau et les huit dessins du premier écran sont l'image de
-       l'accueil. En dessous, il n'y a plus que des mots : une phrase, six
-       lignes de carte, trois portes. Les photographies vivent dans les pages
-       où on est venu les voir.
+       Elles sont choisies pour ce premier écran-là. L'assiette est sombre,
+       vert et orange sur fond noir : elle prolonge le socle du sceau. La
+       terrasse porte le vert des chaises et la lumière du soir. Les deux
+       vivent dans la palette de la maison ; c'est à cela qu'on les a
+       choisies, pas à ce qu'elles montrent.
        ================================================================== -->
   <section class="sect word">
     <div class="illu i-clubs" data-side="r" style="--y:18%; --w:115px; --in:-14px; --r:11deg" data-hide="lg"></div>
     <div class="wrap-sm" data-reveal>
       <p class="word__q">Un golf, une cuisine soignée, et le calme de la campagne vaudoise à vingt minutes de Lausanne.</p>
       <p class="word__s soft">Golfeur ou non, la maison accueille tout le monde : déjeuner de travail, repas de famille, verre en fin d&rsquo;après-midi ou dîner face au parcours.</p>
-      <p class="word__a">
-        <a class="btn" href="tel:+41218822419">Réserver une table</a>
-        <a class="alink" href="le-restaurant.html">Découvrir la maison</a>
-      </p>
+      <p class="word__a"><a class="btn" href="tel:+41218822419">Réserver une table</a></p>
+    </div>
+  </section>
+
+  <!-- LE PREMIER DUO : la photographie à gauche, le texte à droite. -->
+  <section class="sect">
+    <div class="illu i-golfeur" data-side="r" style="--y:62%; --w:135px; --in:-18px; --r:5deg" data-hide="lg"></div>
+    <div class="wrap">
+      <div class="duo" data-reveal>
+        <div class="duo__img">
+          <figure class="ph ph--z ph--derive" data-file="plat-01.jpg">
+            <img src="assets/photos/plat-01.jpg" alt="Saint-Jacques et écume verte, une entrée du 9" loading="lazy" decoding="async">
+            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>Une entrée</span><code>plat-01.jpg</code></span>
+          </figure>
+        </div>
+        <div class="duo__txt">
+          <div class="mark i-assiette" style="--w:62px" aria-hidden="true"></div>
+          <h2 class="t-2">Une cuisine faite maison, au fil des saisons</h2>
+          <p class="lead">Entrées, viandes, poissons, pâtes et desserts : tout est travaillé sur place, avec le label Fait Maison. La carte reste courte et bouge avec les arrivages.</p>
+          <p class="soft">Une carte des golfeurs, plus rapide, permet de déjeuner entre deux parcours.</p>
+          <p class="duo__lien"><a class="btn btn--line" href="la-carte.html">Voir toute la carte</a></p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -224,73 +245,46 @@
     </div>
   </section>
 
-  <!-- LES TROIS PORTES : un index, pas une galerie. Chaque page dit en une
-       ligne ce qu'on y trouve, et c'est elle qui porte les photographies. -->
+  <!-- LE SECOND DUO : les côtés s'inversent. -->
   <section class="sect">
-    <div class="illu i-chef" data-side="l" style="--y:20%; --w:165px; --in:-12px; --r:-3deg" data-hide="lg"></div>
+    <div class="illu i-chef" data-side="l" style="--y:22%; --w:165px; --in:-16px; --r:-3deg" data-hide="lg"></div>
     <div class="wrap">
-      <div data-reveal style="max-width:34rem; margin-bottom:clamp(1.6rem,3.5vw,2.6rem)">
-        <h2 class="t-2">Trois raisons de pousser la porte</h2>
+      <div class="duo duo--r" data-reveal>
+        <div class="duo__img">
+          <figure class="ph ph--z ph--derive" data-file="terrasse-04.jpg">
+            <img src="assets/photos/terrasse-04.jpg" alt="Une table dressée sur la terrasse du 9, le parcours au soleil couchant" loading="lazy" decoding="async">
+            <span class="ph__slot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Photo à ajouter</b><span>La terrasse au couchant</span><code>terrasse-04.jpg</code></span>
+          </figure>
+        </div>
+        <div class="duo__txt">
+          <div class="mark i-table" style="--w:56px" aria-hidden="true"></div>
+          <h2 class="t-2">Une salle au calme, une terrasse sur le parcours</h2>
+          <p class="lead">Des tables espacées, de grandes baies tournées vers le green. Aux beaux jours le service passe dehors, et le soir le soleil se couche derrière les fairways.</p>
+          <p class="soft">Repas de famille, réunion d&rsquo;entreprise, événement privé : la maison prend les groupes.</p>
+          <p class="duo__lien duo__lien--duo">
+            <a class="btn btn--line" href="le-restaurant.html">Le restaurant</a>
+            <a class="alink" href="la-terrasse.html">La terrasse</a>
+          </p>
+        </div>
       </div>
-      <nav class="portes" data-reveal style="--vu-retard:.08s" aria-label="Les pages du site">
-        <a class="porte" href="le-restaurant.html">
-          <b>Le restaurant</b>
-          <span>Le lieu, la cuisine du chef, l&rsquo;esprit de la maison.</span>
-          <i aria-hidden="true">&rarr;</i>
-        </a>
-        <a class="porte" href="la-carte.html">
-          <b>La carte</b>
-          <span>Entrées, viandes, poissons, desserts et carte des golfeurs.</span>
-          <i aria-hidden="true">&rarr;</i>
-        </a>
-        <a class="porte" href="la-terrasse.html">
-          <b>La terrasse</b>
-          <span>La vue sur le green, du déjeuner au coucher du soleil.</span>
-          <i aria-hidden="true">&rarr;</i>
-        </a>
-      </nav>
     </div>
   </section>
 </main>
 
 <footer class="foot">
-  <div class="illu i-assiette" data-side="r" style="--y:62%; --w:180px; --in:0px; --r:5deg" data-hide="lg"></div>
   <div class="wrap">
 
-    <div class="foot__haut">
+    <div class="foot__in">
       <a class="foot__marque" href="index.html">
         <span class="foot__nom">Le&nbsp;<i>9</i></span>
         <span class="foot__sous">Restaurant du Golf du Brésil</span>
       </a>
-      <p class="foot__mot">Une table au calme, au bord du parcours, dans le Gros-de-Vaud.</p>
+      <address class="foot__co">
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux" target="_blank" rel="noopener">Chemin du Brésil 4, 1376 Goumoens-le-Jux</a>
+        <a href="tel:+41218822419">021 882 24 19</a>
+        <a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a>
+      </address>
     </div>
-
-    <div class="foot__cols">
-      <div class="foot__col">
-        <h2>Adresse</h2>
-        <address>
-          Chemin du Brésil 4<br>
-          1376 Goumoens-le-Jux<br>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chemin+du+Br%C3%A9sil+4%2C+1376+Goumoens-le-Jux" target="_blank" rel="noopener">Itinéraire</a>
-        </address>
-      </div>
-      <div class="foot__col">
-        <h2>Contact</h2>
-        <p>
-          <a href="tel:+41218822419">021 882 24 19</a><br>
-          <a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a><br>
-          <a href="contact.html#horaires">Horaires</a>
-        </p>
-      </div>
-    </div>
-
-    <nav class="foot__nav" aria-label="Navigation de pied de page">
-      <a href="index.html">Accueil</a>
-      <a href="le-restaurant.html">Le restaurant</a>
-      <a href="la-carte.html">La carte</a>
-      <a href="la-terrasse.html">La terrasse</a>
-      <a href="contact.html">Contact</a>
-    </nav>
 
     <p class="foot__end">
       <span>&copy; <span data-year>2026</span> Le 9 &middot; Restaurant du Golf du Br&eacute;sil</span>

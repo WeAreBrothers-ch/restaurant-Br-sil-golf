@@ -7,7 +7,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 
 | Fichier | Page | Composition |
 |---|---|---|
-| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct, et plus une seule photographie : une phrase, six lignes de carte, trois portes. |
+| `index.html` | Accueil | Premier écran sombre : le sceau et huit dessins, rien d'autre. Puis le bandeau d'accès direct en quatre carrés, une phrase, un duo, six lignes de carte, un second duo. |
 | `le-restaurant.html` | Le restaurant | Titre sur deux colonnes, bande photo pleine largeur, un diptyque puis un contrepoint, le chef, trois repères |
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, texte en deux colonnes façon journal, une journée en trois heures |
@@ -38,8 +38,10 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   L'Étoile, l'autre restaurant de la maison, dont le premier écran est noir.
   Sur grand écran, le sceau est une île au milieu et les dessins font le tour.
   Sur un téléphone il barre l'écran : il ne reste plus une couronne mais deux
-  bandes, quatre dessins au-dessus et quatre en dessous, en quinconce, et aucun
-  n'est coupé sur les côtés.
+  bandes, quatre dessins au-dessus et quatre en dessous, et aucun n'est coupé
+  sur les côtés. **Chacun est posé à sa propre profondeur** — 16, 7, 19 et 10
+  pour cent dans la bande du haut — comme chez L'Étoile, où aucun dessin n'est
+  à la hauteur de son voisin. Alignés deux par deux, ils faisaient une frise.
 - **Rien ne descend sous 13 px** au doigt. Les libellés en capitales espacées,
   les plus durs à lire, montent d'un cran sous 700 px.
 - **Aucune cible tactile sous 44 px de haut.** Les liens de liste, les liens
@@ -54,11 +56,12 @@ C'est là que le site sera lu. Tout part de l'écran étroit et monte ensuite.
   les deux seules choses qu'on veut faire depuis un téléphone devant un site de
   restaurant. Elle monte une fois le premier écran passé et s'efface pendant la
   saisie d'un champ, pour ne pas se poser sur le clavier.
-- **Le pied de page tient en trois temps** à toutes les tailles : la maison,
-  les coordonnées, les pages. L'adresse et le contact restent côte à côte même
-  sur un téléphone, et les pages sont une simple ligne de liens. Il portait
-  quatre colonnes qui devenaient quatre pavés empilés : 1148 px de défilement
-  pour une adresse et un numéro, contre 653 aujourd'hui.
+- **Le pied de page tient en deux lignes** : l'enseigne et les coordonnées sur
+  la première, la mention légale sur la seconde. Il portait en plus une devise
+  et la liste des cinq pages — une troisième fois après l'en-tête et après le
+  menu, alors que personne ne descend au bas d'une page pour y chercher la
+  navigation restée collée en haut. De 1148 px de défilement à 653, puis à
+  321 aujourd'hui.
 - **Le menu est un vrai `<dialog>`** ouvert en modal : le piégeage du focus, la
   touche Échap et le rôle de dialogue sont assurés par le navigateur. Il occupe
   tout l'écran, en vert profond, et les liens y sont composés dans le serif des
@@ -85,19 +88,22 @@ part de la colonne où pend la petite photographie du diptyque : les deux blocs
 partagent un axe. C'est l'inverse exact du premier bloc : là le texte était à
 côté, ici il est dedans.
 
-**L'accueil ne porte aucune photographie.** Il en a porté neuf : un ruban,
-un duo, trois cartes de plat, une paire, un second duo. C'était beaucoup
-d'images pour une page qui n'a que deux choses à faire — dire ce qu'est la
-maison, et mener aux quatre autres pages, qui, elles, montrent. Le sceau et
-les huit dessins du premier écran sont son image. En dessous il n'y a plus
-que des mots : une phrase, six lignes de carte, trois portes. Les
-photographies vivent dans les pages où l'on est venu les voir.
+**Le duo** (page « Accueil »). Une photographie et un texte côte à côte, la
+photographie sur six colonnes, le texte sur cinq, et la gouttière du milieu
+vide : c'est ce vide, et non un filet, qui les sépare. Les côtés s'inversent
+d'un duo à l'autre.
 
-**Les trois portes** (page « Accueil »). Un index, pas une galerie. Trois
-lignes réglées : le nom de la page dans le serif des titres, ce qu'on y
-trouve en dessous, la flèche au bout. C'étaient trois photographies plein
-cadre, puis trois cartes en escalier, puis des duos ; l'accueil n'a pas à
-montrer ce que la page de la terrasse montre déjà, il a à y mener.
+C'est la disposition de L'Étoile, pas son nombre. Chez eux la page d'accueil
+compte une quinzaine de photographies ; ici il y en a **deux**, une de chaque
+côté du panneau vert. L'accueil en a porté neuf — un ruban, un duo, trois
+cartes de plat, une paire, un second duo — et c'était une galerie. Jamais
+deux images à la suite, jamais une grille : une image, un texte, et l'on
+passe à autre chose.
+
+Les deux sont choisies pour ce premier écran-là, pas pour ce qu'elles
+montrent. L'assiette est sombre, vert et orange sur fond noir : elle prolonge
+le socle du sceau. La terrasse porte le vert des chaises et la lumière du
+soir. Les deux vivent dans la palette de la maison.
 
 **Les heures** (page « La terrasse »). Une journée en trois temps, réglée
 comme une grille horaire : un filet, l'heure dans la marge en chiffres de

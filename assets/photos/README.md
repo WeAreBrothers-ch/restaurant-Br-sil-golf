@@ -30,7 +30,7 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 
 | Fichier | Vient de | Où il apparaît |
 |---|---|---|
-| `plat-01.jpg` | nourriture.jpg | carte, le restaurant |
+| `plat-01.jpg` | nourriture.jpg | accueil (premier duo), carte, le restaurant |
 | `plat-02.jpg` | nourriture 2.jpg | carte |
 | `plat-03.jpg` | caption.jpg | terrasse, l'heure du déjeuner |
 | `plat-04.jpg` | viande.jpg | carte, le restaurant |
@@ -41,14 +41,17 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 | `terrasse-01.jpg` | le9_barolo_terrasse | terrasse, l'heure du soir |
 | `terrasse-02.jpg` | le9_terrasse_coucher_soleil | en réserve, plus affichée |
 | `terrasse-03.jpg` | le9_barolo_terrasse | en réserve, plus affichée |
-| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | en réserve, plus affichée |
+| `terrasse-04.jpg` | le9_terrasse_coucher_soleil | accueil (second duo) |
 | `salle-01.jpg` | une-vue-imprenable-sur | le restaurant, la vue depuis la salle |
 
-## L'accueil n'affiche aucune photographie
+## L'accueil n'affiche que deux photographies
 
-C'est voulu : le sceau et les huit dessins du premier écran sont son image,
-et les quatre autres pages portent les photographies. Ne pas en redéposer une
-sur `index.html` sans y penser à deux fois.
+C'est voulu. Le sceau et les huit dessins du premier écran sont son image ;
+les quatre autres pages portent le reste. Les deux qui y figurent sont
+choisies pour la palette du premier écran — `plat-01` est sombre, vert et
+orange sur fond noir, `terrasse-04` porte le vert des chaises et la lumière
+du soir. Avant d'en ajouter une troisième, se demander si la page en a besoin
+ou si c'est la page de destination qui doit la porter.
 
 ## Attention : il n'y a que deux prises de vue de la terrasse
 

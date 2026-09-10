@@ -83,7 +83,7 @@
    premier écran et les dessins n'avaient plus où se ranger — ils finissaient
    sur le sceau. Avec elle, il reste toujours deux bandes libres, une au-dessus
    et une en dessous, et aucun dessin n'a besoin d'approcher le cercle. */
-.mono .seal { width: min(72vw, 40svh, 19rem); aspect-ratio: 1; }
+.mono .seal { width: min(72vw, 36svh, 19rem); aspect-ratio: 1; }
 
 @media (min-width: 600px)  { .mono .seal { width: min(58vw, 46svh, 24rem); } }
 @media (min-width: 1100px) { .mono .seal { width: min(46vw, 58svh, 30rem); } }
@@ -94,7 +94,10 @@
   position: absolute; inset: 0; z-index: 0;
   pointer-events: none; user-select: none;
   opacity: calc(1 - var(--p) * .72);
-  --echelle: .5;
+  /* Ils étaient à un demi et devaient se ranger côte à côte : quatre dessins
+     de front sur 390 px, c'est une frise, pas une dispersion. Un cran en
+     dessous leur rend la place de se poser chacun à sa propre profondeur. */
+  --echelle: .44;
 }
 /* LE PREMIER ÉCRAN NE SE COUPE PAS.
 
@@ -103,7 +106,7 @@
    Mais un premier écran qui laisse voir la case d'en dessous n'est plus un
    premier écran, c'est une page qui commence mal. Il prend toute la hauteur,
    à toutes les tailles, et rien d'autre n'y paraît. */
-@media (max-width: 379px) { .home-champ { --echelle: .42; } }
+@media (max-width: 379px) { .home-champ { --echelle: .38; } }
 @media (min-width: 700px)  { .home-champ { --echelle: .68; } }
 @media (min-width: 1100px) { .home-champ { --echelle: 1; } }
 
@@ -162,14 +165,14 @@
 
    Deux golfeurs seulement, un de chaque côté : trois se lisaient comme une
    répétition. Le troisième reste sur les autres pages. */
-.piece--swing     { --x: 11%; --y: 30%; --l: 145px; --r: -11deg; --chute: 245px; --vrille: 14deg; }
-.piece--chef      { --x: 10%; --y: 74%; --l: 185px; --r: 5deg;   --chute: 175px; --vrille: -16deg; }
-.piece--assiette  { --x: 28%; --y: 11%; --l: 200px; --r: 7deg;   --chute: 165px; --vrille: -12deg; }
-.piece--bouteille { --x: 75%; --y: 12%; --l: 125px; --r: -9deg;  --chute: 135px; --vrille: 18deg; }
-.piece--trait     { --x: 88%; --y: 29%; --l: 150px; --r: 6deg;   --chute: 230px; --vrille: -13deg; }
-.piece--table     { --x: 87%; --y: 72%; --l: 180px; --r: -6deg;  --chute: 200px; --vrille: 11deg; }
-.piece--sac       { --x: 18%; --y: 82%; --l: 85px;  --r: -7deg;  --chute: 110px; --vrille: 20deg; }
-.piece--clubs     { --x: 75%; --y: 86%; --l: 140px; --r: 13deg;  --chute: 130px; --vrille: -21deg; }
+.piece--assiette  { --x: 26%; --y: 9%;  --l: 200px; --r: 7deg;   --chute: 165px; --vrille: -12deg; }
+.piece--bouteille { --x: 76%; --y: 14%; --l: 125px; --r: -9deg;  --chute: 135px; --vrille: 18deg; }
+.piece--swing     { --x: 10%; --y: 27%; --l: 145px; --r: -11deg; --chute: 245px; --vrille: 14deg; }
+.piece--trait     { --x: 89%; --y: 33%; --l: 150px; --r: 6deg;   --chute: 230px; --vrille: -13deg; }
+.piece--chef      { --x: 11%; --y: 71%; --l: 185px; --r: 5deg;   --chute: 175px; --vrille: -16deg; }
+.piece--table     { --x: 86%; --y: 68%; --l: 180px; --r: -6deg;  --chute: 200px; --vrille: 11deg; }
+.piece--sac       { --x: 24%; --y: 87%; --l: 85px;  --r: -7deg;  --chute: 110px; --vrille: 20deg; }
+.piece--clubs     { --x: 71%; --y: 89%; --l: 140px; --r: 13deg;  --chute: 130px; --vrille: -21deg; }
 
 /* AU DOIGT, LA COMPOSITION CHANGE DE NATURE.
 
@@ -194,19 +197,27 @@
    celle du dessus, celle du dessous — et ne s'approchent jamais du cercle.
    Chaque bande porte quatre dessins en quinconce : jamais deux à la même
    hauteur, jamais deux du même côté l'un sous l'autre. */
-/* Les quatre d'une bande ne se recouvrent jamais non plus : chacun a sa
-   tranche de largeur, et les hauteurs alternent d'un dessin au suivant.
-   C'est ce qui fait lire une dispersion là où quatre dessins alignés
-   feraient une frise. */
+/* LA DISPERSION DE L'ÉTOILE.
+
+   Chez eux, aucun dessin n'est à la hauteur de son voisin : ils sont posés à
+   neuf profondeurs différentes, du bord de l'écran jusqu'aux abords de
+   l'enseigne, et c'est ce désordre réglé qui fait qu'on ne voit pas la
+   grille. Les nôtres étaient alignés deux par deux en haut et en bas : quatre
+   dessins de front, c'est une frise.
+
+   Ils ont maintenant chacun leur profondeur — 16, 7, 19 et 10 pour cent dans
+   la bande du haut, 79, 90, 80 et 91 dans celle du bas — et leur tranche de
+   largeur. Deux voisins ne partagent jamais à la fois une hauteur et une
+   largeur, et aucun n'approche le cercle du sceau. */
 @media (max-width: 699px) {
-  .piece--swing     { --x: 13%; --y: 15%; --r: -8deg; }
-  .piece--assiette  { --x: 40%; --y: 9%;  --r: -6deg; }
-  .piece--bouteille { --x: 65%; --y: 13%; --r: 7deg; }
-  .piece--trait     { --x: 87%; --y: 11%; --r: 5deg; }
-  .piece--sac       { --x: 9%;  --y: 86%; --r: -7deg; }
-  .piece--chef      { --x: 32%; --y: 91%; --r: -5deg; }
-  .piece--table     { --x: 60%; --y: 89%; --r: 4deg; }
-  .piece--clubs     { --x: 87%; --y: 84%; --r: 11deg; }
+  .piece--swing     { --x: 12%; --y: 16%; --r: -8deg; }
+  .piece--assiette  { --x: 38%; --y: 7%;  --r: -6deg; }
+  .piece--bouteille { --x: 62%; --y: 19%; --r: 7deg; }
+  .piece--trait     { --x: 88%; --y: 10%; --r: 5deg; }
+  .piece--sac       { --x: 10%; --y: 79%; --r: -7deg; }
+  .piece--chef      { --x: 34%; --y: 90%; --r: -5deg; }
+  .piece--table     { --x: 62%; --y: 80%; --r: 4deg; }
+  .piece--clubs     { --x: 88%; --y: 91%; --r: 11deg; }
 }
 
 /* Écran très étroit : les dessins gardaient leur taille pendant que l'écran
@@ -319,38 +330,42 @@
 
 
 /* ---------------------------------------------------------------------------
-   LES TROIS PORTES
+   LE DUO — une photographie et un texte, côte à côte
 
-   Un index, pas une galerie. Trois lignes réglées : le nom de la page dans le
-   serif des titres, ce qu'on y trouve en dessous, la flèche au bout.
+   La disposition de L'Étoile, pas son nombre : chez eux la page d'accueil
+   compte une quinzaine de photographies, ici il y en a deux, une de chaque
+   côté du panneau vert, les côtés inversés. Jamais deux images à la suite,
+   jamais une grille — une image, un texte, et l'on passe à autre chose.
 
-   C'étaient trois photographies plein cadre, puis trois cartes en escalier,
-   puis des duos. Mais l'accueil n'a pas à montrer ce que les autres pages
-   montrent déjà : il a à y mener. La photographie de la terrasse est à sa
-   place sur la page de la terrasse, et pas deux fois.
+   La photographie prend six colonnes, le texte cinq, et la gouttière du
+   milieu reste vide : c'est ce vide, et non un filet, qui les sépare.
    --------------------------------------------------------------------------- */
-.portes { display: grid; border-top: 1px solid var(--line); }
-.porte {
-  display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
-  align-items: baseline; gap: .4rem clamp(1.5rem, 4vw, 3rem);
-  padding: clamp(1.2rem, 2.5vw, 1.8rem) 0;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none; color: inherit;
+.duo {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1.25rem, 2.5vw, 2.5rem); align-items: center;
 }
-.porte b { font: 500 clamp(1.45rem, 2.6vw, 2.1rem)/1.15 var(--serif); color: var(--fg-strong); transition: color .2s; }
-.porte span { font-size: var(--fs-sm); line-height: 1.5; color: var(--fg-soft); }
-.porte i { font-style: normal; color: var(--accent); transition: transform .25s; }
-.porte:hover b { color: var(--accent); }
-.porte:hover i { transform: translateX(6px); }
-/* Au doigt, la phrase passe sous le nom : côte à côte, il ne lui resterait
-   que trois mots par ligne. */
-@media (max-width: 760px) {
-  .porte { grid-template-columns: minmax(0, 1fr) auto; }
-  /* La flèche reste sur la ligne du nom : placée d'office, elle tombait sous
-     la phrase et se lisait comme un quatrième lien. */
-  .porte i    { grid-column: 2; grid-row: 1; }
-  .porte span { grid-column: 1 / -1; grid-row: 2; }
+.duo__img { grid-column: 1 / span 6; grid-row: 1; }
+.duo__img .ph { --ar: 4/5; }
+.duo__txt { grid-column: 8 / -1; grid-row: 1; max-width: 30rem; }
+.duo__txt > :last-child { margin-bottom: 0; }
+.duo .mark { margin-bottom: 1.1rem; }
+.duo__lien { margin-top: 1.8rem; }
+.duo__lien--duo { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; }
+/* Photographie à droite : le texte part du bord gauche de la page. */
+.duo--r .duo__img { grid-column: 7 / -1; grid-row: 1; }
+.duo--r .duo__img .ph { --ar: 4/3; }
+.duo--r .duo__txt { grid-column: 1 / span 5; }
+
+/* Sous 900 px, la photographie passe au-dessus du texte : côte à côte, il ne
+   resterait au texte que trois mots par ligne. */
+@media (max-width: 899px) {
+  .duo { grid-template-columns: 1fr; row-gap: 1.6rem; }
+  .duo .duo__img, .duo .duo__txt,
+  .duo--r .duo__img, .duo--r .duo__txt { grid-column: 1 / -1; grid-row: auto; }
+  .duo__txt { max-width: 56ch; }
+  .duo__img .ph, .duo--r .duo__img .ph { --ar: 4/3; }
 }
+@media (max-width: 699px) { .duo__lien { margin-top: 1.4rem; } }
 
 /* QUELQUES PLATS : la carte d'abord, sur le vert de la page de la carte.
 
@@ -863,6 +878,7 @@
    --------------------------------------------------------------------------- */
 @media (max-width: 699px) {
   .rest-band .ph,
+  .duo__img,
   .heure__img,
   .dip__a,
   .cp__img,
@@ -881,7 +897,7 @@
   }
   /* Le coin arrondi est une convention de vignette : une image qui touche les
      deux bords n'en a plus l'usage. */
-  .rest-band .ph, .heure__img .ph, .dip__a .ph, .cp__img .ph, .fam-photo { border-radius: 0; }
+  .rest-band .ph, .duo__img .ph, .heure__img .ph, .dip__a .ph, .cp__img .ph, .fam-photo { border-radius: 0; }
 
   /* La seconde photographie du diptyque ne sort que par la droite, liseré
      compris : sa marge est réglée avec la composition, plus haut. */
