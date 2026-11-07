@@ -430,9 +430,9 @@ endroit porte un commentaire `TODO` dans le HTML, à l'aplomb de la ligne
 concernée.
 
 - **Formulaire de contact** : il poste vers `envoyer-message.php`, qui envoie le
-  courriel en SMTP depuis une boîte du domaine (Infomaniak). Reste à créer la boîte
-  `contact@le9.ch` et à poser `contact-config.php` sur le serveur : mode d'emploi
-  dans « Le formulaire de contact » et « Mise en ligne sur Infomaniak » ci-dessous.
+  courriel en SMTP depuis la boîte d'Étoile (Infomaniak). Reste à copier le
+  `contact-config.php` d'Étoile sur le serveur : mode d'emploi dans « Le formulaire de
+  contact » et « Mise en ligne sur Infomaniak » ci-dessous.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Carte en PDF** : le lien est retiré de `la-carte.html` tant que le fichier
   n'existe pas — il menait à une page d'erreur. Déposer le PDF dans
@@ -448,35 +448,33 @@ concernée.
 - **Numéro de téléphone** : la fiche de l'office du tourisme indique 021 732 26 46, le site utilise le 021 882 24 19 que vous m'avez donné.
 - **Droits des dessins** : ils viennent de banques d'images, vérifier que les licences couvrent l'usage sur le site.
 
-## Mise en ligne sur Infomaniak
+## Mise en ligne sur Infomaniak (même hébergement que L'Étoile)
 
-À faire **une seule fois** (une vingtaine de minutes). Ensuite, chaque push sur `main`
-met le site à jour tout seul (`.github/workflows/deploy-infomaniak.yml`, par FTPS).
+Les trois sites tournent sur **le même hébergement Infomaniak** (celui de
+restaurant-letoile.ch) : chacun a son dossier et son propre domaine. À faire **une
+seule fois** ; ensuite, chaque push sur `main` met le site à jour tout seul
+(`.github/workflows/deploy-infomaniak.yml`, par FTPS).
 
-1. **Un site pour le domaine.** Manager Infomaniak → Web & Domaines → **Sites Web** →
-   Ajouter un site → choisissez **le9.ch**. (Si votre hébergement n'a plus de place
-   pour un site de plus, il faut en commander un : un hébergement « Starter » suffit.)
-2. **Le certificat SSL.** Il est installé automatiquement ; attendez que
-   `https://le9.ch` s'ouvre sans avertissement avant d'aller plus loin
-   (le `.htaccess` redirige tout vers https).
-3. **PHP.** Site → PHP → choisissez la version la plus récente proposée.
-4. **Un compte FTP.** Site → Connexions FTP / SSH → Ajouter un compte FTP.
-   Mettez comme **répertoire la racine du site** (par exemple `/web/le9`).
-   Notez le serveur (du genre `xxxx.ftp.infomaniak.com`), l'identifiant et le mot de passe.
-5. **Les trois secrets GitHub.** Dans le repo : Settings → Secrets and variables →
-   Actions → New repository secret : `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`.
-6. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
-   Cochez d'abord **Simulation** (rien n'est écrit, on voit ce qui serait envoyé), puis
-   relancez sans la case. Les envois suivants partent seuls à chaque push sur `main`.
-7. **Le formulaire de contact** : créez la boîte `contact@le9.ch` et posez
-   `contact-config.php` (section « Le formulaire de contact » plus bas).
-8. **Vérifiez** : le site en https, une page intérieure, un message test du formulaire.
+1. **Ajouter le site.** Manager Infomaniak → Web & Domaines → Sites Web → l'hébergement
+   **restaurant-letoile.ch** → Ajouter un site → domaine **le9.ch**, et comme
+   emplacement du site un dossier **`/web/le9`**. Le dossier doit s'appeler
+   exactement `le9` : c'est celui que le workflow vise (`DOSSIER_DISTANT`).
+2. **Attendre le certificat SSL.** Il s'installe seul ; attendez que `https://le9.ch`
+   s'ouvre sans avertissement (le `.htaccess` redirige tout vers https).
+3. **PHP.** Réglez la même version que pour L'Étoile, ou la plus récente.
+4. **Les trois secrets GitHub : les mêmes que L'Étoile.** Le compte FTP de l'hébergement
+   arrive dans `/web` et voit tous les dossiers : pas de nouveau compte à créer. Dans ce
+   repo : Settings → Secrets and variables → Actions → New repository secret :
+   `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, avec les valeurs de ceux du repo de L'Étoile.
+5. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
+   Cochez d'abord **Simulation** (rien n'est écrit), puis relancez sans la case.
+6. **Le formulaire de contact** : copiez le `contact-config.php` de L'Étoile dans le
+   dossier `/web/le9` du serveur (même boîte d'envoi). Voir « Le formulaire de contact ».
+7. **Vérifiez** : le site en https, une page intérieure, un message test du formulaire.
 
-Tant que les secrets de l'étape 5 n'existent pas, le workflow s'ignore proprement (il
-l'écrit dans son journal) : pousser du code ne casse rien.
-
-Le déploiement n'envoie ni les sources de travail (photos d'origine, scripts), ni les
-fichiers `.md`, ni `contact-config.php` : ce dernier reste sur le serveur.
+Tant que les secrets de l'étape 4 n'existent pas, le workflow s'ignore proprement (il
+l'écrit dans son journal) : pousser du code ne casse rien. Le déploiement n'envoie ni
+les sources de travail, ni les `.md`, ni `contact-config.php`, qui reste sur le serveur.
 
 ---
 
@@ -495,9 +493,11 @@ sont `mail.infomaniak.com`, port 587 (STARTTLS) ou 465 (SSL), identifiant = adre
 
 ### Mise en service — à faire une seule fois
 
-1. **Une boîte mail du domaine.** Dans le Manager Infomaniak, créez (ou choisissez) une
-   adresse du domaine, par exemple **contact@le9.ch**, et notez son mot de passe.
-2. **Le fichier de configuration.** Copiez `contact-config.example.php` sous le nom
+1. **La boîte d'envoi : celle de L'Étoile.** Une seule boîte suffit pour les trois sites
+   (par exemple **contact@restaurant-letoile.ch**) : le script envoie depuis elle et met
+   l'adresse du visiteur en « Répondre à ». Rien de nouveau à créer dans le Manager.
+2. **Le fichier de configuration.** Le plus simple : copiez le `contact-config.php` du site de
+   L'Étoile (même contenu). Sinon, copiez `contact-config.example.php` sous le nom
    **`contact-config.php`** et renseignez l’adresse et le mot de passe de la boîte.
 3. **Posez-le sur le serveur**, dans le même dossier que `envoyer-message.php` (la racine
    du site) : Manager → Gestionnaire de fichiers, ou FTP.

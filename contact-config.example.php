@@ -3,7 +3,8 @@
    CONTACT-CONFIG.PHP — la boîte mail qui envoie les messages du formulaire
 
    1. Copiez ce fichier sous le nom `contact-config.php` (sans « .example »).
-   2. Remplissez l'adresse de la boîte et son mot de passe.
+   2. Remplissez l'adresse de la boîte et son mot de passe. C'est la MÊME boîte que
+      pour le site de L'Étoile : le plus simple est de copier son `contact-config.php`.
    3. Déposez-le sur le serveur, dans le même dossier que `envoyer-message.php`
       (la racine du site).
 
@@ -16,7 +17,7 @@ return [
     'hote'         => 'mail.infomaniak.com',
     'port'         => 587,
     'chiffrement'  => 'starttls',          // 'starttls' avec le port 587, ou 'ssl' avec le port 465
-    'utilisateur'  => 'contact@le9.ch',   // l'adresse COMPLÈTE de la boîte Infomaniak
+    'utilisateur'  => 'contact@restaurant-letoile.ch',   // la MÊME boîte que L'Étoile (adresse complète)
     'mot_de_passe' => '',
     // 'expediteur' => '',                 // par défaut : l'adresse ci-dessus (à garder ainsi)
 ];

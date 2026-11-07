@@ -5,9 +5,13 @@
 # un fichier d'état (.ftp-deploy-sync-state.json) à la racine du dossier distant :
 # seuls les fichiers réellement changés sont transférés ensuite.
 #
-# Secrets à créer dans GitHub (Settings → Secrets and variables → Actions) :
+# Ce site est hébergé sur le MÊME hébergement Infomaniak que L'Étoile : on réutilise
+# son compte FTP, qui arrive dans /web et voit donc tous les dossiers de sites.
+#
+# Secrets à créer dans GitHub (Settings → Secrets and variables → Actions) — les
+# trois mêmes valeurs que dans le repo de L'Étoile :
 #   FTP_SERVER    ex. xxxx.ftp.infomaniak.com
-#   FTP_USERNAME  le compte FTP créé dans le Manager Infomaniak
+#   FTP_USERNAME  le compte FTP de l'hébergement
 #   FTP_PASSWORD  son mot de passe
 #
 # Tant que ces trois secrets n'existent pas, ce workflow ne fait RIEN (il le dit
@@ -32,9 +36,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # Chemin RELATIF au dossier où le compte FTP arrive en se connectant. Quand le
-  # compte FTP est créé avec « Répertoire » = la racine du site, c'est « / ».
-  DOSSIER_DISTANT: /
+  # Chemin RELATIF au dossier où le compte FTP arrive en se connectant. Le compte FTP
+  # de L'Étoile arrive dans /web ; ce site est dans /web/le9 (« Emplacement du
+  # site » choisi dans le Manager : le dossier doit porter exactement ce nom).
+  DOSSIER_DISTANT: /le9/
 
 jobs:
   deployer:
