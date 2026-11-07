@@ -379,7 +379,7 @@ input, textarea { caret-color: var(--c-green); }
    autre vert. Le script dit lequel des deux passe dessous. */
 .head[data-ton] {
   --head-fg:   var(--c-cream);
-  --head-fg-2: rgb(var(--cr) / .62);
+  --head-fg-2: rgb(var(--cr) / .72);
   --head-line: rgb(var(--cr) / .2);
   --head-accent: var(--c-brass-vif);
 }
