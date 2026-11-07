@@ -462,11 +462,11 @@ seule fois** ; ensuite, chaque push sur `main` met le site à jour tout seul
 2. **Attendre le certificat SSL.** Il s'installe seul ; attendez que `https://le9.ch`
    s'ouvre sans avertissement (le `.htaccess` redirige tout vers https).
 3. **PHP.** Réglez la même version que pour L'Étoile, ou la plus récente.
-4. **Un compte FTP limité à `/sites`, et les trois secrets GitHub.** Hébergement → FTP / SSH →
-   Ajouter un utilisateur → accès **FTP**, répertoire **`/sites`**. Un seul compte sert aux
-   deux sites (Golf et Tennis) ; il ne voit pas le site d'Étoile. Puis, dans ce repo :
+4. **Un compte FTP limité au dossier du site, et les trois secrets GitHub.** Hébergement →
+   FTP / SSH → Ajouter un utilisateur → accès **FTP**, répertoire **`/sites/le9.ch`** (le compte
+   ne voit alors que ce site, pas celui d'Étoile ; ici `b98c7_deploy`). Puis, dans ce repo :
    Settings → Secrets and variables → Actions → New repository secret : `FTP_SERVER`,
-   `FTP_USERNAME` (l'identifiant complet, du genre `b98c7_deploy`), `FTP_PASSWORD`.
+   `FTP_USERNAME` (l'identifiant complet), `FTP_PASSWORD`.
 5. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
    Cochez d'abord **Simulation** (rien n'est écrit), puis relancez sans la case.
 6. **Le formulaire de contact** : copiez le `contact-config.php` de L'Étoile dans le

@@ -6,11 +6,11 @@
 # seuls les fichiers réellement changés sont transférés ensuite.
 #
 # Ce site est hébergé sur le MÊME hébergement Infomaniak que L'Étoile, dans son propre
-# dossier (/sites/le9.ch). Le compte FTP « deploy » est limité à /sites : il ne
-# peut pas toucher au site d'Étoile.
+# dossier (/sites/le9.ch), avec son propre compte FTP limité à ce dossier :
+# il ne peut pas toucher au site d'Étoile.
 #
 # Secrets à créer dans GitHub (Settings → Secrets and variables → Actions) — les
-# mêmes valeurs dans les repos du Golf et du Tennis :
+# valeurs du compte FTP de CE site :
 #   FTP_SERVER    ex. xxxx.ftp.infomaniak.com
 #   FTP_USERNAME  le compte FTP de l'hébergement
 #   FTP_PASSWORD  son mot de passe
@@ -38,9 +38,9 @@ concurrency:
 
 env:
   # Chemin RELATIF au dossier où le compte FTP arrive en se connectant. Le compte FTP
-  # de ce site est limité au dossier /sites de l'hébergement, qui contient un dossier
-  # par site : celui-ci est /sites/le9.ch.
-  DOSSIER_DISTANT: /le9.ch/
+  # de ce site (b98c7_deploy) est limité au dossier /sites/le9.ch de l'hébergement :
+  # il y arrive directement, donc « / ». Il ne voit pas le site d'Étoile.
+  DOSSIER_DISTANT: /
 
 jobs:
   deployer:
