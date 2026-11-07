@@ -456,20 +456,21 @@ seule fois** ; ensuite, chaque push sur `main` met le site à jour tout seul
 (`.github/workflows/deploy-infomaniak.yml`, par FTPS).
 
 1. **Ajouter le site.** Manager Infomaniak → Web & Domaines → Sites Web → l'hébergement
-   **restaurant-letoile.ch** → Ajouter un site → domaine **le9.ch**, et comme
-   emplacement du site un dossier **`/web/le9`**. Le dossier doit s'appeler
-   exactement `le9` : c'est celui que le workflow vise (`DOSSIER_DISTANT`).
+   **restaurant-letoile.ch** → Ajouter un site → « Créez un projet vierge » (PHP) →
+   domaine **le9.ch**. Le Manager le place dans `/sites/le9.ch` (c'est le dossier que le
+   workflow vise, `DOSSIER_DISTANT`).
 2. **Attendre le certificat SSL.** Il s'installe seul ; attendez que `https://le9.ch`
    s'ouvre sans avertissement (le `.htaccess` redirige tout vers https).
 3. **PHP.** Réglez la même version que pour L'Étoile, ou la plus récente.
-4. **Les trois secrets GitHub : les mêmes que L'Étoile.** Le compte FTP de l'hébergement
-   arrive dans `/web` et voit tous les dossiers : pas de nouveau compte à créer. Dans ce
-   repo : Settings → Secrets and variables → Actions → New repository secret :
-   `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, avec les valeurs de ceux du repo de L'Étoile.
+4. **Un compte FTP limité à `/sites`, et les trois secrets GitHub.** Hébergement → FTP / SSH →
+   Ajouter un utilisateur → accès **FTP**, répertoire **`/sites`**. Un seul compte sert aux
+   deux sites (Golf et Tennis) ; il ne voit pas le site d'Étoile. Puis, dans ce repo :
+   Settings → Secrets and variables → Actions → New repository secret : `FTP_SERVER`,
+   `FTP_USERNAME` (l'identifiant complet, du genre `b98c7_deploy`), `FTP_PASSWORD`.
 5. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
    Cochez d'abord **Simulation** (rien n'est écrit), puis relancez sans la case.
 6. **Le formulaire de contact** : copiez le `contact-config.php` de L'Étoile dans le
-   dossier `/web/le9` du serveur (même boîte d'envoi). Voir « Le formulaire de contact ».
+   dossier `/sites/le9.ch` du serveur (même boîte d'envoi). Voir « Le formulaire de contact ».
 7. **Vérifiez** : le site en https, une page intérieure, un message test du formulaire.
 
 Tant que les secrets de l'étape 4 n'existent pas, le workflow s'ignore proprement (il
