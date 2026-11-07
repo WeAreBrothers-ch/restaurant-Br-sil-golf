@@ -40,6 +40,7 @@ env:
   # Chemin RELATIF au dossier où le compte FTP arrive en se connectant. Le compte FTP
   # de ce site (b98c7_deploy) est limité au dossier /sites/le9.ch de l'hébergement :
   # il y arrive directement, donc « / ». Il ne voit pas le site d'Étoile.
+  # (Le chemin réel est détecté par l'étape « Trouver le dossier du site ».)
   DOSSIER_DISTANT: /
 
 jobs:
@@ -69,6 +70,26 @@ jobs:
             echo "pret=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Trouver le dossier du site sur le serveur
+        id: dossier
+        if: ${{ steps.secrets.outputs.pret == 'true' }}
+        env:
+          SERVEUR: ${{ secrets.FTP_SERVER }}
+          UTILISATEUR: ${{ secrets.FTP_USERNAME }}
+          MOT_DE_PASSE: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # Selon la façon dont le compte FTP a été créé, il arrive soit directement dans
+          # le dossier du site, soit dans /sites (qui contient le dossier du site). On
+          # regarde ce qu'il voit en arrivant et on en déduit le bon chemin.
+          liste=$(curl -sS --ssl-reqd --max-time 40 --user "$UTILISATEUR:$MOT_DE_PASSE" "ftp://$SERVEUR/" --list-only || true)
+          if echo "$liste" | tr -d '\r' | grep -qx "le9.ch"; then
+            echo "dossier=/le9.ch/" >> "$GITHUB_OUTPUT"
+            echo "Le compte arrive dans /sites : le site est dans /le9.ch/"
+          else
+            echo "dossier=/" >> "$GITHUB_OUTPUT"
+            echo "Le compte arrive directement dans le dossier du site : /"
+          fi
+
       - name: Envoyer les fichiers
         if: ${{ steps.secrets.outputs.pret == 'true' }}
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
@@ -78,7 +99,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps        # FTP sur TLS explicite, port 21
           port: 21
-          server-dir: ${{ env.DOSSIER_DISTANT }}
+          server-dir: ${{ steps.dossier.outputs.dossier }}
           local-dir: ./
           dry-run: ${{ inputs.dry_run == true }}
           # Fichiers de travail qui ne doivent pas se retrouver en ligne.
