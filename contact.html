@@ -164,11 +164,12 @@
   <!-- ==================================================================
        ÉCRIVEZ-NOUS
 
-       TODO ENVOI : le formulaire poste vers un service de réception qui
-       transmet le message par courriel. Remplacer l'adresse de l'attribut
-       « action » ci-dessous par la vôtre (Formspree, Basin, Formcarry, ou un
-       script sur votre hébergement). Tant que ce n'est pas fait, l'envoi
-       échoue et le visiteur est renvoyé vers le téléphone.
+       LE FORMULAIRE : il poste vers `envoyer-message.php`, à la racine du site,
+       qui transmet le message par courriel depuis une boîte du domaine (SMTP
+       Infomaniak). Les identifiants de cette boîte sont dans
+       `contact-config.php`, posé à la main sur le serveur et absent de git :
+       voir « Le formulaire de contact » dans le README. Tant que ce fichier
+       manque, l'envoi échoue et le visiteur est renvoyé vers le téléphone.
        ================================================================== -->
   <section class="sect" id="ecrire" aria-labelledby="titre-ecrire">
     <div class="illu i-bouteille" data-side="l" style="--y:38%; --w:130px; --in:-12px; --r:-6deg" data-hide="lg"></div>
@@ -181,7 +182,7 @@
       </div>
 
       <form class="form" data-telephone="021 882 24 19" novalidate
-            action="https://formspree.io/f/VOTRE-IDENTIFIANT" method="post" data-reveal>
+            action="/envoyer-message.php" method="post" data-reveal>
         <div class="form__duo">
           <p class="form__champ">
             <label for="nom">Votre nom</label>

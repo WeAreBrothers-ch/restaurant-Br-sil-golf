@@ -13,6 +13,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 | `404.html` | Page introuvable | Le sceau, une phrase, deux liens et le numéro. GitHub Pages la sert pour toute adresse qui n'existe pas. |
+| `envoyer-message.php` | Pas une page : reçoit le formulaire de contact et l'envoie par courriel (SMTP Infomaniak). Voir « Le formulaire de contact ». |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
 en fond et le duo (une photographie, un texte) sont communs.
@@ -428,11 +429,12 @@ citation de presse restent à valider. La liste est ci-dessous, et chaque
 endroit porte un commentaire `TODO` dans le HTML, à l'aplomb de la ligne
 concernée.
 
-- **Formulaire de contact** : il poste vers un service de réception qui
-  transmet le message par courriel. Remplacer l'adresse de l'attribut `action`
-  dans `contact.html` par la vôtre (Formspree, Basin, Formcarry, ou un script
-  sur votre hébergement). Tant que ce n'est pas fait, l'envoi échoue et le
-  visiteur est renvoyé vers le téléphone.
+- **Formulaire de contact** : il poste vers `envoyer-message.php`, qui envoie le
+  courriel en SMTP depuis une boîte du domaine (Infomaniak). Deux choses à faire :
+  renseigner le domaine du site dans le tableau `SITE` en tête de
+  `envoyer-message.php` (`votre-domaine.ch`, tant qu'il y figure rien ne part), et
+  poser `contact-config.php` sur le serveur. Mode d'emploi complet dans la section
+  « Le formulaire de contact » ci-dessous.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Carte en PDF** : le lien est retiré de `la-carte.html` tant que le fichier
   n'existe pas — il menait à une page d'erreur. Déposer le PDF dans
@@ -458,3 +460,57 @@ Le site est à la racine du dépôt et n'utilise que des chemins relatifs.
 
 L'option « Deploy from a branch » (branche `main`, dossier `/`) fonctionne aussi.
 Le fichier `.nojekyll` fait servir les fichiers tels quels.
+
+---
+
+## Le formulaire de contact
+
+Le formulaire envoie un courriel au restaurant, **sans service tiers**. Il poste vers
+**`envoyer-message.php`** (à la racine du site), qui se connecte en SMTP à une boîte mail
+de votre domaine chez Infomaniak et transmet le message à **restaurantle9@golfbresil.ch**. Si l’envoi échoue,
+le visiteur voit un message et le numéro de téléphone du restaurant.
+
+**Pourquoi pas la fonction `mail()` de PHP ?** Infomaniak la déconseille : envoi non
+authentifié, quota réduit, messages qui finissent en indésirables. Un envoi
+authentifié par une vraie boîte arrive en boîte de réception. Les
+[paramètres officiels](https://www.infomaniak.com/en/support/faq/468/understanding-mail-ports-and-protocols)
+sont `mail.infomaniak.com`, port 587 (STARTTLS) ou 465 (SSL), identifiant = adresse complète.
+
+### Mise en service — à faire une seule fois
+
+1. **Une boîte mail du domaine.** Dans le Manager Infomaniak, créez (ou choisissez) une
+   adresse du domaine, par exemple **contact@votre-domaine.ch**, et notez son mot de passe.
+2. **Le fichier de configuration.** Copiez `contact-config.example.php` sous le nom
+   **`contact-config.php`** et renseignez l’adresse et le mot de passe de la boîte.
+3. **Posez-le sur le serveur**, dans le même dossier que `envoyer-message.php` (la racine
+   du site) : Manager → Gestionnaire de fichiers, ou FTP. **Avant cela, remplacez `votre-domaine.ch` par le vrai domaine dans le tableau `SITE` de `envoyer-message.php`** (`hotes`) : tant qu’il y figure, le script refuse tout envoi.
+   Il contient un mot de passe : il n’est **pas dans git** (il est dans `.gitignore`) et
+   n’est donc **jamais déployé automatiquement**. C’est le seul fichier à poser à la main.
+4. **PHP 8.0 ou plus** pour le site (Manager → Hébergement → Site → PHP).
+5. **Testez** : envoyez un message depuis la page Contact et vérifiez qu’il arrive
+   (regardez les indésirables la première fois ; marquez-le « pas du courrier indésirable »).
+
+Sans `contact-config.php`, rien ne part : le site reste utilisable et renvoie le visiteur
+vers le téléphone. C’est volontaire.
+
+### Ce qui protège la boîte
+
+Un champ-piège invisible pour les robots ; l’origine de la requête, qui doit être le
+site lui-même ; 5 messages par heure et par visiteur, 100 par jour au total (pour ne
+jamais atteindre le quota d’envoi de la boîte) ; les retours à la ligne retirés de tout
+ce qui finit dans un en-tête (on ne peut pas ajouter de destinataire en cachette) ;
+des longueurs plafonnées.
+
+### Changer l’adresse qui reçoit, ou le téléphone affiché en cas d’échec
+
+C’est le tableau `SITE` en tête de **`envoyer-message.php`** (adresse de réception,
+domaines autorisés, téléphone, couleurs de la petite page de réponse).
+
+### Si un message n’arrive pas
+
+Regardez le journal d’erreurs PHP de l’hébergement (Manager → Hébergement → Logs) : chaque
+ligne qui commence par `[contact` dit pourquoi (mot de passe refusé, boîte injoignable,
+configuration absente…). Les messages du visiteur et vos identifiants n’y figurent jamais.
+
+C’est volontairement **un formulaire de contact, pas de réservation** : une demande de
+table qui n’aboutirait pas serait pire qu’un numéro bien visible.

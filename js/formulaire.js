@@ -3,7 +3,7 @@
 
    Il fonctionne sans ce fichier : `action` et `method` sont posés sur la
    balise, donc un envoi ordinaire part quand même. Le visiteur atterrit
-   simplement sur la page du service de réception au lieu de rester ici.
+   simplement sur la page de réponse de `envoyer-message.php` au lieu de rester ici.
 
    Ce fichier ne fait que retenir l'envoi pour afficher la réponse sur place et
    vérifier trois choses avant de partir. En cas d'échec, il redonne le numéro
