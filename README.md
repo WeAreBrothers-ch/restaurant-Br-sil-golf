@@ -486,7 +486,7 @@ sont `mail.infomaniak.com`, port 587 (STARTTLS) ou 465 (SSL), identifiant = adre
    du site) : Manager → Gestionnaire de fichiers, ou FTP. **Avant cela, remplacez `votre-domaine.ch` par le vrai domaine dans le tableau `SITE` de `envoyer-message.php`** (`hotes`) : tant qu’il y figure, le script refuse tout envoi.
    Il contient un mot de passe : il n’est **pas dans git** (il est dans `.gitignore`) et
    n’est donc **jamais déployé automatiquement**. C’est le seul fichier à poser à la main.
-4. **PHP 8.0 ou plus** pour le site (Manager → Hébergement → Site → PHP).
+4. **La version de PHP** du site (Manager → Hébergement → Site → PHP). Le script fonctionne dès PHP 7.0, mais choisissez la plus récente proposée : les anciennes ne reçoivent plus de correctifs de sécurité.
 5. **Testez** : envoyez un message depuis la page Contact et vérifiez qu’il arrive
    (regardez les indésirables la première fois ; marquez-le « pas du courrier indésirable »).
 

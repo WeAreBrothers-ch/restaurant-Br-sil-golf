@@ -29,6 +29,9 @@ declare(strict_types=1);
        (c'est ce qui empêche d'ajouter un destinataire en cachette) ;
      · des longueurs plafonnées, un courriel validé, un message minimal.
 
+   COMPATIBILITÉ : écrit pour fonctionner dès PHP 7.0 (aucune syntaxe récente), parce
+   que la version choisie sur l'hébergement n'est pas toujours la dernière.
+
    La partie à adapter d'un site à l'autre est le tableau SITE ci-dessous.
    ============================================================================ */
 
@@ -46,6 +49,7 @@ const SITE = [
     ],
 ];
 
+@ini_set('display_errors', '0');
 date_default_timezone_set('Europe/Zurich');
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: no-store');
@@ -55,10 +59,10 @@ header('Cache-Control: no-store');
 /** Le visiteur est-il arrivé par JavaScript (fetch) ou par un envoi ordinaire ? */
 function veut_json(): bool
 {
-    return str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
+    return strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
 }
 
-function repondre(int $statut, bool $ok, string $message, array $champs = []): void
+function repondre(int $statut, bool $ok, string $message, array $champs = [])
 {
     http_response_code($statut);
     if (veut_json()) {
@@ -72,7 +76,9 @@ function repondre(int $statut, bool $ok, string $message, array $champs = []): v
     }
     // Sans JavaScript : une petite page, aux couleurs du site, avec la sortie de secours.
     header('Content-Type: text/html; charset=UTF-8');
-    $h = static fn (string $s): string => htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $h = function (string $s): string {
+        return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    };
     $c = SITE['couleurs'];
     $tel = $h(SITE['telephone']);
     $telLien = $h(preg_replace('/[^0-9+]/', '', SITE['telephone']) ?? '');
@@ -91,7 +97,7 @@ function repondre(int $statut, bool $ok, string $message, array $champs = []): v
     exit;
 }
 
-function journal(string $texte): void
+function journal(string $texte)
 {
     error_log('[contact ' . SITE['nom'] . '] ' . $texte);
 }
@@ -143,7 +149,9 @@ function entete(string $s): string
         $mot .= $c;
     }
     $mots[] = $mot;
-    return implode("\r\n ", array_map(static fn (string $m): string => '=?UTF-8?B?' . base64_encode($m) . '?=', $mots));
+    return implode("\r\n ", array_map(function (string $m): string {
+        return '=?UTF-8?B?' . base64_encode($m) . '?=';
+    }, $mots));
 }
 
 function hote_de(string $url): string
@@ -169,7 +177,9 @@ function limiter(string $ip): bool
         }
         flock($f, LOCK_EX);
         $dates = json_decode((string) stream_get_contents($f), true);
-        $dates = array_values(array_filter(is_array($dates) ? $dates : [], static fn ($t): bool => is_int($t) && $t > $maintenant - $fenetre));
+        $dates = array_values(array_filter(is_array($dates) ? $dates : [], function ($t) use ($maintenant, $fenetre): bool {
+            return is_int($t) && $t > $maintenant - $fenetre;
+        }));
         $autorise = count($dates) < $plafond;
         if ($autorise) {
             $dates[] = $maintenant;
@@ -207,14 +217,14 @@ function smtp_lire($flux): array
 function smtp_commande($flux, string $commande, array $attendus, string $nom): string
 {
     fwrite($flux, $commande . "\r\n");
-    [$code, $texte] = smtp_lire($flux);
+    list($code, $texte) = smtp_lire($flux);
     if (!in_array($code, $attendus, true)) {
         throw new RuntimeException('SMTP ' . $nom . ' refusé : ' . $texte);
     }
     return $texte;
 }
 
-function smtp_envoyer(array $cfg, string $expediteur, string $destinataire, string $message): void
+function smtp_envoyer(array $cfg, string $expediteur, string $destinataire, string $message)
 {
     $implicite = $cfg['chiffrement'] === 'ssl';
     $contexte = stream_context_create(['ssl' => [
@@ -236,7 +246,7 @@ function smtp_envoyer(array $cfg, string $expediteur, string $destinataire, stri
     stream_set_timeout($flux, 15);
 
     try {
-        [$code, $texte] = smtp_lire($flux);
+        list($code, $texte) = smtp_lire($flux);
         if ($code !== 220) {
             throw new RuntimeException('accueil SMTP inattendu : ' . $texte);
         }
@@ -245,7 +255,13 @@ function smtp_envoyer(array $cfg, string $expediteur, string $destinataire, stri
 
         if ($cfg['chiffrement'] === 'starttls') {
             smtp_commande($flux, 'STARTTLS', [220], 'STARTTLS');
-            if (!stream_socket_enable_crypto($flux, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            $methode = STREAM_CRYPTO_METHOD_TLS_CLIENT;
+            foreach (['STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT', 'STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT'] as $nom) {
+                if (defined($nom)) {
+                    $methode |= constant($nom);
+                }
+            }
+            if (!stream_socket_enable_crypto($flux, true, $methode)) {
                 throw new RuntimeException('le chiffrement TLS n\'a pas pu être établi');
             }
             smtp_commande($flux, 'EHLO ' . $moi, [250], 'EHLO');

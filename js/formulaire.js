@@ -82,6 +82,11 @@
       headers: { Accept: 'application/json' }
     }).then(function (r) {
       if (!r.ok) throw new Error(r.status);
+      // Le succès doit être explicite : une page d'erreur du serveur (PHP absent,
+      // par exemple) n'est jamais prise pour un envoi réussi.
+      return r.json();
+    }).then(function (res) {
+      if (!res || res.success !== true) throw new Error('refus');
       form.reset();
       repondre('Merci, votre message est parti. Nous répondons sous un ou deux jours.', 'ok');
     }).catch(function () {
