@@ -12,7 +12,7 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `la-carte.html` | La carte | Fond sombre, familles de plats sur deux colonnes, trois photographies en respiration, chacune entre deux familles |
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
-| `404.html` | Page introuvable | Le sceau, une phrase, deux liens et le numéro. GitHub Pages la sert pour toute adresse qui n'existe pas. |
+| `404.html` | Page introuvable | Le sceau, une phrase, deux liens et le numéro. Le serveur la sert pour toute adresse qui n'existe pas (`ErrorDocument` du `.htaccess`). |
 | `envoyer-message.php` | Pas une page : reçoit le formulaire de contact et l'envoie par courriel (SMTP Infomaniak). Voir « Le formulaire de contact ». |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
@@ -430,11 +430,9 @@ endroit porte un commentaire `TODO` dans le HTML, à l'aplomb de la ligne
 concernée.
 
 - **Formulaire de contact** : il poste vers `envoyer-message.php`, qui envoie le
-  courriel en SMTP depuis une boîte du domaine (Infomaniak). Deux choses à faire :
-  renseigner le domaine du site dans le tableau `SITE` en tête de
-  `envoyer-message.php` (`votre-domaine.ch`, tant qu'il y figure rien ne part), et
-  poser `contact-config.php` sur le serveur. Mode d'emploi complet dans la section
-  « Le formulaire de contact » ci-dessous.
+  courriel en SMTP depuis une boîte du domaine (Infomaniak). Reste à créer la boîte
+  `contact@le9.ch` et à poser `contact-config.php` sur le serveur : mode d'emploi
+  dans « Le formulaire de contact » et « Mise en ligne sur Infomaniak » ci-dessous.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Carte en PDF** : le lien est retiré de `la-carte.html` tant que le fichier
   n'existe pas — il menait à une page d'erreur. Déposer le PDF dans
@@ -450,16 +448,35 @@ concernée.
 - **Numéro de téléphone** : la fiche de l'office du tourisme indique 021 732 26 46, le site utilise le 021 882 24 19 que vous m'avez donné.
 - **Droits des dessins** : ils viennent de banques d'images, vérifier que les licences couvrent l'usage sur le site.
 
-## Mettre en ligne sur GitHub Pages
+## Mise en ligne sur Infomaniak
 
-Le site est à la racine du dépôt et n'utilise que des chemins relatifs.
+À faire **une seule fois** (une vingtaine de minutes). Ensuite, chaque push sur `main`
+met le site à jour tout seul (`.github/workflows/deploy-infomaniak.yml`, par FTPS).
 
-1. Fusionner la branche dans `main`.
-2. Dans le dépôt : **Settings → Pages → Build and deployment → Source : GitHub Actions**.
-3. Le workflow `.github/workflows/deploy-pages.yml` publie à chaque push sur `main`.
+1. **Un site pour le domaine.** Manager Infomaniak → Web & Domaines → **Sites Web** →
+   Ajouter un site → choisissez **le9.ch**. (Si votre hébergement n'a plus de place
+   pour un site de plus, il faut en commander un : un hébergement « Starter » suffit.)
+2. **Le certificat SSL.** Il est installé automatiquement ; attendez que
+   `https://le9.ch` s'ouvre sans avertissement avant d'aller plus loin
+   (le `.htaccess` redirige tout vers https).
+3. **PHP.** Site → PHP → choisissez la version la plus récente proposée.
+4. **Un compte FTP.** Site → Connexions FTP / SSH → Ajouter un compte FTP.
+   Mettez comme **répertoire la racine du site** (par exemple `/web/le9`).
+   Notez le serveur (du genre `xxxx.ftp.infomaniak.com`), l'identifiant et le mot de passe.
+5. **Les trois secrets GitHub.** Dans le repo : Settings → Secrets and variables →
+   Actions → New repository secret : `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`.
+6. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
+   Cochez d'abord **Simulation** (rien n'est écrit, on voit ce qui serait envoyé), puis
+   relancez sans la case. Les envois suivants partent seuls à chaque push sur `main`.
+7. **Le formulaire de contact** : créez la boîte `contact@le9.ch` et posez
+   `contact-config.php` (section « Le formulaire de contact » plus bas).
+8. **Vérifiez** : le site en https, une page intérieure, un message test du formulaire.
 
-L'option « Deploy from a branch » (branche `main`, dossier `/`) fonctionne aussi.
-Le fichier `.nojekyll` fait servir les fichiers tels quels.
+Tant que les secrets de l'étape 5 n'existent pas, le workflow s'ignore proprement (il
+l'écrit dans son journal) : pousser du code ne casse rien.
+
+Le déploiement n'envoie ni les sources de travail (photos d'origine, scripts), ni les
+fichiers `.md`, ni `contact-config.php` : ce dernier reste sur le serveur.
 
 ---
 
@@ -479,11 +496,11 @@ sont `mail.infomaniak.com`, port 587 (STARTTLS) ou 465 (SSL), identifiant = adre
 ### Mise en service — à faire une seule fois
 
 1. **Une boîte mail du domaine.** Dans le Manager Infomaniak, créez (ou choisissez) une
-   adresse du domaine, par exemple **contact@votre-domaine.ch**, et notez son mot de passe.
+   adresse du domaine, par exemple **contact@le9.ch**, et notez son mot de passe.
 2. **Le fichier de configuration.** Copiez `contact-config.example.php` sous le nom
    **`contact-config.php`** et renseignez l’adresse et le mot de passe de la boîte.
 3. **Posez-le sur le serveur**, dans le même dossier que `envoyer-message.php` (la racine
-   du site) : Manager → Gestionnaire de fichiers, ou FTP. **Avant cela, remplacez `votre-domaine.ch` par le vrai domaine dans le tableau `SITE` de `envoyer-message.php`** (`hotes`) : tant qu’il y figure, le script refuse tout envoi.
+   du site) : Manager → Gestionnaire de fichiers, ou FTP.
    Il contient un mot de passe : il n’est **pas dans git** (il est dans `.gitignore`) et
    n’est donc **jamais déployé automatiquement**. C’est le seul fichier à poser à la main.
 4. **La version de PHP** du site (Manager → Hébergement → Site → PHP). Le script fonctionne dès PHP 7.0, mais choisissez la plus récente proposée : les anciennes ne reçoivent plus de correctifs de sécurité.

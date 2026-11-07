@@ -3,6 +3,4 @@
 User-agent: *
 Allow: /
 
-# TODO mise en ligne : ajouter la ligne ci-dessous une fois le domaine connu,
-# et déposer le fichier sitemap.xml correspondant à la racine.
-# Sitemap: https://votre-domaine.ch/sitemap.xml
+Sitemap: https://www.le9.ch/sitemap.xml

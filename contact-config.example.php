@@ -16,7 +16,7 @@ return [
     'hote'         => 'mail.infomaniak.com',
     'port'         => 587,
     'chiffrement'  => 'starttls',          // 'starttls' avec le port 587, ou 'ssl' avec le port 465
-    'utilisateur'  => 'contact@votre-domaine.ch',   // l'adresse COMPLÈTE de la boîte Infomaniak
+    'utilisateur'  => 'contact@le9.ch',   // l'adresse COMPLÈTE de la boîte Infomaniak
     'mot_de_passe' => '',
     // 'expediteur' => '',                 // par défaut : l'adresse ci-dessus (à garder ainsi)
 ];

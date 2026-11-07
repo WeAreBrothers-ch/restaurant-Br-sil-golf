@@ -1,0 +1,67 @@
+# ────────────────────────────────────────────────────────────────
+# le9.ch — configuration Apache (Infomaniak)
+# ────────────────────────────────────────────────────────────────
+
+Options -Indexes
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+
+# ── 1. Une seule adresse canonique : https://www.le9.ch
+# ⚠ Ne déployez ce fichier qu'une fois le certificat SSL du site actif (Manager →
+# Site → SSL) : sans lui, la redirection vers https renverrait une erreur.
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://www.le9.ch%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.le9.ch%{REQUEST_URI} [L,R=301]
+
+# /index.html → /   (une seule URL pour l'accueil)
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# ── 2. Page d'erreur
+ErrorDocument 404 /404.html
+
+# ── 3. Compression
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+      application/javascript application/json application/xml image/svg+xml
+  </IfModule>
+</IfModule>
+
+# ── 4. Cache navigateur
+# Les images de ce site n'ont PAS de millésime dans leur nom (plat-01.jpg…) : une photo
+# remplacée doit apparaître vite chez les visiteurs déjà venus, donc une semaine seulement.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                "access plus 0 seconds"
+  ExpiresByType text/css                 "access plus 1 hour"
+  ExpiresByType application/javascript   "access plus 1 hour"
+  ExpiresByType image/jpeg               "access plus 1 week"
+  ExpiresByType image/png                "access plus 1 week"
+  ExpiresByType image/webp               "access plus 1 week"
+  ExpiresByType image/svg+xml            "access plus 1 week"
+  ExpiresByType image/x-icon             "access plus 1 month"
+  ExpiresByType font/woff2               "access plus 1 year"
+</IfModule>
+
+# ── 5. En-têtes de sécurité
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── 6. Ne jamais servir le fichier d'état du déploiement
+<Files ".ftp-deploy-sync-state.json">
+  Require all denied
+</Files>
+
+# ── 7. Ne jamais servir la configuration du formulaire de contact
+# contact-config.php contient le mot de passe de la boîte d'envoi. Il ne
+# renvoie rien s'il est appelé directement, mais autant qu'il ne réponde pas.
+<FilesMatch "^contact-config(\.example)?\.php$">
+  Require all denied
+</FilesMatch>

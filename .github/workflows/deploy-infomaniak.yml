@@ -1,0 +1,92 @@
+# ────────────────────────────────────────────────────────────────
+# Déploiement automatique de le site Le 9 (Restaurant du Golf du Brésil) sur l'hébergement Infomaniak.
+#
+# Chaque push sur `main` envoie les fichiers modifiés par FTPS. L'action garde
+# un fichier d'état (.ftp-deploy-sync-state.json) à la racine du dossier distant :
+# seuls les fichiers réellement changés sont transférés ensuite.
+#
+# Secrets à créer dans GitHub (Settings → Secrets and variables → Actions) :
+#   FTP_SERVER    ex. xxxx.ftp.infomaniak.com
+#   FTP_USERNAME  le compte FTP créé dans le Manager Infomaniak
+#   FTP_PASSWORD  son mot de passe
+#
+# Tant que ces trois secrets n'existent pas, ce workflow ne fait RIEN (il le dit
+# dans son journal) : pas d'échec, pas de courriel d'erreur.
+# ────────────────────────────────────────────────────────────────
+name: Déployer sur Infomaniak
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Simulation : teste la connexion et liste ce qui serait envoyé, sans rien écrire sur le serveur"
+        type: boolean
+        default: false
+
+# Un seul déploiement à la fois : deux transferts FTP simultanés
+# corrompraient le fichier d'état côté serveur.
+concurrency:
+  group: deploiement-ftp
+  cancel-in-progress: false
+
+env:
+  # Chemin RELATIF au dossier où le compte FTP arrive en se connectant. Quand le
+  # compte FTP est créé avec « Répertoire » = la racine du site, c'est « / ».
+  DOSSIER_DISTANT: /
+
+jobs:
+  deployer:
+    name: Transfert FTPS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Vérifier que les trois secrets sont configurés
+        id: secrets
+        env:
+          SERVEUR: ${{ secrets.FTP_SERVER }}
+          UTILISATEUR: ${{ secrets.FTP_USERNAME }}
+          MOT_DE_PASSE: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          manquants=""
+          if [ -z "$SERVEUR" ]; then manquants="$manquants FTP_SERVER"; fi
+          if [ -z "$UTILISATEUR" ]; then manquants="$manquants FTP_USERNAME"; fi
+          if [ -z "$MOT_DE_PASSE" ]; then manquants="$manquants FTP_PASSWORD"; fi
+          if [ -n "$manquants" ]; then
+            echo "::notice::Déploiement ignoré, secret(s) manquant(s) :$manquants. Créez-les dans Settings → Secrets and variables → Actions → New repository secret."
+            echo "pret=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Les trois secrets sont présents."
+            echo "pret=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Envoyer les fichiers
+        if: ${{ steps.secrets.outputs.pret == 'true' }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps        # FTP sur TLS explicite, port 21
+          port: 21
+          server-dir: ${{ env.DOSSIER_DISTANT }}
+          local-dir: ./
+          dry-run: ${{ inputs.dry_run == true }}
+          # Fichiers de travail qui ne doivent pas se retrouver en ligne.
+          # contact-config.php (le mot de passe de la boîte d'envoi) est posé une
+          # fois à la main sur le serveur : jamais touché par le déploiement.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
+            **/node_modules/**
+            tools/**
+            assets/photos/source/**
+            assets/illustrations/source/**
+            *.md
+            contact-config.php
+            contact-config.example.php
+            .nojekyll
