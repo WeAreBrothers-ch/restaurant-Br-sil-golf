@@ -28,11 +28,55 @@ ligne indique le format voulu et le point de l'image à garder au centre.
 
 ## Chaque photo existe en deux tailles
 
-À côté de chaque fichier vit sa jumelle de 800 px, `<nom>-800.jpg`. Les pages
-déclarent les deux et le navigateur choisit : la grande sur un écran
-d'ordinateur, la petite au doigt. Les jumelles sont produites par
+À côté de chaque grande photo vit sa jumelle de 1200 px, `<nom>-1200.jpg`. Les
+pages déclarent les deux dans `srcset` et le navigateur choisit : la grande sur
+un écran d'ordinateur, la jumelle au doigt. Les jumelles sont produites par
 `tools/prepare_photos.py` — ne pas les modifier à la main, et **ne pas les
 lister dans le tableau ci-dessous** : elles suivent leur aînée.
+
+**Pourquoi 1200 px.** Un téléphone récent affiche en 390 px CSS mais possède
+1170 pixels physiques (écran ×3). Une jumelle de 800 px y était étirée d'un
+tiers. Et les valeurs de `sizes` doivent dire la vérité : un `sizes="62vw"` sur
+une photo qui occupe toute la largeur de l'écran fait choisir au navigateur
+un fichier trop petit. Les pages portent maintenant la largeur réellement
+occupée (`100vw` au doigt, la part de la grille sur ordinateur).
+
+## Des photos nettes : la super-résolution
+
+Plusieurs photos d'origine sont plus petites que la place qu'elles occupent :
+des photos de téléphone de 1000 px posées sur 1640 px de large sur un écran
+Retina, une vue de la salle de 900 px, et deux « HD » de terrasse annoncées à
+2296 px mais dont le détail réel ne dépasse guère 600 px.
+
+`tools/prepare_photos.py` les agrandit avec Real-ESRGAN (`tools/superresolution.py`,
+modèle de 4,8 Mo téléchargé au premier lancement dans `tools/.modeles/`, non
+versionné), qui nettoie au passage les carrés de compression, puis les ramène
+à la taille voulue. Sans `onnxruntime` ou sans réseau, le script se rabat sur un
+redimensionnement classique : rien ne casse.
+
+```
+pip install Pillow onnxruntime numpy
+python3 tools/prepare_photos.py                              # tout
+python3 tools/prepare_photos.py --seulement plat-02.jpg      # une seule photo
+python3 tools/prepare_photos.py --sans-agrandissement        # sans super-résolution
+```
+
+Ce que ça ne fait pas : inventer du détail qui n'a pas été photographié. Un
+arrière-plan flou à la prise de vue reste flou, mais lissé proprement. Une vraie
+photo en haute définition restera toujours préférable (voir « Ce qui manque »).
+
+## Deux cadrages pour téléphone
+
+Sur un téléphone, deux bandeaux posent un panorama dans une boîte qui n'a pas sa
+forme : « La terrasse » dans une boîte **portrait** de 390 × 620, « Le restaurant »
+dans une boîte presque carrée. Le panorama y était agrandi près de trois fois.
+Ils ont donc chacun un cadrage dédié, servi sous 700 px par une balise
+`<picture>` :
+
+| Fichier | Remplace, sur téléphone | Forme |
+|---|---|---|
+| `terrasse-pano-m.jpg` | `terrasse-pano.jpg` | portrait 5/8 |
+| `lieu-pano-m.jpg` | `lieu-pano.jpg` | 4/3 |
 
 ## Ce que le site utilise aujourd'hui
 
@@ -51,6 +95,8 @@ lister dans le tableau ci-dessous** : elles suivent leur aînée.
 | `terrasse-03.jpg` | le9_barolo_terrasse | en réserve, plus affichée |
 | `terrasse-04.jpg` | le9_terrasse_coucher_soleil | accueil (second duo) |
 | `salle-01.jpg` | une-vue-imprenable-sur | le restaurant, la vue depuis la salle |
+| `terrasse-pano-m.jpg` | le9_terrasse_coucher_soleil | cadrage téléphone de « La terrasse » (voir plus haut) |
+| `lieu-pano-m.jpg` | le9_barolo_terrasse | cadrage téléphone de « Le restaurant » (voir plus haut) |
 
 ## L'accueil n'affiche que deux photographies
 
@@ -96,10 +142,11 @@ absent déclenche une requête en échec à chaque visite. Déposez la photo dan
 et dites-le-moi : je remets l'emplacement dans la page.
 
 Une vraie photo de la salle serait utile : la seule dont nous disposons fait
-900 px de large, et n'en donne que 675 une fois recadrée. Elle a donc dû rester
-dans le cadre sur la page « Le restaurant », là où la composition prévoyait de
-la faire sortir jusqu'au bord de l'écran. Une vue en haute définition rendrait
-ce débordement possible.
+900 px de large, et n'en donne que 675 une fois recadrée. La super-résolution la
+rend propre à la taille où elle est posée, mais elle a dû rester dans le cadre
+sur la page « Le restaurant », là où la composition prévoyait de la faire sortir
+jusqu'au bord de l'écran. Une vue en haute définition rendrait ce débordement
+possible.
 
 Idéalement : une vue de la salle vide, une table dressée à l'intérieur, et le
 chef en cuisine.

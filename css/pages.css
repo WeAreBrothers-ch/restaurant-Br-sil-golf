@@ -493,7 +493,7 @@
 .dip__a .ph { --ar: 3/2; }
 /* La photographie d'origine est en hauteur : recadrée en paysage, c'est la
    viande qu'on garde, pas la nappe au-dessus de l'assiette. */
-.dip__a .ph > img { object-position: 50% 58%; }
+.dip__a .ph img { object-position: 50% 58%; }
 .dip__b {
   grid-column: 5 / span 3; grid-row: 3; z-index: 3;
   /* Elle remonte sur la grande des trois quarts de sa hauteur (5/4 de sa
