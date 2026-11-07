@@ -74,8 +74,16 @@ DERIVES = [
     # PORTRAIT de 390 × 620. Un panorama 16/9 y est agrandi près de trois fois :
     # c'est ce qui le rendait flou. Ces deux cadrages sont servis à la place du
     # panorama sous 700 px (balise <picture>), à la forme exacte de la boîte.
-    ("le9_barolo_terrasse_HD.png",         "lieu-pano-m.jpg",    4/3, 1600, .54, .56, (.045, 0, .01, 0)),
+    # Les originaux sont des captures Instagram : tampon « LE 9 » dans le coin bas-droit,
+    # points de carrousel sur les bords et en bas au centre. Ce cadrage retire le coin
+    # droit (le tampon) et s'arrête avant le bord bas (les points).
+    ("le9_barolo_terrasse_HD.png",         "lieu-pano-m.jpg",    4/3, 1600, .36, .67, (.045, 0, .17, 0)),
     ("le9_terrasse_coucher_soleil_HD.png", "terrasse-pano-m.jpg", 5/8, 1300, .47, .50, (.01, 0, .045, 0)),
+
+    # --- Image de partage -----------------------------------------------------
+    # Ce qui s'affiche quand on envoie le lien par message ou sur un réseau :
+    # 1200 × 630, sous 200 Ko (WhatsApp écarte les aperçus trop lourds).
+    ("le9_terrasse_coucher_soleil_HD.png", "og.jpg", 1200/630, 1200, .48, .50, (.01, 0, .045, 0)),
 
     # --- La salle -------------------------------------------------------------
     # Photo d'origine en 900 px : agrandie par super-résolution, elle tient
@@ -178,12 +186,13 @@ def mise_a_taille(im: Image.Image, width: int, mou=None, sr_ok=False):
     return im, False
 
 
-def save_jpeg(im: Image.Image, path: Path) -> int:
+def save_jpeg(im: Image.Image, path: Path, max_kb: int = None) -> int:
     """Écrit en JPEG, en baissant la qualité tant que le fichier est trop lourd."""
-    for q in (QUALITY, 76, 70, 64):
+    max_kb = max_kb or MAX_KB
+    for q in (QUALITY, 76, 70, 64, 58):
         im.save(path, "JPEG", quality=q, optimize=True, progressive=True, subsampling=1)
         kb = path.stat().st_size // 1024
-        if kb <= MAX_KB:
+        if kb <= max_kb:
             return kb
     return path.stat().st_size // 1024
 
@@ -264,7 +273,7 @@ def main(argv=None):
         im, agrandie = mise_a_taille(im, width, SOURCES_MOLLES.get(src), sr_ok)
         if im.width < width:
             petites.append((dst, im.width, width))
-        kb = save_jpeg(im, OUT / dst)
+        kb = save_jpeg(im, OUT / dst, 200 if dst == "og.jpg" else None)
         total += kb
         print(f"  ✓ {src[:34]:36s} -> {dst:20s} {im.width}×{im.height}  {kb} Ko{'  (super-résolution)' if agrandie else ''}")
 
