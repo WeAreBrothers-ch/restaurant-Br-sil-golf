@@ -21,6 +21,22 @@ RewriteRule ^ https://www.le9.ch%{REQUEST_URI} [L,R=301]
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
 RewriteRule ^ / [R=301,L]
 
+# ── Adresses sans « .html » : /la-carte au lieu de /la-carte.html
+# /page.html → /page (redirection permanente, une seule adresse indexée)
+RewriteCond %{THE_REQUEST} \s/+(?!404\.html)([^\s?]+)\.html[\s?] [NC]
+RewriteCond %{DOCUMENT_ROOT}/%1.html -f
+RewriteRule ^ /%1 [R=301,L]
+
+# /page/ → /page (pas de slash final : les liens du site sont relatifs)
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# /page sert page.html (réécriture interne : l'adresse ne change pas)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([^/]+)$ $1.html [L]
+
 # ── 2. Page d'erreur
 ErrorDocument 404 /404.html
 

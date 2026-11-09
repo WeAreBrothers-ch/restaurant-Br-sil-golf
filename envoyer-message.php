@@ -4,7 +4,7 @@ declare(strict_types=1);
 /* ============================================================================
    ENVOYER-MESSAGE.PHP — le formulaire de contact, branché sur l'hébergement
 
-   Le formulaire de `contact.html` poste ici. Ce script vérifie le message et le
+   Le formulaire de la page Contact poste ici. Ce script vérifie le message et le
    transmet par courriel à l'adresse du restaurant, en SMTP authentifié sur une
    boîte mail du domaine (Infomaniak : mail.infomaniak.com). Il ne dépend
    d'aucun service tiers et n'a rien à installer.
@@ -41,7 +41,7 @@ const SITE = [
     'destinataire' => 'restaurantle9@golfbresil.ch',
     'hotes'        => ['www.le9.ch', 'le9.ch'],
     'telephone'    => '021 882 24 19',
-    'retour'       => '/contact.html',
+    'retour'       => '/contact',
     'couleurs'     => [
         'fond'   => '#f7f1e1',
         'texte'  => '#12241b',
