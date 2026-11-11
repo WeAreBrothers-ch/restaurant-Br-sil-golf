@@ -13,7 +13,6 @@ framework ni étape de compilation : du HTML, du CSS et un fichier JavaScript.
 | `la-terrasse.html` | La terrasse | Photo panoramique en tête, chapô et trois colonnes de journal, une journée en trois heures |
 | `contact.html` | Contact | Informations et plan côte à côte, horaires jour par jour, formulaire, bloc réservation |
 | `404.html` | Page introuvable | Le sceau, une phrase, deux liens et le numéro. Le serveur la sert pour toute adresse qui n'existe pas (`ErrorDocument` du `.htaccess`). |
-| `envoyer-message.php` | Pas une page : reçoit le formulaire de contact et l'envoie par courriel (SMTP Infomaniak). Voir « Le formulaire de contact ». |
 
 Chaque page a sa propre grille. Seuls l'en-tête, le pied de page, les dessins
 en fond et le duo (une photographie, un texte) sont communs.
@@ -230,7 +229,6 @@ js/amorce.js                   pose data-js avant le premier affichage
 js/main.js                     menu, apparitions, filet de l'en-tête
 js/hero.js                     le mouvement du premier écran
 js/barre.js                    la barre d'appel du téléphone
-js/formulaire.js               validation et envoi du formulaire de contact
 assets/illustrations/source/   les dessins d'origine
 assets/illustrations/dist/     les dessins servis par le site (une seule couleur)
 assets/photos/source/          les photos d'origine
@@ -429,10 +427,6 @@ citation de presse restent à valider. La liste est ci-dessous, et chaque
 endroit porte un commentaire `TODO` dans le HTML, à l'aplomb de la ligne
 concernée.
 
-- **Formulaire de contact** : il poste vers `envoyer-message.php`, qui envoie le
-  courriel en SMTP depuis la boîte d'Étoile (Infomaniak). Reste à copier le
-  `contact-config.php` d'Étoile sur le serveur : mode d'emploi dans « Le formulaire de
-  contact » et « Mise en ligne sur Infomaniak » ci-dessous.
 - **Carte** : plats et prix relevés sur une fiche en ligne de 2024, à valider avec la cuisine.
 - **Carte en PDF** : le lien est retiré de `la-carte.html` tant que le fichier
   n'existe pas — il menait à une page d'erreur. Déposer le PDF dans
@@ -469,66 +463,20 @@ seule fois** ; ensuite, chaque push sur `main` met le site à jour tout seul
    `FTP_USERNAME` (l'identifiant complet), `FTP_PASSWORD`.
 5. **Le premier déploiement.** Onglet Actions → « Déployer sur Infomaniak » → Run workflow.
    Cochez d'abord **Simulation** (rien n'est écrit), puis relancez sans la case.
-6. **Le formulaire de contact** : copiez le `contact-config.php` de L'Étoile dans le
-   dossier `/sites/le9.ch` du serveur (même boîte d'envoi). Voir « Le formulaire de contact ».
-7. **Vérifiez** : le site en https, une page intérieure, un message test du formulaire.
+6. **Vérifiez** : le site en https, une page intérieure, le bouton « Appeler » de la page Contact.
 
 Tant que les secrets de l'étape 4 n'existent pas, le workflow s'ignore proprement (il
 l'écrit dans son journal) : pousser du code ne casse rien. Le déploiement n'envoie ni
-les sources de travail, ni les `.md`, ni `contact-config.php`, qui reste sur le serveur.
+les sources de travail ni les `.md`.
 
 ---
 
-## Le formulaire de contact
+## Pas de formulaire de contact
 
-Le formulaire envoie un courriel au restaurant, **sans service tiers**. Il poste vers
-**`envoyer-message.php`** (à la racine du site), qui se connecte en SMTP à une boîte mail
-de votre domaine chez Infomaniak et transmet le message à **restaurantle9@golfbresil.ch**. Si l’envoi échoue,
-le visiteur voit un message et le numéro de téléphone du restaurant.
+Le site n'a **pas de formulaire** : la réservation, comme toute question, se fait **par téléphone**.
+La page Contact porte un grand bouton « Appeler » (le composant `.appel`, dans
+`css/pages.css`) : au téléphone il lance l'appel, sur ordinateur il montre le numéro. La barre
+d'appel fixe du bas de l'écran et le bouton « Réserver » de l'en-tête font le même geste.
 
-**Pourquoi pas la fonction `mail()` de PHP ?** Infomaniak la déconseille : envoi non
-authentifié, quota réduit, messages qui finissent en indésirables. Un envoi
-authentifié par une vraie boîte arrive en boîte de réception. Les
-[paramètres officiels](https://www.infomaniak.com/en/support/faq/468/understanding-mail-ports-and-protocols)
-sont `mail.infomaniak.com`, port 587 (STARTTLS) ou 465 (SSL), identifiant = adresse complète.
-
-### Mise en service — à faire une seule fois
-
-1. **La boîte d'envoi : celle de L'Étoile.** Une seule boîte suffit pour les trois sites
-   (par exemple **contact@restaurant-letoile.ch**) : le script envoie depuis elle et met
-   l'adresse du visiteur en « Répondre à ». Rien de nouveau à créer dans le Manager.
-2. **Le fichier de configuration.** Le plus simple : copiez le `contact-config.php` du site de
-   L'Étoile (même contenu). Sinon, copiez `contact-config.example.php` sous le nom
-   **`contact-config.php`** et renseignez l’adresse et le mot de passe de la boîte.
-3. **Posez-le sur le serveur**, dans le même dossier que `envoyer-message.php` (la racine
-   du site) : Manager → Gestionnaire de fichiers, ou FTP.
-   Il contient un mot de passe : il n’est **pas dans git** (il est dans `.gitignore`) et
-   n’est donc **jamais déployé automatiquement**. C’est le seul fichier à poser à la main.
-4. **La version de PHP** du site (Manager → Hébergement → Site → PHP). Le script fonctionne dès PHP 7.0, mais choisissez la plus récente proposée : les anciennes ne reçoivent plus de correctifs de sécurité.
-5. **Testez** : envoyez un message depuis la page Contact et vérifiez qu’il arrive
-   (regardez les indésirables la première fois ; marquez-le « pas du courrier indésirable »).
-
-Sans `contact-config.php`, rien ne part : le site reste utilisable et renvoie le visiteur
-vers le téléphone. C’est volontaire.
-
-### Ce qui protège la boîte
-
-Un champ-piège invisible pour les robots ; l’origine de la requête, qui doit être le
-site lui-même ; 5 messages par heure et par visiteur, 100 par jour au total (pour ne
-jamais atteindre le quota d’envoi de la boîte) ; les retours à la ligne retirés de tout
-ce qui finit dans un en-tête (on ne peut pas ajouter de destinataire en cachette) ;
-des longueurs plafonnées.
-
-### Changer l’adresse qui reçoit, ou le téléphone affiché en cas d’échec
-
-C’est le tableau `SITE` en tête de **`envoyer-message.php`** (adresse de réception,
-domaines autorisés, téléphone, couleurs de la petite page de réponse).
-
-### Si un message n’arrive pas
-
-Regardez le journal d’erreurs PHP de l’hébergement (Manager → Hébergement → Logs) : chaque
-ligne qui commence par `[contact` dit pourquoi (mot de passe refusé, boîte injoignable,
-configuration absente…). Les messages du visiteur et vos identifiants n’y figurent jamais.
-
-C’est volontairement **un formulaire de contact, pas de réservation** : une demande de
-table qui n’aboutirait pas serait pire qu’un numéro bien visible.
+Pour changer le numéro, modifiez-le partout où il apparaît : cherchez-le dans les fichiers
+`.html` (le lien commence par `tel:`).

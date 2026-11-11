@@ -103,7 +103,6 @@ jobs:
           local-dir: ./
           dry-run: ${{ inputs.dry_run == true }}
           # Fichiers de travail qui ne doivent pas se retrouver en ligne.
-          # contact-config.php (le mot de passe de la boîte d'envoi) est posé une
           # fois à la main sur le serveur : jamais touché par le déploiement.
           exclude: |
             **/.git*
@@ -114,6 +113,4 @@ jobs:
             assets/photos/source/**
             assets/illustrations/source/**
             *.md
-            contact-config.php
-            contact-config.example.php
             .nojekyll

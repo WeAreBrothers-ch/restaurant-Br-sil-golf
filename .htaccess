@@ -74,10 +74,3 @@ ErrorDocument 404 /404.html
 <Files ".ftp-deploy-sync-state.json">
   Require all denied
 </Files>
-
-# ── 7. Ne jamais servir la configuration du formulaire de contact
-# contact-config.php contient le mot de passe de la boîte d'envoi. Il ne
-# renvoie rien s'il est appelé directement, mais autant qu'il ne réponde pas.
-<FilesMatch "^contact-config(\.example)?\.php$">
-  Require all denied
-</FilesMatch>

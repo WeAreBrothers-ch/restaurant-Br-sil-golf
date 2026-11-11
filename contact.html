@@ -162,66 +162,16 @@
     </div>
   </section>
 
-  <!-- ==================================================================
-       ÉCRIVEZ-NOUS
-
-       LE FORMULAIRE : il poste vers `envoyer-message.php`, à la racine du site,
-       qui transmet le message par courriel depuis une boîte du domaine (SMTP
-       Infomaniak). Les identifiants de cette boîte sont dans
-       `contact-config.php`, posé à la main sur le serveur et absent de git :
-       voir « Le formulaire de contact » dans le README. Tant que ce fichier
-       manque, l'envoi échoue et le visiteur est renvoyé vers le téléphone.
-       ================================================================== -->
-  <section class="sect" id="ecrire" aria-labelledby="titre-ecrire">
-    <div class="illu i-bouteille" data-side="l" style="--y:38%; --w:130px; --in:-12px; --r:-6deg" data-hide="lg"></div>
-    <div class="wrap ecrire">
-      <div class="ecrire__mot" data-reveal>
-        <div class="mark i-chef" style="--w:56px" aria-hidden="true"></div>
-        <h2 class="t-2" id="titre-ecrire">Une question,<br>un groupe, un événement</h2>
-        <p class="lead" style="margin-top:1.2rem">Allergies, repas de famille, banquet, privatisation : posez votre question ici.</p>
-        <p class="sm soft">Pour réserver une table, le téléphone reste le plus rapide : <a href="tel:+41218822419">021 882 24 19</a>.</p>
-      </div>
-
-      <form class="form" data-telephone="021 882 24 19" novalidate
-            action="/envoyer-message.php" method="post" data-reveal>
-        <div class="form__duo">
-          <p class="form__champ">
-            <label for="nom">Votre nom</label>
-            <input id="nom" name="nom" type="text" autocomplete="name" maxlength="80" required>
-          </p>
-          <p class="form__champ">
-            <label for="email">Votre courriel</label>
-            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" required>
-          </p>
-        </div>
-        <p class="form__champ">
-          <label for="sujet">Sujet</label>
-          <input id="sujet" name="sujet" type="text" autocomplete="off" maxlength="120" placeholder="Table de 12 le samedi midi…">
-        </p>
-        <p class="form__champ">
-          <label for="message">Votre message</label>
-          <textarea id="message" name="message" rows="5" maxlength="2000" required aria-describedby="aide-message"></textarea>
-          <span class="form__aide" id="aide-message">Nous répondons sous un ou deux jours. Pour une table ce soir, appelez-nous.</span>
-        </p>
-        <!-- Piège à robots : un champ que personne ne voit et que personne ne
-             remplit. S'il arrive rempli, le message est jeté. -->
-        <p class="form__piege" aria-hidden="true">
-          <label for="site">Ne remplissez pas ce champ</label>
-          <input id="site" name="site" type="text" tabindex="-1" autocomplete="off">
-        </p>
-        <div class="form__reponse" aria-live="polite"></div>
-        <button class="btn form__envoi" type="submit">Envoyer le message</button>
-      </form>
-    </div>
-  </section>
-
   <section class="sect book">
     <div class="illu i-chef"  data-side="l" style="--y:24%; --w:165px; --in:6px; --r:-3deg" data-hide="lg"></div>
     <div class="illu i-sac"   data-side="r" style="--y:22%; --w:95px;  --in:8px; --r:6deg" data-hide="lg"></div>
     <div class="wrap-sm" data-reveal>
       <h2 class="t-3">Une table se réserve par téléphone</h2>
-      <a class="book__tel" href="tel:+41218822419">021 882 24 19</a>
-      <p class="soft">Groupes, banquets, événements privés, allergies : écrivez-nous à <a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a>.</p>
+      <a class="appel" href="tel:+41218822419" data-analytics="call" aria-label="Appeler le restaurant au 021 882 24 19">
+        <span class="appel__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+        <span class="appel__texte"><span class="appel__label">Appeler</span><span class="appel__num">021 882 24 19</span></span>
+      </a>
+      <p class="soft">Groupes, banquets, événements privés, allergies : appelez-nous aussi, ou écrivez à <a href="mailto:restaurantle9@golfbresil.ch">restaurantle9@golfbresil.ch</a>.</p>
     </div>
   </section>
 </main>
@@ -286,6 +236,5 @@
 
 <script src="js/main.js" defer></script>
 <script src="js/barre.js" defer></script>
-<script src="js/formulaire.js" defer></script>
 </body>
 </html>

@@ -869,14 +869,34 @@
 
 /* Bandeau réservation en bas de page */
 .book { text-align: center; }
-.book__tel { display: inline-block; margin: .8rem 0 1rem; padding-bottom: .25rem; text-decoration: none;
-             font: 500 clamp(2.4rem, 6.5vw, 4.2rem)/1 var(--serif); font-variant-numeric: tabular-nums;
-             color: var(--fg-strong); border-bottom: 1px solid var(--accent); }
+/* Le bouton d'appel : la réservation se fait au téléphone, c'est donc un vrai bouton,
+   plein, grand, avec une icône, et non un lien souligné. Le libellé dit ce qui se
+   passe, le numéro se lit d'un coup d'œil pour qui ne peut pas téléphoner depuis
+   son écran. Au doigt, il prend toute la largeur de la colonne. */
+.appel {
+  display: inline-flex; align-items: center; gap: 1.15rem;
+  min-height: 76px; margin: 1.2rem 0 1.4rem; padding: .9rem 2.2rem .9rem 1rem;
+  border-radius: 999px; text-decoration: none; text-align: left;
+  background: var(--btn-bg); color: var(--btn-fg); border: 1px solid var(--btn-bg);
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.appel:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgb(0 0 0 / .18); }
+.appel:active { transform: scale(.98); }
+.appel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.appel__icone {
+  display: grid; flex: none; place-items: center; width: 50px; height: 50px;
+  border: 1px solid currentColor; border-radius: 50%;
+}
+.appel__icone svg { width: 22px; height: 22px; }
+.appel__texte { display: grid; gap: .4rem; }
+.appel__label { font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+.appel__num { font: 500 clamp(1.7rem, 4.6vw, 2.4rem)/1 var(--serif); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+@media (max-width: 560px) { .appel { display: flex; justify-content: center; width: 100%; padding-inline: 1rem; } }
 .book p { max-width: 38em; margin-inline: auto; }
 /* Un lien au milieu d'une phrase ne peut pas grandir sans décoller les lignes :
    on lui donne de la marge de frappe sans toucher au flux. */
 @media (pointer: coarse) {
-  .book p a, .ecrire__mot p a { display: inline-block; padding-block: .55rem; }
+  .book p a { display: inline-block; padding-block: .55rem; }
 }
 
 /* Horaires : le rappel à gauche, la grille des jours à droite */
@@ -897,61 +917,6 @@
   max-width: 820px;
   margin: clamp(2rem, 4vw, 3.5rem) auto clamp(2.5rem, 5vw, 4rem);
 }
-
-/* =========================================================================
-   ÉCRIVEZ-NOUS
-
-   Le mot à gauche, le formulaire à droite ; en colonne unique au doigt, le
-   mot d'abord. Les champs sont hauts et le texte à 16 px : en dessous, les
-   navigateurs de téléphone agrandissent la page d'eux-mêmes à la mise au
-   point, et on se retrouve à faire glisser l'écran pour lire ce qu'on tape.
-   ========================================================================= */
-.ecrire { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
-@media (max-width: 860px) { .ecrire { grid-template-columns: 1fr; } }
-
-.form { display: grid; gap: 1.1rem; }
-.form__duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-@media (max-width: 560px) { .form__duo { grid-template-columns: 1fr; } }
-
-.form__champ { display: grid; gap: .45rem; margin: 0; }
-.form__champ label {
-  font: 600 var(--fs-micro)/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
-  color: var(--fg-soft);
-}
-.form__champ input,
-.form__champ textarea {
-  width: 100%; min-height: 52px; padding: .85rem 1rem;
-  font: 400 1rem/1.5 var(--sans); color: var(--fg);
-  background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
-  transition: border-color .2s, box-shadow .2s;
-}
-.form__champ textarea { min-height: 148px; resize: vertical; }
-.form__champ input::placeholder, .form__champ textarea::placeholder { color: var(--fg-soft); opacity: .65; }
-.form__champ input:focus-visible,
-.form__champ textarea:focus-visible {
-  outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-.form__aide { font-size: var(--fs-mini); color: var(--fg-soft); }
-
-/* Un champ en erreur : le filet passe au laiton, et la raison s'écrit dessous. */
-.form__champ[data-erreur] input,
-.form__champ[data-erreur] textarea { border-color: var(--accent); }
-.form__erreur { font-size: var(--fs-mini); color: var(--accent); }
-
-.form__piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-
-.form__reponse:empty { display: none; }
-.form__reponse {
-  padding: .9rem 1.1rem; border-radius: var(--r); font-size: var(--fs-sm); line-height: 1.55;
-  border: 1px solid var(--line); background: var(--bg-2);
-}
-.form__reponse[data-etat="ok"] { border-color: var(--c-green-mid); }
-.form__reponse[data-etat="ko"] { border-color: var(--accent); }
-.form__reponse a { color: inherit; font-weight: 600; }
-
-.form__envoi { justify-self: start; min-height: 52px; }
-@media (max-width: 560px) { .form__envoi { justify-self: stretch; } }
 
 /* ---------------------------------------------------------------------------
    AU TÉLÉPHONE, L'IMAGE SORT DU CADRE
