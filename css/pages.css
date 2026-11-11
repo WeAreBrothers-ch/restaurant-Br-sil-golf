@@ -869,29 +869,35 @@
 
 /* Bandeau réservation en bas de page */
 .book { text-align: center; }
-/* Le bouton d'appel : la réservation se fait au téléphone, c'est donc un vrai bouton,
-   plein, grand, avec une icône, et non un lien souligné. Le libellé dit ce qui se
-   passe, le numéro se lit d'un coup d'œil pour qui ne peut pas téléphoner depuis
-   son écran. Au doigt, il prend toute la largeur de la colonne. */
+/* Le bouton d'appel : la réservation se fait au téléphone, c'est donc un vrai bouton, pas
+   un lien souligné. Une seule ligne (icône | APPELER | numéro) : l'action d'abord, puis le
+   numéro, lisible d'un coup d'œil pour qui ne peut pas téléphoner depuis son écran. Au
+   doigt il prend la largeur de la colonne, et le numéro passe sous le mot « Appeler ». */
+.book__contenu { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.book__contenu > h2, .book__contenu > p { margin: 0; }
 .appel {
-  display: inline-flex; align-items: center; gap: 1.15rem;
-  min-height: 76px; margin: 1.2rem 0 1.4rem; padding: .9rem 2.2rem .9rem 1rem;
-  border-radius: 999px; text-decoration: none; text-align: left;
+  display: inline-flex; align-items: center; justify-content: center; gap: 1rem;
+  min-height: 64px; margin-top: .4rem; padding: 0 2.4rem;
+  border-radius: 999px; text-decoration: none;
   background: var(--btn-bg); color: var(--btn-fg); border: 1px solid var(--btn-bg);
   transition: transform .2s, background .2s, box-shadow .2s;
 }
 .appel:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgb(0 0 0 / .18); }
 .appel:active { transform: scale(.98); }
 .appel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-.appel__icone {
-  display: grid; flex: none; place-items: center; width: 50px; height: 50px;
-  border: 1px solid currentColor; border-radius: 50%;
-}
+.appel__icone { display: flex; flex: none; }
 .appel__icone svg { width: 22px; height: 22px; }
-.appel__texte { display: grid; gap: .4rem; }
+.appel__texte { display: flex; align-items: center; gap: 1rem; }
 .appel__label { font: 600 var(--fs-mini)/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
-.appel__num { font: 500 clamp(1.7rem, 4.6vw, 2.4rem)/1 var(--serif); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
-@media (max-width: 560px) { .appel { display: flex; justify-content: center; width: 100%; padding-inline: 1rem; } }
+.appel__num {
+  padding-left: 1rem; border-left: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  font: 500 clamp(1.45rem, 3.4vw, 1.85rem)/1 var(--serif); font-variant-numeric: tabular-nums; letter-spacing: -.01em;
+}
+@media (max-width: 560px) {
+  .appel { width: 100%; padding: 1rem 1.2rem; }
+  .appel__texte { flex-direction: column; gap: .45rem; }
+  .appel__num { padding-left: 0; border-left: 0; }
+}
 .book p { max-width: 38em; margin-inline: auto; }
 /* Un lien au milieu d'une phrase ne peut pas grandir sans décoller les lignes :
    on lui donne de la marge de frappe sans toucher au flux. */
