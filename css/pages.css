@@ -881,9 +881,11 @@
    les couleurs et les lettres du 9 :
 
      1. l'adresse, les coordonnées et l'itinéraire, à côté d'une photographie ;
-     2. les horaires, une ligne par jour, sur le crème ;
-     3. le bloc de réservation, sur le fond alterné, avec UN bouton d'appel ;
-     4. le plan.
+     2. le bloc de réservation, sur le fond alterné, avec UN bouton d'appel ;
+     3. le plan.
+
+   Les horaires, encore à confirmer, n'y sont pas : ils reviendront entre
+   l'adresse et la réservation, une ligne par jour, dès qu'ils seront sûrs.
 
    Les boutons ont l'angle vif du Tennis Club : rectangles pleins ou filets,
    pas de pilule.
@@ -893,7 +895,7 @@
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 6vw, 5.5rem); align-items: center;
 }
-.ct-texte h1 em, .ct-section h2 em, .ct-reserver h2 em { font-style: italic; }
+.ct-texte h1 em, .ct-reserver h2 em { font-style: italic; }
 .ct-chapo { margin: 1.4rem 0 0; color: var(--fg); max-width: 32rem; }
 .ct-adresse { margin-top: 1.6rem; font-style: normal; line-height: 1.75; color: var(--fg-soft); }
 .ct-coord { margin: 1.4rem 0 0; font: 500 1.25rem/1.75 var(--serif); }
@@ -915,18 +917,9 @@
   .ct-photo .ph { --ar: 4/3; }
 }
 
-/* Les horaires, puis le plan : deux sections sur le crème, séparées par le
-   bloc de réservation sur le fond alterné. */
+/* Le plan, sur le crème, après le bloc de réservation sur le fond alterné.
+   Les horaires reviendront juste avant ce bloc dès qu'ils seront confirmés. */
 .ct-section { padding-block: clamp(2.5rem, 7vw, 5.5rem); }
-.ct-note { margin: 1rem 0 0; max-width: 34rem; color: var(--fg-soft); }
-.ct-semaine { margin: clamp(1.6rem, 4vw, 2.4rem) 0 0; border-top: 1px solid var(--line); }
-.ct-jour {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline;
-  padding: 1rem 0; border-bottom: 1px solid var(--line);
-}
-.ct-jour dt { font: 500 var(--fs-base)/1.4 var(--sans); color: var(--fg-strong); }
-.ct-jour dd { margin: 0; font-variant-numeric: tabular-nums; }
-.ct-jour .tbc { font: 400 var(--fs-sm)/1.4 var(--sans); color: var(--fg-soft); border-bottom: 1px dashed currentColor; }
 
 /* Le bloc de réservation : une colonne centrée, un seul bouton. */
 .ct-reserver { padding-block: clamp(3rem, 8vw, 5.5rem); background: var(--bg-2); text-align: center; }
@@ -935,7 +928,6 @@
 .ct-reserver .mark { margin: 0 auto .2rem; }
 .ct-reserver h2 { text-wrap: balance; }
 .ct-detail { max-width: 34em; font-size: var(--fs-sm); color: var(--fg-soft); }
-.ct-detail + .ct-detail { margin-top: -.7rem; }
 .ct-detail a { color: var(--fg-strong); }
 @media (pointer: coarse) {
   .ct-detail a { display: inline-block; padding-block: .4rem; }
