@@ -21,8 +21,9 @@
    graphique la joue seule (voir « L'arrivée »).
 
    Et là où le navigateur sait lier une animation au défilement, --p n'est même
-   plus écrit : la chute est jouée par le compositeur, au rythme exact du doigt
-   (voir « Le défilement, confié au navigateur »).
+   plus écrit : le script confie au navigateur la même chute, aux valeurs
+   fixes, et le compositeur la joue au rythme exact du doigt (voir « Le
+   défilement, confié au navigateur »).
    ========================================================================= */
 
 /* Déclarer --p lui donne un type : il devient un vrai nombre, interpolable,
@@ -307,55 +308,17 @@
 /* ---------------------------------------------------------------------------
    LE DÉFILEMENT, CONFIÉ AU NAVIGATEUR
 
-   Là où le navigateur sait lier une animation au défilement (Chrome, Edge,
-   Safari 26), le script ne fait plus que mesurer la course du premier écran,
-   une fois, et poser data-defilement="css". La chute, la vrille et les fondus
-   sont alors joués par le compositeur, dans la même image que le défilement
-   lui-même : plus aucun retard d'une image, plus aucun à-coup quand la page
-   est occupée ailleurs. Les valeurs de départ et d'arrivée sont celles de --p
-   à 0 et à 1 : c'est le même mouvement, au pixel près.
+   Là où le navigateur sait lier une animation au défilement (Safari 26,
+   Chrome, Edge), le script ne passe plus par `--p` : il lit la chute, la
+   vrille et la pente de chaque dessin, et confie au navigateur une animation
+   aux valeurs FIXES, attachée au défilement de la page. Le navigateur la joue
+   alors sur le compositeur, dans la même image que le défilement — sur iPhone,
+   depuis iOS 26.4. Des valeurs fixes, et non `var()` : c'est la forme qu'un
+   moteur peut toujours jouer hors du fil principal.
 
-   Ailleurs, le script écrit --p comme avant.
+   Le mouvement est le même, au pixel près : les valeurs de départ et
+   d'arrivée sont celles de `--p` à 0 et à 1. Tout est dans le script.
    --------------------------------------------------------------------------- */
-@keyframes mono-defile {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to   { transform: translateY(-2.5rem) scale(.95); opacity: .1; }
-}
-@keyframes champ-defile {
-  from { opacity: 1; }
-  to   { opacity: .28; }
-}
-@keyframes piece-defile {
-  from { transform: translateY(0) rotate(var(--r)) translate(-50%, -50%); }
-  to   { transform: translateY(var(--chute)) rotate(calc(var(--r) + var(--vrille))) translate(-50%, -50%); }
-}
-
-@supports (animation-timeline: scroll()) {
-  [data-defilement="css"] .mono {
-    animation: mono-defile linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0px var(--course);
-  }
-  [data-defilement="css"] .home-champ {
-    animation: champ-defile linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0px var(--course);
-  }
-  [data-defilement="css"] .piece {
-    animation: piece-defile linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0px var(--course);
-  }
-  /* L'arrivée et le défilement ensemble : deux animations, deux horloges. */
-  [data-js] [data-defilement="css"] .piece {
-    animation:
-      piece-arrivee var(--dur-pose) var(--expo) backwards,
-      piece-defile linear both;
-    animation-delay: var(--retard, 0s), 0s;
-    animation-timeline: auto, scroll(root block);
-    animation-range: normal, 0px var(--course);
-  }
-}
 
 
 /* ---------------------------------------------------------------------------
