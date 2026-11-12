@@ -15,9 +15,14 @@
    contente d'écrire ce nombre ; c'est ici que chaque dessin en tire sa chute
    et sa vrille. Une écriture par image de rendu, pas dix.
 
-   Le même nombre sert à l'arrivée : les dessins entrent depuis --p:-0.35,
-   c'est-à-dire un peu plus haut et penchés dans l'autre sens. Le geste
-   d'arrivée et le geste de départ sont le même mouvement, joué à l'envers.
+   L'arrivée est le même geste joué à l'envers : les dessins entrent d'où les
+   mettrait --p:-0.35, un peu plus haut et penchés dans l'autre sens. Elle
+   passe par translate et rotate plutôt que par --p, pour que la carte
+   graphique la joue seule (voir « L'arrivée »).
+
+   Et là où le navigateur sait lier une animation au défilement, --p n'est même
+   plus écrit : la chute est jouée par le compositeur, au rythme exact du doigt
+   (voir « Le défilement, confié au navigateur »).
    ========================================================================= */
 
 /* Déclarer --p lui donne un type : il devient un vrai nombre, interpolable,
@@ -144,12 +149,20 @@
   opacity: .82;
   -webkit-mask: var(--src) center/contain no-repeat;
           mask: var(--src) center/contain no-repeat;
-  transform: translate(-50%, -50%)
-             translateY(calc(var(--p) * var(--chute)))
-             rotate(calc(var(--r) + var(--p) * var(--vrille)));
+  /* L'origine est le centre du dessin posé, et l'ordre des fonctions en
+     découle : on ramène le dessin sur son centre, on le penche, puis on le
+     fait tomber. Même geste qu'avant, mais le point (left, top) devient le
+     pivot dont l'arrivée a besoin pour tourner le dessin sur lui-même avec
+     rotate, sans toucher à transform. */
+  transform-origin: 0 0;
+  transform: translateY(calc(var(--p) * var(--chute)))
+             rotate(calc(var(--r) + var(--p) * var(--vrille)))
+             translate(-50%, -50%);
+  /* À toutes les tailles. Sans couche à lui, chaque dessin — un masque, ce qui
+     coûte cher à peindre — était repeint à chaque image du défilement : c'est
+     sur téléphone que cela saccadait. */
+  will-change: transform;
 }
-/* On ne prévient le navigateur que là où il y a de quoi tenir dix couches. */
-@media (min-width: 1100px) { .piece { will-change: transform; } }
 
 /* LA COURONNE.
 
@@ -270,14 +283,78 @@
 .piece--table     { --retard: 480ms; }
 .piece--chef      { --retard: 550ms; }
 
+/* L'arrivée ne joue plus --p : animer une propriété personnalisée oblige le
+   navigateur à recalculer la page à chaque image, sur le fil principal, au
+   moment précis où il charge tout le reste — d'où les à-coups. Elle joue
+   translate, rotate et opacity, que la carte graphique anime seule, et qui
+   s'ajoutent à transform au lieu de le remplacer. */
 @keyframes piece-arrivee {
-  from { opacity: 0; --p: -0.35; }
+  from {
+    opacity: 0;
+    translate: 0 calc(-0.35 * var(--chute));
+    rotate: calc(-0.35 * var(--vrille));
+  }
 }
 
-/* Le sceau se pose aussi, sans retard : c'est lui qu'on voit en premier. */
-[data-js] .mono { animation: hero-pose var(--dur-pose) var(--expo) backwards; }
+/* Le sceau se pose aussi, sans retard : c'est lui qu'on voit en premier.
+   L'arrivée est jouée sur le sceau lui-même, et le défilement sur le titre qui
+   le porte : deux éléments, deux mouvements qui ne se marchent jamais dessus. */
+[data-js] .mono .seal { animation: hero-pose var(--dur-pose) var(--expo) backwards; }
 @keyframes hero-pose {
   from { opacity: 0; transform: translateY(1.5rem) scale(.985); }
+}
+
+/* ---------------------------------------------------------------------------
+   LE DÉFILEMENT, CONFIÉ AU NAVIGATEUR
+
+   Là où le navigateur sait lier une animation au défilement (Chrome, Edge,
+   Safari 26), le script ne fait plus que mesurer la course du premier écran,
+   une fois, et poser data-defilement="css". La chute, la vrille et les fondus
+   sont alors joués par le compositeur, dans la même image que le défilement
+   lui-même : plus aucun retard d'une image, plus aucun à-coup quand la page
+   est occupée ailleurs. Les valeurs de départ et d'arrivée sont celles de --p
+   à 0 et à 1 : c'est le même mouvement, au pixel près.
+
+   Ailleurs, le script écrit --p comme avant.
+   --------------------------------------------------------------------------- */
+@keyframes mono-defile {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to   { transform: translateY(-2.5rem) scale(.95); opacity: .1; }
+}
+@keyframes champ-defile {
+  from { opacity: 1; }
+  to   { opacity: .28; }
+}
+@keyframes piece-defile {
+  from { transform: translateY(0) rotate(var(--r)) translate(-50%, -50%); }
+  to   { transform: translateY(var(--chute)) rotate(calc(var(--r) + var(--vrille))) translate(-50%, -50%); }
+}
+
+@supports (animation-timeline: scroll()) {
+  [data-defilement="css"] .mono {
+    animation: mono-defile linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px var(--course);
+  }
+  [data-defilement="css"] .home-champ {
+    animation: champ-defile linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px var(--course);
+  }
+  [data-defilement="css"] .piece {
+    animation: piece-defile linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px var(--course);
+  }
+  /* L'arrivée et le défilement ensemble : deux animations, deux horloges. */
+  [data-js] [data-defilement="css"] .piece {
+    animation:
+      piece-arrivee var(--dur-pose) var(--expo) backwards,
+      piece-defile linear both;
+    animation-delay: var(--retard, 0s), 0s;
+    animation-timeline: auto, scroll(root block);
+    animation-range: normal, 0px var(--course);
+  }
 }
 
 

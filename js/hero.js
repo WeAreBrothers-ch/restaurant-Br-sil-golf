@@ -1,13 +1,20 @@
 /* ============================================================================
    LE MOUVEMENT DU PREMIER ÉCRAN
 
-   Ce fichier ne déplace rien. Il écrit un seul nombre, --p, l'avancée du
-   premier défilement de 0 à 1, et la feuille de style en tire la chute et la
-   vrille de chacun des neuf dessins. Une écriture par image de rendu, pas neuf :
-   c'est ce qui permet au navigateur de tout composer sur la carte graphique.
+   La feuille de style tire la chute et la vrille des dessins d'un seul nombre,
+   l'avancée du premier défilement, de 0 à 1. Ce fichier ne fait que lui donner
+   cette avancée, de l'une de deux façons.
 
-   Passé le premier écran, le nombre reste à 1 et plus rien n'est écrit : la
-   page ne travaille pas pendant les milliers de pixels qui suivent.
+   1. Là où le navigateur sait lier une animation au défilement (Chrome, Edge,
+      Safari 26) : il mesure la course — la hauteur du premier écran —, l'écrit
+      dans --course, pose data-defilement="css", et s'arrête là. Pas un
+      écouteur de défilement : le mouvement est joué par le compositeur, dans
+      la même image que le défilement, même quand la page est occupée
+      ailleurs. C'est ce qui le rend parfaitement fluide.
+
+   2. Ailleurs : il écrit --p à chaque image de rendu où l'on a défilé. Sans
+      arrondi : l'arrondi au centième faisait avancer les dessins par sauts de
+      deux à trois pixels, et c'était cela, la saccade.
 
    Si le système demande un mouvement réduit, ce fichier ne fait rien : les
    dessins restent où ils sont posés.
@@ -18,27 +25,45 @@
   var hero = document.querySelector('.home-hero');
   if (!hero) return;
 
+  var parCss = false;
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    parCss = !!(window.CSS && CSS.supports('animation-timeline: scroll()'));
   } catch (e) { return; }
 
   var course = 1;
-  var dernier = -1;
-  var attente = false;
+  var courseEcrite = 0;
 
   // La course est la hauteur du premier écran : le mouvement est fini quand on
   // l'a entièrement passé. Elle est remesurée à chaque changement de taille,
   // car sur téléphone la barre d'adresse qui se replie la fait varier.
-  function mesurer() { course = Math.max(1, hero.offsetHeight); }
+  function mesurer() {
+    course = Math.max(1, hero.offsetHeight);
+    if (course === courseEcrite) return;
+    courseEcrite = course;
+    hero.style.setProperty('--course', course + 'px');
+  }
+
+  if (parCss) {
+    try {
+      mesurer();
+      hero.setAttribute('data-defilement', 'css');
+      window.addEventListener('resize', mesurer);
+      return;
+    } catch (e) { hero.removeAttribute('data-defilement'); }
+  }
+
+  var dernier = -1;
+  var attente = false;
 
   function ecrire() {
     attente = false;
     var p = window.scrollY / course;
     if (p < 0) p = 0;
     if (p > 1) p = 1;
-    // Deux décimales suffisent ; au-delà on réécrit une valeur que personne ne
-    // voit. Et si elle n'a pas changé, on ne touche pas au style.
-    var v = Math.round(p * 100) / 100;
+    // Quatre décimales : un dix-millième de chute, c'est moins d'un dixième de
+    // pixel. Et si la valeur n'a pas changé, on ne touche pas au style.
+    var v = Math.round(p * 10000) / 10000;
     if (v === dernier) return;
     dernier = v;
     hero.style.setProperty('--p', String(v));

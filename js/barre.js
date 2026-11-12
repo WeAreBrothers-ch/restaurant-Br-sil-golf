@@ -14,11 +14,17 @@
   var liens = Array.prototype.slice.call(barre.querySelectorAll('a'));
   var etat = null;
 
+  // Le seuil est la hauteur du premier écran s'il y en a un, sinon une valeur
+  // courte : sur les pages intérieures la barre doit venir tout de suite.
+  // Il est mesuré au chargement et au changement de taille, jamais pendant le
+  // défilement : une lecture de mise en page à chaque image, c'est une image
+  // qui peut arriver en retard.
+  var hero = document.querySelector('.home-hero');
+  var seuil = 220;
+  function mesurer() { seuil = hero ? hero.offsetHeight * .7 : 220; }
+  mesurer();
+
   function appliquer() {
-    // Le seuil est la hauteur du premier écran s'il y en a un, sinon une valeur
-    // courte : sur les pages intérieures la barre doit venir tout de suite.
-    var hero = document.querySelector('.home-hero');
-    var seuil = hero ? hero.offsetHeight * .7 : 220;
     var visible = window.scrollY > seuil;
     if (visible === etat) return;
     etat = visible;
@@ -35,7 +41,7 @@
     attente = true;
     requestAnimationFrame(function () { attente = false; appliquer(); });
   }, { passive: true });
-  window.addEventListener('resize', function () { etat = null; appliquer(); });
+  window.addEventListener('resize', function () { mesurer(); etat = null; appliquer(); });
   appliquer();
 
   // Pendant la saisie, on laisse la place au clavier.
